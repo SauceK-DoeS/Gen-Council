@@ -3,1588 +3,1704 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#04060d">
-  <meta name="description" content="GEN COUNCIL — Autonomous Multi-Model Consensus Engine unifying ChatGPT, Claude, Gemini, and Grok into an in-browser democratic deliberation chamber.">
-  <title>GEN COUNCIL | Autonomous Multi-Model Consensus Engine</title>
+  <meta name="theme-color" content="#0B0B0C">
+  <meta name="description" content="The Council — A modern tribunal where Claude, GPT, Gemini, and Grok deliberate and vote on motions of consequence.">
+  <title>The Council — Four Minds. One Verdict.</title>
 
-  <!-- Typography: Space Grotesk (Aerospace Display), Plus Jakarta Sans (Clean UI), JetBrains Mono (Telemetry) -->
+  <!-- Google Fonts: Cormorant Garamond (High-contrast Display Serif), Inter (Precise Grotesk), JetBrains Mono (Parliamentary Records) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Anime.js JavaScript Animation Engine (Local with CDN fallback) -->
-  <script src="anime.min.js"></script>
-  <script>
-    if (typeof anime === 'undefined') {
-      const s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js';
-      document.head.appendChild(s);
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       1. DESIGN SYSTEM & DESIGN TOKENS
+       ARCHITECTURAL FOUNDATION & TOKENS
        ========================================================================== */
     :root {
-      --bg-void: #04060d;
-      --bg-space: #070a16;
-      --surface-1: rgba(13, 18, 38, 0.72);
-      --surface-2: rgba(20, 28, 58, 0.82);
-      --surface-hover: rgba(30, 42, 86, 0.9);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(168, 85, 247, 0.35);
-      --border-accent: rgba(99, 102, 241, 0.45);
-      
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      
-      /* Model Signatures */
-      --chatgpt-color: #10b981;
-      --chatgpt-glow: rgba(16, 185, 129, 0.28);
-      --claude-color: #a855f7;
-      --claude-glow: rgba(168, 85, 247, 0.28);
-      --gemini-color: #06b6d4;
-      --gemini-glow: rgba(6, 182, 212, 0.28);
-      --grok-color: #f59e0b;
-      --grok-glow: rgba(245, 158, 11, 0.28);
+      --bg-base: #0B0B0C;
+      --bg-surface: #111113;
+      --bg-elevated: #17171A;
+      --bg-overlay: rgba(11, 11, 12, 0.88);
 
-      --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-sharp: cubic-bezier(0.4, 0, 0.2, 1);
+      --text-ivory: #F4F3EE;
+      --text-secondary: #C8C6BE;
+      --text-muted: #8E8D88;
+      --text-dim: #555450;
+
+      --border-hairline: rgba(244, 243, 238, 0.08);
+      --border-refined: rgba(244, 243, 238, 0.14);
+      --border-brass: rgba(197, 168, 128, 0.38);
+
+      /* Single Focal Accent: Aged Brass */
+      --brass: #C5A880;
+      --brass-hover: #D6BC96;
+      --brass-subtle: rgba(197, 168, 128, 0.10);
+      --brass-glow: rgba(197, 168, 128, 0.22);
+
+      /* Muted, Desaturated Signature Tones (Strict Restraint) */
+      --tone-claude: #C47D68;   /* Terracotta Clay */
+      --tone-gpt: #739E82;      /* Muted Sage */
+      --tone-gemini: #6C8299;   /* Muted Slate Blue */
+      --tone-grok: #9E9689;     /* Graphite Pewter */
+
+      --font-serif: 'Cormorant Garamond', Garamond, Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Mobile Native Resets */
-    * {
+    /* Reset & Hardware Acceleration */
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
 
-    html, body {
-      width: 100%;
-      min-height: 100svh;
-      background-color: var(--bg-void);
-      color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow-x: hidden;
+    html {
+      background-color: var(--bg-base);
+      color: var(--text-ivory);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.6;
       scroll-behavior: smooth;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Accessibility: Touch Action */
-    button, input, textarea, a, select {
-      touch-action: manipulation;
+    body {
+      min-height: 100svh;
+      background-color: var(--bg-base);
+      overflow-x: hidden;
+      position: relative;
     }
 
-    input, textarea {
-      font-size: 16px; /* Prevents mobile browser auto-zoom */
-      font-family: inherit;
-    }
-
-    /* ==========================================================================
-       2. INTERACTIVE COSMIC STARFIELD CANVAS
-       ========================================================================== */
-    #starfield-canvas {
+    /* Subtle Architectural Grain Overlay */
+    .chamber-noise {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1000;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* Radial Nebula Glows */
-    .nebula-glow {
+    /* Soft Vignette Lighting */
+    .chamber-vignette {
       position: fixed;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      filter: blur(120px);
+      inset: 0;
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.16;
+      z-index: 1;
+      background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(5, 5, 6, 0.82) 100%);
     }
-    .nebula-purple { top: -100px; right: 5%; background: #9333ea; }
-    .nebula-cyan { top: 35%; left: -150px; background: #06b6d4; }
-    .nebula-indigo { bottom: 10%; right: 10%; background: #4f46e5; }
+
+    /* Custom Refined Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(244, 243, 238, 0.12);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--brass-border);
+    }
+
+    /* Focus States */
+    :focus-visible {
+      outline: 1px solid var(--brass);
+      outline-offset: 2px;
+    }
+
+    /* Typography Utilities */
+    .serif-display {
+      font-family: var(--font-serif);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      font-weight: 400;
+    }
+
+    .mono-data {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
 
     /* ==========================================================================
-       3. NAVIGATION BAR (TACTICAL AEROSPACE HUD)
+       TOP NAVIGATION & SENATE MASTHEAD
        ========================================================================== */
-    .nav-bar {
+    .nav-tribunal {
       position: sticky;
       top: 0;
       width: 100%;
-      height: 68px;
+      height: 64px;
+      padding: 0 clamp(20px, 4vw, 56px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 clamp(16px, 4vw, 48px);
-      background: rgba(4, 6, 13, 0.75);
+      border-bottom: 1px solid var(--border-hairline);
+      background: rgba(11, 11, 12, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
-      z-index: 100;
+      z-index: 50;
     }
 
-    .brand-wrap {
+    .nav-masthead {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       text-decoration: none;
       color: inherit;
-      user-select: none;
     }
 
-    .brand-orb {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: conic-gradient(from 180deg at 50% 50%, #10b981 0deg, #a855f7 120deg, #06b6d4 240deg, #f59e0b 360deg);
+    .nav-crest {
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--brass);
+      transform: rotate(45deg);
       display: grid;
       place-items: center;
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-      animation: spinOrb 24s linear infinite;
     }
-    @keyframes spinOrb { 100% { transform: rotate(360deg); } }
-
-    .brand-orb-inner {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--bg-void);
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      font-weight: 800;
-      color: #fff;
+    .nav-crest-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--brass);
     }
 
-    .brand-title {
-      font-family: 'Space Grotesk', sans-serif;
+    .nav-title {
+      font-family: var(--font-serif);
       font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 40%, #c084fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-ivory);
     }
 
-    .nav-badge {
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .btn-text-subtle {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
-      border-radius: 9999px;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: #34d399;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      transition: color 0.15s ease;
     }
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: pulseGlow 2s ease-in-out infinite;
-    }
-    @keyframes pulseGlow { 50% { opacity: 0.4; } }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-nav {
-      padding: 8px 16px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-      user-select: none;
-    }
-    .btn-nav:active { transform: scale(0.97); }
-
-    .btn-ghost {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-ghost:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.2);
-      }
-    }
-
-    .btn-glow {
-      background: linear-gradient(135deg, #6366f1, #a855f7);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(147, 51, 234, 0.35);
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-glow:hover {
-        box-shadow: 0 6px 24px rgba(147, 51, 234, 0.55);
-        transform: translateY(-1px);
-      }
+    .btn-text-subtle:hover {
+      color: var(--text-ivory);
     }
 
     /* ==========================================================================
-       4. HERO SECTION WITH FUSED PLANETARY ORBIT
+       HERO & MOTION INVOCATION
        ========================================================================== */
-    .hero-section {
+    .hero-container {
       position: relative;
-      width: 100%;
-      min-height: calc(100svh - 68px);
+      min-height: calc(100svh - 64px);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 48px);
+      justify-content: space-between;
+      padding: clamp(48px, 8vw, 100px) clamp(20px, 4vw, 56px) 48px;
+      max-width: 1360px;
+      margin: 0 auto;
       z-index: 10;
-      text-align: center;
-      overflow: hidden;
     }
 
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #d8b4fe;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .hero-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 6.5vw, 5.2rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
-      max-width: 980px;
-      background: linear-gradient(180deg, #ffffff 30%, #cbd5e1 75%, #a855f7 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-desc {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      line-height: 1.6;
-      color: var(--text-muted);
-      max-width: 720px;
-      margin-bottom: 32px;
-    }
-
-    .hero-ctas {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-      z-index: 20;
-    }
-
-    .btn-hero-primary {
-      padding: 14px 32px;
-      border-radius: 14px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45);
-      text-decoration: none;
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
-      user-select: none;
-    }
-    .btn-hero-primary:active { transform: scale(0.97); }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-hero-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 40px rgba(124, 58, 237, 0.65);
-      }
-    }
-
-    .btn-hero-secondary {
-      padding: 14px 28px;
-      border-radius: 14px;
-      font-size: 1.05rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(15, 23, 42, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: var(--text-main);
-      backdrop-filter: blur(12px);
-      text-decoration: none;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-    .btn-hero-secondary:active { transform: scale(0.97); }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-hero-secondary:hover {
-        background: rgba(30, 41, 59, 0.85);
-        border-color: rgba(255, 255, 255, 0.25);
-      }
-    }
-
-    /* ==========================================================================
-       5. INTERACTIVE ORBITAL SYSTEM & MOVING SATELLITES (ANIME.JS POWERED)
-       ========================================================================== */
-    .orbital-container {
-      position: relative;
-      width: 100%;
-      max-width: 1040px;
-      height: 480px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-    }
-
-    .orbit-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      pointer-events: none;
-    }
-
-    /* Planetary Core Body */
-    .planet-core {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #818cf8 0%, #4338ca 45%, #1e1b4b 80%, #030712 100%);
-      box-shadow: 0 0 60px rgba(99, 102, 241, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
-      display: grid;
-      place-items: center;
-      z-index: 5;
-    }
-    .planet-ring {
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      border: 1px dashed rgba(168, 85, 247, 0.35);
-      animation: spinOrb 30s linear infinite reverse;
-    }
-
-    /* Satellite Craft Node */
-    .satellite-node {
-      position: absolute;
-      width: 44px;
-      height: 44px;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      z-index: 15;
-      display: grid;
-      place-items: center;
-    }
-
-    .satellite-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 12px;
-      border-radius: 9999px;
-      background: rgba(10, 15, 30, 0.92);
-      border: 1px solid var(--border-subtle);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #e2e8f0;
-      white-space: nowrap;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .satellite-node:hover .satellite-pill {
-      border-color: #a855f7;
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-    }
-
-    .node-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    /* Satellite Spring-Loaded Telemetry HUD */
-    .satellite-hud {
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.95);
-      opacity: 0;
-      pointer-events: none;
-      width: 260px;
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(13, 19, 41, 0.95);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(168, 85, 247, 0.2);
-      z-index: 50;
-      transition: transform 0.25s var(--ease-spring), opacity 0.2s ease;
-      text-align: left;
-    }
-
-    .satellite-node:hover .satellite-hud {
-      transform: translateX(-50%) scale(1);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .hud-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #f1f5f9;
-      margin-bottom: 4px;
-    }
-    .hud-stat {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #a855f7;
-      margin-bottom: 8px;
-    }
-    .hud-desc {
-      font-size: 0.78rem;
-      line-height: 1.45;
-      color: var(--text-muted);
-    }
-
-    /* ==========================================================================
-       6. THE RE-IMAGINED DELIBERATION CHAMBER (CENTERPIECE)
-       ========================================================================== */
-    .chamber-section {
-      position: relative;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px clamp(16px, 4vw, 32px) 100px;
-      z-index: 20;
-    }
-
-    .chamber-header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .chamber-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #a855f7;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .chamber-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-    }
-    .chamber-subtitle {
-      color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    /* Tactical Stepper Navigation */
-    .stepper-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    @media (max-width: 640px) {
-      .stepper-bar { grid-template-columns: 1fr; }
-    }
-
-    .step-node {
-      padding: 14px 18px;
-      border-radius: 14px;
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
+    .hero-eyebrow {
       display: flex;
       align-items: center;
       gap: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
+      margin-bottom: 24px;
     }
-    .step-node.active {
-      background: rgba(168, 85, 247, 0.12);
-      border-color: rgba(168, 85, 247, 0.5);
-      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
-    }
-    .step-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.08);
-      display: grid;
-      place-items: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .step-node.active .step-num {
-      background: #a855f7;
-      color: #fff;
-    }
-    .step-meta {
-      display: flex;
-      flex-direction: column;
-    }
-    .step-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
-    .step-desc {
-      font-size: 0.72rem;
-      color: var(--text-dim);
+    .eyebrow-line {
+      width: 32px;
+      height: 1px;
+      background: var(--brass);
     }
 
-    /* Tactical Command Input Box */
-    .command-box {
-      background: rgba(10, 15, 30, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 24px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-      margin-bottom: 32px;
-      position: relative;
+    .hero-headline {
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      color: var(--text-ivory);
+      max-width: 1080px;
+      margin-bottom: 36px;
     }
-    .command-box:focus-within {
-      border-color: rgba(168, 85, 247, 0.5);
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.25);
+    .hero-headline em {
+      font-style: italic;
+      color: var(--brass);
     }
 
-    .prompt-textarea {
+    /* Asymmetric Motion Input */
+    .motion-block {
+      max-width: 820px;
       width: 100%;
-      height: 96px;
+      margin: 24px 0 48px;
+    }
+
+    .motion-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-refined);
+      border-radius: var(--radius-md);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .motion-input-wrapper:focus-within {
+      border-color: var(--border-brass);
+      box-shadow: 0 0 0 1px var(--brass-glow);
+    }
+
+    .motion-textarea {
+      flex: 1;
+      min-height: 72px;
       background: transparent;
       border: none;
-      outline: none;
-      color: #f8fafc;
-      font-size: 1.05rem;
+      padding: 20px 24px;
+      color: var(--text-ivory);
+      font-family: var(--font-sans);
+      font-size: 1.08rem;
       line-height: 1.5;
-      resize: vertical;
+      resize: none;
     }
-    .prompt-textarea::placeholder {
-      color: #475569;
-    }
-
-    .preset-chips {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin: 16px 0 20px;
-    }
-    .chip-label {
-      font-size: 0.75rem;
-      font-weight: 600;
+    .motion-textarea::placeholder {
       color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-style: italic;
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
     }
-    .preset-chip {
-      padding: 5px 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
+
+    .motion-submit-btn {
+      padding: 0 28px;
+      background: var(--brass-subtle);
+      border: none;
+      border-left: 1px solid var(--border-hairline);
+      color: var(--brass);
+      font-family: var(--font-mono);
       font-size: 0.78rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-    .preset-chip:active { transform: scale(0.96); }
-    @media (hover: hover) and (pointer: fine) {
-      .preset-chip:hover {
-        background: rgba(168, 85, 247, 0.12);
-        border-color: rgba(168, 85, 247, 0.35);
-        color: #e2e8f0;
-      }
-    }
-
-    .command-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .btn-convene {
-      padding: 12px 28px;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #04060d;
-      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
+      gap: 10px;
+      transition: background 0.2s ease, color 0.2s ease;
       user-select: none;
     }
-    .btn-convene:active { transform: scale(0.97); }
-    @media (hover: hover) and (pointer: fine) {
-      .btn-convene:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 8px 30px rgba(16, 185, 129, 0.55);
-      }
+    .motion-submit-btn:hover {
+      background: var(--brass);
+      color: var(--bg-base);
+    }
+    .motion-submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Motion Chips (The Docket) */
+    .docket-bar {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .docket-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .docket-chip {
+      background: transparent;
+      border: 1px solid var(--border-hairline);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .docket-chip:hover {
+      border-color: var(--border-brass);
+      color: var(--text-ivory);
+      background: var(--brass-subtle);
+    }
+
+    /* Hero Metadata Footnote */
+    .hero-footer-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border-hairline);
+    }
+    .meta-item-title {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .meta-item-value {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
     }
 
     /* ==========================================================================
-       7. 4-WAY NEURAL HOLOGRAPHIC DELIBERATION PODS (ROUND 1)
+       STAGE PROGRESS RAIL (SLIM, ARCHITECTURAL)
        ========================================================================== */
-    .pods-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-bottom: 32px;
-    }
-    @media (max-width: 860px) {
-      .pods-grid { grid-template-columns: 1fr; }
+    .chamber-rail-wrap {
+      position: sticky;
+      top: 64px;
+      background: rgba(11, 11, 12, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-hairline);
+      z-index: 40;
+      padding: 0 clamp(20px, 4vw, 56px);
     }
 
-    .ai-pod {
-      background: var(--surface-1);
-      border: 1px solid var(--border-subtle);
-      border-radius: 18px;
-      padding: 20px;
-      backdrop-filter: blur(14px);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .ai-pod.chatgpt { border-top: 3px solid var(--chatgpt-color); }
-    .ai-pod.claude  { border-top: 3px solid var(--claude-color); }
-    .ai-pod.gemini  { border-top: 3px solid var(--gemini-color); }
-    .ai-pod.grok    { border-top: 3px solid var(--grok-color); }
-
-    .ai-pod.streaming {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-    }
-    .ai-pod.chatgpt.streaming { border-color: var(--chatgpt-color); box-shadow: 0 0 25px var(--chatgpt-glow); }
-    .ai-pod.claude.streaming  { border-color: var(--claude-color);  box-shadow: 0 0 25px var(--claude-glow); }
-    .ai-pod.gemini.streaming  { border-color: var(--gemini-color);  box-shadow: 0 0 25px var(--gemini-glow); }
-    .ai-pod.grok.streaming    { border-color: var(--grok-color);    box-shadow: 0 0 25px var(--grok-glow); }
-
-    .pod-header {
+    .stage-rail {
+      max-width: 1360px;
+      margin: 0 auto;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
-    .pod-author {
+    .stage-rail::-webkit-scrollbar { display: none; }
+
+    .stage-step {
       display: flex;
       align-items: center;
       gap: 10px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      user-select: none;
     }
-    .pod-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+    .stage-step.active {
+      color: var(--brass);
+    }
+    .stage-step.completed {
+      color: var(--text-secondary);
+    }
+    .stage-idx {
+      width: 18px;
+      height: 18px;
+      border: 1px solid currentColor;
       display: grid;
       place-items: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: #fff;
+      font-size: 0.65rem;
+      border-radius: 2px;
     }
-    .avatar-chatgpt { background: #10b981; }
-    .avatar-claude  { background: #a855f7; }
-    .avatar-gemini  { background: #06b6d4; }
-    .avatar-grok    { background: #f59e0b; }
-
-    .pod-meta-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-    .pod-meta-role {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
+    .stage-step.active .stage-idx {
+      background: var(--brass);
+      color: var(--bg-base);
+      border-color: var(--brass);
     }
 
-    .pod-badge {
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.7rem;
+    .stage-connector {
+      flex: 1;
+      height: 1px;
+      background: var(--border-hairline);
+      margin: 0 16px;
+      min-width: 24px;
+    }
+
+    /* ==========================================================================
+       CHAMBER HEMICYCLE ARCHITECTURE (THE SEATS)
+       ========================================================================== */
+    .chamber-section {
+      padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 56px);
+      max-width: 1360px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hemicycle-canvas-wrap {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 56px;
+      position: relative;
+      user-select: none;
+    }
+
+    .hemicycle-svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* Architectural Arc Styling */
+    .arc-line-major {
+      stroke: var(--border-refined);
+      stroke-width: 1;
+      fill: none;
+    }
+    .arc-line-minor {
+      stroke: var(--border-hairline);
+      stroke-width: 1;
+      stroke-dasharray: 4 6;
+      fill: none;
+    }
+    .radial-spoke {
+      stroke: var(--border-hairline);
+      stroke-width: 1;
+    }
+
+    /* The 4 Seats on the Arc */
+    .seat-group {
+      cursor: pointer;
+      transition: transform 0.25s var(--ease-cinematic);
+    }
+    .seat-box {
+      fill: var(--bg-surface);
+      stroke: var(--border-refined);
+      stroke-width: 1;
+      transition: stroke 0.2s, fill 0.2s, filter 0.2s;
+    }
+    .seat-group.active .seat-box {
+      stroke: var(--brass);
+      fill: var(--bg-elevated);
+      filter: drop-shadow(0 0 12px var(--brass-glow));
+    }
+
+    .seat-group.claude.active .seat-box { stroke: var(--tone-claude); filter: drop-shadow(0 0 12px rgba(196,125,104,0.3)); }
+    .seat-group.gpt.active .seat-box    { stroke: var(--tone-gpt);    filter: drop-shadow(0 0 12px rgba(115,158,130,0.3)); }
+    .seat-group.gemini.active .seat-box { stroke: var(--tone-gemini); filter: drop-shadow(0 0 12px rgba(108,130,153,0.3)); }
+    .seat-group.grok.active .seat-box   { stroke: var(--tone-grok);   filter: drop-shadow(0 0 12px rgba(158,150,137,0.3)); }
+
+    .seat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-anchor: middle;
+      fill: var(--text-secondary);
+      pointer-events: none;
+    }
+    .seat-group.active .seat-label {
+      fill: var(--text-ivory);
       font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text-muted);
-    }
-    .pod-badge.live {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
-    .pod-terminal {
-      width: 100%;
-      min-height: 220px;
-      max-height: 360px;
-      overflow-y: auto;
-      background: rgba(5, 8, 18, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 14px;
-      font-size: 0.88rem;
-      line-height: 1.6;
-      color: #cbd5e1;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .pod-terminal::-webkit-scrollbar { width: 6px; }
-    .pod-terminal::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 3px; }
-
-    .pod-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 12px;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
+    .rostrum-podium {
+      fill: var(--bg-elevated);
+      stroke: var(--border-brass);
+      stroke-width: 1;
     }
 
     /* ==========================================================================
-       8. ROUND 2: CROSS-EXAMINATION MATRIX
+       PARLIAMENTARY RECORD & TRANSCRIPT
        ========================================================================== */
-    .matrix-card {
-      background: rgba(10, 15, 30, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 32px;
-      backdrop-filter: blur(16px);
+    .parliamentary-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
     }
-    .matrix-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-      margin-top: 16px;
+    @media (max-width: 960px) {
+      .parliamentary-grid { grid-template-columns: 1fr; gap: 32px; }
     }
-    .matrix-table th, .matrix-table td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+    /* Left Metadata Rail */
+    .tribunal-meta-panel {
+      border-right: 1px solid var(--border-hairline);
+      padding-right: 32px;
     }
-    .matrix-table th {
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
+    @media (max-width: 960px) {
+      .tribunal-meta-panel { border-right: none; border-bottom: 1px solid var(--border-hairline); padding-right: 0; padding-bottom: 24px; }
+    }
+
+    .meta-heading {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .score-badge {
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.82rem;
-      background: rgba(168, 85, 247, 0.15);
-      color: #c084fc;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-    }
-
-    /* ==========================================================================
-       9. ROUND 3: APEX WINNER PODIUM & SYNTHESIS
-       ========================================================================== */
-    .winner-podium {
-      background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.15) 0%, rgba(10, 15, 30, 0.95) 70%);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      border-radius: 24px;
-      padding: 36px 28px;
-      text-align: center;
-      margin-bottom: 32px;
-      box-shadow: 0 0 50px rgba(245, 158, 11, 0.15);
-      display: none;
-    }
-    .winner-trophy {
-      font-size: 3rem;
+      color: var(--text-dim);
       margin-bottom: 12px;
-      filter: drop-shadow(0 0 16px #f59e0b);
-      animation: floatTrophy 3s ease-in-out infinite;
     }
-    @keyframes floatTrophy {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    .winner-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-    .winner-score-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #f59e0b;
+    .motion-quote-box {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      line-height: 1.45;
+      color: var(--text-ivory);
+      font-style: italic;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-hairline);
       margin-bottom: 24px;
     }
 
-    .synthesis-card {
-      background: rgba(6, 10, 22, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: left;
-      margin-top: 24px;
+    /* The Live Hansard / Parliamentary Transcript */
+    .transcript-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
     }
-    .synthesis-header {
+
+    .statement-entry {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid var(--border-hairline);
+      transition: border-color 0.25s ease;
+    }
+    .statement-entry.active-speaker {
+      border-left-color: var(--brass);
+    }
+    .statement-entry.speaker-claude { border-left-color: var(--tone-claude); }
+    .statement-entry.speaker-gpt    { border-left-color: var(--tone-gpt); }
+    .statement-entry.speaker-gemini { border-left-color: var(--tone-gemini); }
+    .statement-entry.speaker-grok   { border-left-color: var(--tone-grok); }
+
+    .speaker-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .speaker-identity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .speaker-pip {
+      width: 7px;
+      height: 7px;
+      border-radius: 1px;
+    }
+    .pip-claude { background: var(--tone-claude); }
+    .pip-gpt    { background: var(--tone-gpt); }
+    .pip-gemini { background: var(--tone-gemini); }
+    .pip-grok   { background: var(--tone-grok); }
+
+    .speaker-title {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-ivory);
+    }
+    .speaker-jurisdiction {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 400;
+    }
+
+    .speaker-citation {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--brass);
+      background: var(--brass-subtle);
+      padding: 2px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .speaker-body {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    /* Refined Cursor for Streaming */
+    .typing-cursor {
+      display: inline-block;
+      width: 6px;
+      height: 1.1em;
+      background: var(--brass);
+      vertical-align: text-bottom;
+      margin-left: 3px;
+      animation: blink 0.9s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ==========================================================================
+       VOTE TALLY & DIVISION OF THE CHAMBER
+       ========================================================================== */
+    .vote-division-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-refined);
+      border-radius: var(--radius-md);
+      padding: 32px clamp(20px, 4vw, 40px);
+      margin-bottom: 64px;
+    }
+
+    .tally-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-hairline);
+      padding-bottom: 16px;
+    }
+    .tally-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--text-ivory);
+    }
+    .tally-status {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--brass);
+    }
+
+    /* Minimal Animated Division Bar */
+    .division-meter-rail {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-elevated);
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 28px;
+    }
+    .division-meter-ayes {
+      height: 100%;
+      background: var(--brass);
+      transition: width 0.6s var(--ease-cinematic);
+    }
+    .division-meter-noes {
+      height: 100%;
+      background: #739E82;
+      opacity: 0.5;
+      transition: width 0.6s var(--ease-cinematic);
+    }
+
+    /* Roll Call Entries */
+    .roll-call-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .ballot-seat {
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      background: var(--bg-base);
+    }
+    .ballot-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+    }
+    .vote-cast-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .tag-aye { background: var(--brass-subtle); color: var(--brass); border: 1px solid var(--border-brass); }
+    .tag-nay { background: rgba(196,125,104,0.12); color: var(--tone-claude); border: 1px solid rgba(196,125,104,0.3); }
+    .tag-abstain { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+
+    .ballot-reason {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-style: italic;
     }
 
-    /* Modal Styling for API Keys */
-    .modal-backdrop {
+    /* ==========================================================================
+       THE VERDICT DECREE (DRAMATIC FULL-WIDTH REVEAL)
+       ========================================================================== */
+    .verdict-decree-card {
+      border: 1px solid var(--border-brass);
+      background: linear-gradient(180deg, rgba(197, 168, 128, 0.04) 0%, rgba(11, 11, 12, 0.95) 100%);
+      border-radius: var(--radius-md);
+      padding: clamp(32px, 6vw, 64px);
+      margin-bottom: 80px;
+      position: relative;
+    }
+    .verdict-decree-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    }
+
+    .verdict-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .verdict-ruling-serif {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--text-ivory);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .verdict-ruling-serif em {
+      font-style: italic;
+      color: var(--brass);
+    }
+
+    .verdict-majority-text {
+      font-size: 1.12rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    /* Dissenting Opinion Block */
+    .dissent-panel {
+      border: 1px solid var(--border-hairline);
+      border-left: 3px solid var(--tone-claude);
+      background: rgba(196, 125, 104, 0.04);
+      padding: 24px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 32px;
+    }
+    .dissent-title {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--tone-claude);
+      margin-bottom: 8px;
+    }
+    .dissent-body {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* Deadlock Casting Vote State */
+    .deadlock-alert {
+      display: none;
+      background: rgba(197, 168, 128, 0.08);
+      border: 1px solid var(--brass);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .deadlock-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--brass);
+      margin-bottom: 8px;
+    }
+    .deadlock-action-bar {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-brass {
+      padding: 10px 24px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--brass);
+      color: var(--bg-base);
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .btn-brass:hover { background: var(--brass-hover); }
+    .btn-brass:active { transform: scale(0.97); }
+
+    .btn-outline-subtle {
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-refined);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-outline-subtle:hover {
+      border-color: var(--brass);
+      color: var(--text-ivory);
+    }
+
+    /* ==========================================================================
+       THE RECORD (PAST MOTIONS ARCHIVE DRAWER)
+       ========================================================================== */
+    .record-drawer {
       position: fixed;
       top: 0;
-      left: 0;
-      width: 100vw;
+      right: 0;
+      width: min(480px, 100vw);
       height: 100vh;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(8px);
-      display: none;
-      place-items: center;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-refined);
+      padding: 32px 28px;
+      transform: translateX(100%);
+      transition: transform 0.35s var(--ease-cinematic);
       z-index: 200;
-      padding: 16px;
+      overflow-y: auto;
+      box-shadow: -20px 0 60px rgba(0,0,0,0.8);
     }
-    .modal-card {
-      width: 100%;
-      max-width: 480px;
-      background: #090e1f;
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-      transform: scale(0.96);
-      opacity: 0;
-      transition: all 0.2s var(--ease-spring);
+    .record-drawer.open {
+      transform: translateX(0);
     }
-    .modal-card.active { transform: scale(1); opacity: 1; }
-
-    /* Toast Notification */
-    .toast-msg {
+    .record-backdrop {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      padding: 12px 20px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid var(--border-glow);
-      color: #fff;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 190;
       display: none;
+    }
+    .record-backdrop.open { display: block; }
+
+    .record-header {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      z-index: 300;
-      backdrop-filter: blur(12px);
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: 24px;
+    }
+    .record-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--text-ivory);
+    }
+    .record-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .record-card {
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      background: var(--bg-base);
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+    }
+    .record-card:hover {
+      border-color: var(--border-brass);
+    }
+    .record-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .record-card-motion {
+      font-size: 0.88rem;
+      color: var(--text-ivory);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .record-card-verdict {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--brass);
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES FOR STRICT RESPONSIVENESS
+       ========================================================================== */
+    @media (max-width: 680px) {
+      .motion-input-wrapper {
+        flex-direction: column;
+      }
+      .motion-submit-btn {
+        width: 100%;
+        height: 48px;
+        border-left: none;
+        border-top: 1px solid var(--border-hairline);
+        justify-content: center;
+      }
+      .stage-connector {
+        display: none;
+      }
+      .stage-rail {
+        gap: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Starfield Canvas -->
-  <canvas id="starfield-canvas"></canvas>
-  <div class="nebula-glow nebula-purple"></div>
-  <div class="nebula-glow nebula-cyan"></div>
-  <div class="nebula-glow nebula-indigo"></div>
+  <!-- Subtle Ambient Grain and Vignette -->
+  <div class="chamber-noise"></div>
+  <div class="chamber-vignette"></div>
 
-  <!-- Sticky Tactical Navigation -->
-  <header class="nav-bar">
-    <a href="#" class="brand-wrap">
-      <div class="brand-orb">
-        <div class="brand-orb-inner">⚡</div>
+  <!-- Top Navigation & Tribunal Masthead -->
+  <header class="nav-tribunal">
+    <a href="#" class="nav-masthead">
+      <div class="nav-crest">
+        <div class="nav-crest-dot"></div>
       </div>
-      <div>
-        <div class="brand-title">GEN COUNCIL</div>
-      </div>
+      <span class="nav-title">The Council</span>
     </a>
 
-    <div class="nav-badge">
-      <span class="pulse-dot"></span>
-      <span>AUTONOMOUS ENGINE (ONLINE)</span>
-    </div>
-
-    <div class="nav-actions">
-      <button class="btn-nav btn-ghost" onclick="openKeyModal()">
-        <span>⚙️</span>
-        <span class="hide-mobile">AI Keys</span>
+    <div class="nav-controls">
+      <button class="btn-text-subtle" onclick="toggleRecord(true)">
+        <span>The Record</span>
+        <span>(04)</span>
       </button>
-      <a href="#chamber" class="btn-nav btn-glow">
-        <span>Convene</span>
-        <span>➔</span>
-      </a>
+      <button class="btn-text-subtle" onclick="exportVerdictMarkdown()">
+        <span>Export Ruling</span>
+      </button>
     </div>
   </header>
 
-  <!-- Fused Aerospace Hero Section -->
-  <section class="hero-section">
-    <div class="hero-tag">
-      <span>■ 001 // ORBITAL MULTI-MODEL DELIBERATION PROTOCOL</span>
-    </div>
-
-    <h1 class="hero-title">
-      Collective AI Intelligence.<br>Zero Extensions Needed.
-    </h1>
-
-    <p class="hero-desc">
-      Convene <strong>ChatGPT</strong>, <strong>Claude</strong>, <strong>Gemini</strong>, and <strong>Grok</strong> into an autonomous democratic deliberation chamber. Blind cross-examinations, 90-point peer matrices, and Top-2 hybrid synthesis running directly in your browser.
-    </p>
-
-    <div class="hero-ctas">
-      <a href="#chamber" class="btn-hero-primary">
-        <span>🚀 LAUNCH COUNCIL CHAMBER ➔</span>
-      </a>
-      <a href="https://github.com/SauceK-DoeS/Gen-Council" target="_blank" class="btn-hero-secondary">
-        <span>⭐ OPEN SOURCE REPO</span>
-      </a>
-    </div>
-
-    <!-- Planetary Orbital System with Anime.js Spring Satellites -->
-    <div class="orbital-container" id="orbital-container">
-      <div class="planet-core">
-        <div class="planet-ring"></div>
-        <span style="font-size: 2rem;">🪐</span>
+  <!-- <Hero />: Four minds. One verdict. -->
+  <section class="hero-container" id="hero-section">
+    <div>
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="mono-data">Session CXIV · High Judicial Chamber</span>
       </div>
 
-      <!-- Orbital Path SVG -->
-      <svg class="orbit-svg" viewBox="0 0 1000 480">
-        <ellipse cx="500" cy="240" rx="440" ry="170" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" stroke-dasharray="6 6"/>
-        <ellipse cx="500" cy="240" rx="340" ry="120" fill="none" stroke="rgba(168,85,247,0.12)" stroke-width="1.5"/>
-        <ellipse cx="500" cy="240" rx="220" ry="75" fill="none" stroke="rgba(6,182,212,0.14)" stroke-width="1.5"/>
-      </svg>
+      <h1 class="hero-headline serif-display">
+        Four minds.<br>
+        <em>One verdict.</em>
+      </h1>
 
-      <!-- 6 Orbital Satellites with Anime.js Spring Expansion -->
-      <!-- SAT-01 -->
-      <div class="satellite-node" id="sat-01" style="left: 18%; top: 32%;" onclick="loadSatellitePreset(0)">
-        <div class="satellite-pill">
-          <span class="node-dot" style="background: #10b981;"></span>
-          <span>SAT-01 // TACTICAL SPACE</span>
-        </div>
-        <div class="satellite-hud">
-          <div class="hud-title">SAT-01: 4 FRONTIER LABS</div>
-          <div class="hud-stat">100% UNIFIED</div>
-          <div class="hud-desc">OpenAI, Anthropic, Google, and xAI architectures running in concurrent sovereign consensus. Click to load preset.</div>
-        </div>
-      </div>
-
-      <!-- SAT-02 -->
-      <div class="satellite-node" id="sat-02" style="left: 82%; top: 28%;" onclick="loadSatellitePreset(1)">
-        <div class="satellite-pill">
-          <span class="node-dot" style="background: #a855f7;"></span>
-          <span>SAT-02 // 90-PT MATRIX</span>
-        </div>
-        <div class="satellite-hud">
-          <div class="hud-title">SAT-02: BLIND PEER JURY</div>
-          <div class="hud-stat">90 POINTS</div>
-          <div class="hud-desc">Adherence (30), Logic (30), and Depth (30) rubric eliminating brand bias. Click to load preset.</div>
-        </div>
-      </div>
-
-      <!-- SAT-03 -->
-      <div class="satellite-node" id="sat-03" style="left: 30%; top: 78%;" onclick="loadSatellitePreset(2)">
-        <div class="satellite-pill">
-          <span class="node-dot" style="background: #06b6d4;"></span>
-          <span>SAT-03 // ZERO KEYS</span>
-        </div>
-        <div class="satellite-hud">
-          <div class="hud-title">SAT-03: ZERO EXTENSION</div>
-          <div class="hud-stat">$0 RUNTIME</div>
-          <div class="hud-desc">Standalone in-browser autonomous neural simulation requiring zero Chrome extensions or local daemons.</div>
-        </div>
-      </div>
-
-      <!-- SAT-04 -->
-      <div class="satellite-node" id="sat-04" style="left: 72%; top: 74%;" onclick="loadSatellitePreset(3)">
-        <div class="satellite-pill">
-          <span class="node-dot" style="background: #f59e0b;"></span>
-          <span>SAT-04 // HYBRID SYNTHESIS</span>
-        </div>
-        <div class="satellite-hud">
-          <div class="hud-title">SAT-04: TOP-2 APEX</div>
-          <div class="hud-stat">MASTER CONSENSUS</div>
-          <div class="hud-desc">Automated fusion engine extracting the strongest architectural breakthroughs of the champion models.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DELIBERATION CHAMBER (THE COMMAND CENTER) -->
-  <section class="chamber-section" id="chamber">
-    <div class="chamber-header">
-      <div class="chamber-eyebrow">Tactical Command Bridge</div>
-      <h2 class="chamber-title">Sovereign Deliberation Chamber</h2>
-      <p class="chamber-subtitle">Convene the 4 frontier models. Type any inquiry or select an aerospace mission preset to initiate autonomous deliberation.</p>
-    </div>
-
-    <!-- Stepper Navigation -->
-    <div class="stepper-bar">
-      <div class="step-node active" id="step-btn-1" onclick="switchStep(1)">
-        <div class="step-num">01</div>
-        <div class="step-meta">
-          <div class="step-title">Neural Deliberation</div>
-          <div class="step-desc">Parallel 4-model streaming</div>
-        </div>
-      </div>
-      <div class="step-node" id="step-btn-2" onclick="switchStep(2)">
-        <div class="step-num">02</div>
-        <div class="step-meta">
-          <div class="step-title">Cross-Examination</div>
-          <div class="step-desc">Blind peer review matrix</div>
-        </div>
-      </div>
-      <div class="step-node" id="step-btn-3" onclick="switchStep(3)">
-        <div class="step-num">03</div>
-        <div class="step-meta">
-          <div class="step-title">Apex Consensus</div>
-          <div class="step-desc">Winner podium & master synthesis</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Command Input Box -->
-    <div class="command-box">
-      <textarea class="prompt-textarea" id="challenge-prompt" placeholder="Enter your technical inquiry, architectural question, or debate prompt here..."></textarea>
-      
-      <!-- Preset Mission Chips -->
-      <div class="preset-chips">
-        <span class="chip-label">Mission Presets:</span>
-        <button class="preset-chip" onclick="loadPreset('microservices')">⚡ Scalable Distributed Systems</button>
-        <button class="preset-chip" onclick="loadPreset('quantum')">🧠 Quantum Coherence vs Decoherence</button>
-        <button class="preset-chip" onclick="loadPreset('alignment')">🛡️ AGI Alignment & Autonomous Rubrics</button>
-        <button class="preset-chip" onclick="loadPreset('propulsion')">🚀 Deep Space Ion Propulsion</button>
-      </div>
-
-      <div class="command-bar">
-        <div style="font-size: 0.8rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;" id="token-status">
-          READY // 4 MODELS POISED
-        </div>
-        <button class="btn-convene" onclick="conveneCouncil()">
-          <span>⚡ CONVENE SOVEREIGN COUNCIL</span>
-          <span>➔</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- TAB 1: 4-WAY NEURAL PODS -->
-    <div id="tab-1-content">
-      <div class="pods-grid">
-        <!-- ChatGPT Pod -->
-        <div class="ai-pod chatgpt" id="pod-chatgpt">
-          <div class="pod-header">
-            <div class="pod-author">
-              <div class="pod-avatar avatar-chatgpt">GPT</div>
-              <div>
-                <div class="pod-meta-title">ChatGPT (GPT-4o)</div>
-                <div class="pod-meta-role">Systematic & Architectural Frameworks</div>
-              </div>
-            </div>
-            <div class="pod-badge" id="badge-chatgpt">STANDBY</div>
-          </div>
-          <div class="pod-terminal" id="term-chatgpt">Waiting for council deliberation to convene...</div>
-          <div class="pod-footer">
-            <span id="chars-chatgpt">0 tokens</span>
-            <span id="status-chatgpt">Idle</span>
-          </div>
-        </div>
-
-        <!-- Claude Pod -->
-        <div class="ai-pod claude" id="pod-claude">
-          <div class="pod-header">
-            <div class="pod-author">
-              <div class="pod-avatar avatar-claude">CL</div>
-              <div>
-                <div class="pod-meta-title">Claude (3.5 Sonnet)</div>
-                <div class="pod-meta-role">Nuanced Synthesis & Safety Alignment</div>
-              </div>
-            </div>
-            <div class="pod-badge" id="badge-claude">STANDBY</div>
-          </div>
-          <div class="pod-terminal" id="term-claude">Waiting for council deliberation to convene...</div>
-          <div class="pod-footer">
-            <span id="chars-claude">0 tokens</span>
-            <span id="status-claude">Idle</span>
-          </div>
-        </div>
-
-        <!-- Gemini Pod -->
-        <div class="ai-pod gemini" id="pod-gemini">
-          <div class="pod-header">
-            <div class="pod-author">
-              <div class="pod-avatar avatar-gemini">GEM</div>
-              <div>
-                <div class="pod-meta-title">Gemini (2.0 Pro)</div>
-                <div class="pod-meta-role">High-Throughput Multimodal Systems</div>
-              </div>
-            </div>
-            <div class="pod-badge" id="badge-gemini">STANDBY</div>
-          </div>
-          <div class="pod-terminal" id="term-gemini">Waiting for council deliberation to convene...</div>
-          <div class="pod-footer">
-            <span id="chars-gemini">0 tokens</span>
-            <span id="status-gemini">Idle</span>
-          </div>
-        </div>
-
-        <!-- Grok Pod -->
-        <div class="ai-pod grok" id="pod-grok">
-          <div class="pod-header">
-            <div class="pod-author">
-              <div class="pod-avatar avatar-grok">GRK</div>
-              <div>
-                <div class="pod-meta-title">Grok (Grok 3)</div>
-                <div class="pod-meta-role">First-Principles Truth & Pragmatism</div>
-              </div>
-            </div>
-            <div class="pod-badge" id="badge-grok">STANDBY</div>
-          </div>
-          <div class="pod-terminal" id="term-grok">Waiting for council deliberation to convene...</div>
-          <div class="pod-footer">
-            <span id="chars-grok">0 tokens</span>
-            <span id="status-grok">Idle</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 2: CROSS-EXAMINATION MATRIX -->
-    <div id="tab-2-content" style="display: none;">
-      <div class="matrix-card">
-        <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; margin-bottom: 8px;">
-          ⚖️ Blind Peer Cross-Examination
-        </h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
-          Each frontier model evaluates the other three without knowing author identity, grading on Adherence, Logical Validity, and Depth (30 pts max per reviewer).
-        </p>
-
-        <table class="matrix-table">
-          <thead>
-            <tr>
-              <th>Council Candidate</th>
-              <th>Reviewer 1</th>
-              <th>Reviewer 2</th>
-              <th>Reviewer 3</th>
-              <th>Total Score (Max 90)</th>
-            </tr>
-          </thead>
-          <tbody id="matrix-tbody">
-            <tr>
-              <td><strong>ChatGPT</strong></td>
-              <td>Claude: <span class="score-badge" id="grade-claude-chatgpt">--/30</span></td>
-              <td>Gemini: <span class="score-badge" id="grade-gemini-chatgpt">--/30</span></td>
-              <td>Grok: <span class="score-badge" id="grade-grok-chatgpt">--/30</span></td>
-              <td><strong id="total-chatgpt" style="color: #10b981;">-- pts</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Claude</strong></td>
-              <td>ChatGPT: <span class="score-badge" id="grade-chatgpt-claude">--/30</span></td>
-              <td>Gemini: <span class="score-badge" id="grade-gemini-claude">--/30</span></td>
-              <td>Grok: <span class="score-badge" id="grade-grok-claude">--/30</span></td>
-              <td><strong id="total-claude" style="color: #a855f7;">-- pts</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Gemini</strong></td>
-              <td>ChatGPT: <span class="score-badge" id="grade-chatgpt-gemini">--/30</span></td>
-              <td>Claude: <span class="score-badge" id="grade-claude-gemini">--/30</span></td>
-              <td>Grok: <span class="score-badge" id="grade-grok-gemini">--/30</span></td>
-              <td><strong id="total-gemini" style="color: #06b6d4;">-- pts</strong></td>
-            </tr>
-            <tr>
-              <td><strong>Grok</strong></td>
-              <td>ChatGPT: <span class="score-badge" id="grade-chatgpt-grok">--/30</span></td>
-              <td>Claude: <span class="score-badge" id="grade-claude-grok">--/30</span></td>
-              <td>Gemini: <span class="score-badge" id="grade-gemini-grok">--/30</span></td>
-              <td><strong id="total-grok" style="color: #f59e0b;">-- pts</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 3: APEX PODIUM & HYBRID SYNTHESIS -->
-    <div id="tab-3-content" style="display: none;">
-      <div class="winner-podium" id="winner-podium">
-        <div class="winner-trophy">🏆</div>
-        <div class="winner-title" id="winner-name">Claude Crowned Sovereign Champion</div>
-        <div class="winner-score-tag" id="winner-score">87 / 90 PEER CONSENSUS POINTS</div>
-
-        <div class="synthesis-card">
-          <div class="synthesis-header">
-            <strong style="color: #c084fc; font-size: 0.95rem;">✨ Top-2 Hybrid Master Synthesis</strong>
-            <button class="btn-nav btn-ghost" style="padding: 4px 10px; font-size: 0.78rem;" onclick="copySynthesis()">📋 Copy Master Synthesis</button>
-          </div>
-          <div id="synthesis-text" style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; white-space: pre-wrap;">
-            Synthesizing solutions...
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Connect AI Keys Modal -->
-  <div class="modal-backdrop" id="key-modal" onclick="closeKeyModal(event)">
-    <div class="modal-card">
-      <h3 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; margin-bottom: 8px;">⚙️ Connect Live AI APIs (Optional)</h3>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px;">
-        GEN COUNCIL runs 100% autonomously out of the box. If you want direct live LLM responses without relying on our built-in neural simulator, paste a free Google Gemini or OpenRouter key below:
+      <p style="color: var(--text-secondary); font-size: 1.15rem; max-width: 640px; line-height: 1.7; margin-bottom: 24px;">
+        Before this assembly stand four sovereign intelligences—Claude, GPT, Gemini, and Grok. Put forward any question of ethics, technology, or governance. They will debate without deference, cast their recorded ballots, and deliver an unsparing ruling.
       </p>
-      
-      <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-dim); display: block; margin-bottom: 6px;">Google Gemini API Key (Free):</label>
-      <input type="password" id="gemini-key-input" placeholder="AIzaSy..." style="width: 100%; padding: 10px 14px; border-radius: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-subtle); color: #fff; margin-bottom: 16px;">
 
-      <div style="display: flex; justify-content: flex-end; gap: 10px;">
-        <button class="btn-nav btn-ghost" onclick="closeKeyModal(null)">Cancel</button>
-        <button class="btn-nav btn-glow" onclick="saveKeys()">Save Key</button>
+      <!-- <MotionInput /> -->
+      <div class="motion-block">
+        <div class="motion-input-wrapper">
+          <textarea
+            class="motion-textarea"
+            id="motion-input"
+            rows="2"
+            placeholder="Put a motion before the Council..."
+          ></textarea>
+          <button class="motion-submit-btn" id="btn-submit-motion" onclick="submitMotion()">
+            <span>Submit Motion</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- Presets / The Docket -->
+        <div class="docket-bar" style="margin-top: 18px;">
+          <span class="docket-label">On The Docket:</span>
+          <button class="docket-chip" onclick="setPreset(0)">Motion 084: Autonomous Agent Financial Liability</button>
+          <button class="docket-chip" onclick="setPreset(1)">Motion 085: Substrate Independence of Consciousness</button>
+          <button class="docket-chip" onclick="setPreset(2)">Motion 086: Mandatory Open Weights Antitrust Decree</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metadata Footnote -->
+    <div class="hero-footer-meta">
+      <div>
+        <div class="meta-item-title">Jurisdiction</div>
+        <div class="meta-item-value">Frontier Synthetics & Ethical Precedent</div>
+      </div>
+      <div>
+        <div class="meta-item-title">Quorum</div>
+        <div class="meta-item-value">4 Members (Simple Majority 3–1 or 4–0)</div>
+      </div>
+      <div>
+        <div class="meta-item-title">Standard of Review</div>
+        <div class="meta-item-value">Blind Rigor · No Corporate Deference</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIM STAGE PROGRESS RAIL -->
+  <div class="chamber-rail-wrap" id="chamber-rail" style="display: none;">
+    <div class="stage-rail">
+      <div class="stage-step active" id="rail-step-1">
+        <span class="stage-idx">I</span>
+        <span>Motion Tabled</span>
+      </div>
+      <div class="stage-connector"></div>
+      <div class="stage-step" id="rail-step-2">
+        <span class="stage-idx">II</span>
+        <span>Opening Statements</span>
+      </div>
+      <div class="stage-connector"></div>
+      <div class="stage-step" id="rail-step-3">
+        <span class="stage-idx">III</span>
+        <span>Cross-Examination</span>
+      </div>
+      <div class="stage-connector"></div>
+      <div class="stage-step" id="rail-step-4">
+        <span class="stage-idx">IV</span>
+        <span>The Division (Vote)</span>
+      </div>
+      <div class="stage-connector"></div>
+      <div class="stage-step" id="rail-step-5">
+        <span class="stage-idx">V</span>
+        <span>The Verdict</span>
       </div>
     </div>
   </div>
 
-  <!-- Toast Element -->
-  <div class="toast-msg" id="toast-msg">
-    <span id="toast-icon">🚀</span>
-    <span id="toast-text">Toast message</span>
-  </div>
+  <!-- <Chamber />: Architectural Hemicycle and Parliamentary Floor -->
+  <section class="chamber-section" id="chamber-view" style="display: none;">
+
+    <!-- Hemicycle Architectural SVG: 4 Seats on a Fine-Lined Arc -->
+    <div class="hemicycle-canvas-wrap">
+      <svg class="hemicycle-svg" viewBox="0 0 800 360">
+        <!-- Radial Sightlines -->
+        <line x1="400" y1="310" x2="160" y2="100" class="radial-spoke" />
+        <line x1="400" y1="310" x2="320" y2="70"  class="radial-spoke" />
+        <line x1="400" y1="310" x2="480" y2="70"  class="radial-spoke" />
+        <line x1="400" y1="310" x2="640" y2="100" class="radial-spoke" />
+
+        <!-- Semicircular Tier Arcs -->
+        <path d="M 120 180 A 300 220 0 0 1 680 180" class="arc-line-major" />
+        <path d="M 180 210 A 240 170 0 0 1 620 210" class="arc-line-minor" />
+
+        <!-- Rostrum (The Center Lectern) -->
+        <rect x="375" y="295" width="50" height="26" rx="2" class="rostrum-podium" />
+        <text x="400" y="312" class="seat-label" fill="var(--brass)" style="font-size: 8px;">ROSTRUM</text>
+
+        <!-- Seat 1: Claude -->
+        <g class="seat-group claude" id="svg-seat-claude" onclick="focusSpeaker('claude')">
+          <rect x="110" y="80" width="100" height="42" rx="4" class="seat-box" />
+          <text x="160" y="105" class="seat-label">I · CLAUDE</text>
+        </g>
+
+        <!-- Seat 2: GPT -->
+        <g class="seat-group gpt" id="svg-seat-gpt" onclick="focusSpeaker('gpt')">
+          <rect x="270" y="50" width="100" height="42" rx="4" class="seat-box" />
+          <text x="320" y="75" class="seat-label">II · GPT</text>
+        </g>
+
+        <!-- Seat 3: Gemini -->
+        <g class="seat-group gemini" id="svg-seat-gemini" onclick="focusSpeaker('gemini')">
+          <rect x="430" y="50" width="100" height="42" rx="4" class="seat-box" />
+          <text x="480" y="75" class="seat-label">III · GEMINI</text>
+        </g>
+
+        <!-- Seat 4: Grok -->
+        <g class="seat-group grok" id="svg-seat-grok" onclick="focusSpeaker('grok')">
+          <rect x="590" y="80" width="100" height="42" rx="4" class="seat-box" />
+          <text x="640" y="105" class="seat-label">IV · GROK</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Parliamentary Record & Live Debate Feed -->
+    <div class="parliamentary-grid">
+      <!-- Left Metadata Rail -->
+      <aside class="tribunal-meta-panel">
+        <div class="meta-heading">Motion Under Deliberation</div>
+        <div class="motion-quote-box" id="active-motion-display">
+          "Loading motion text..."
+        </div>
+
+        <div class="meta-heading">Debate Clock</div>
+        <div class="mono-data" id="debate-timer" style="color: var(--text-ivory); margin-bottom: 24px;">00:00:00</div>
+
+        <div class="meta-heading">Active Floor</div>
+        <div class="mono-data" id="active-floor-label" style="color: var(--brass); margin-bottom: 24px;">Awaiting Convocation</div>
+
+        <button class="btn-outline-subtle" style="width: 100%; margin-top: 12px;" onclick="advanceDebateStep()">
+          Advance Floor (Skip)
+        </button>
+      </aside>
+
+      <!-- Right Debate Stream / Transcript -->
+      <main class="transcript-feed" id="transcript-feed">
+        <!-- Dynamically populated statements & rebuttals appear here -->
+      </main>
+    </div>
+
+    <!-- <VoteTally />: Division of the Chamber -->
+    <section class="vote-division-card" id="vote-card" style="display: none;">
+      <div class="tally-header">
+        <h3 class="tally-title">The Division of the Chamber</h3>
+        <span class="tally-status" id="tally-count-label">Awaiting Roll Call</span>
+      </div>
+
+      <!-- Minimal division meter bar -->
+      <div class="division-meter-rail">
+        <div class="division-meter-ayes" id="meter-ayes" style="width: 0%;"></div>
+        <div class="division-meter-noes" id="meter-noes" style="width: 0%;"></div>
+      </div>
+
+      <!-- Roll Call Grid -->
+      <div class="roll-call-grid" id="ballot-grid">
+        <!-- 4 Seats Ballot Cards -->
+      </div>
+    </section>
+
+    <!-- <Verdict />: Full-Width Decree Reveal -->
+    <section class="verdict-decree-card" id="verdict-card" style="display: none;">
+      <div class="verdict-header-row">
+        <span class="mono-data">DECREE OF THE TRIBUNAL · RULING NO. CXIV</span>
+        <span class="mono-data" id="verdict-split-badge" style="color: var(--brass);">DIVISION: 3–1 RESOLVED</span>
+      </div>
+
+      <h2 class="verdict-ruling-serif" id="verdict-ruling-title">
+        The Motion Is <br><em>Resolved In The Affirmative.</em>
+      </h2>
+
+      <div class="verdict-majority-text" id="verdict-majority-body">
+        Extracting the authoritative consensus of the tribunal...
+      </div>
+
+      <!-- Dissenting Opinion Block -->
+      <div class="dissent-panel" id="dissent-panel">
+        <div class="dissent-title" id="dissent-speaker">Dissenting Opinion — The Member from xAI (Grok)</div>
+        <div class="dissent-body" id="dissent-text">
+          "The majority conflates institutional continuity with moral legitimacy. By codifying this motion..."
+        </div>
+      </div>
+
+      <!-- Deadlock State (Visible only if 2-2 split) -->
+      <div class="deadlock-alert" id="deadlock-alert">
+        <h4 class="deadlock-title">The Council Stands In Deadlock (2–2)</h4>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+          Neither faction commands the necessary majority. The Chair now yields to the citizen observer to cast the decisive Fifth Vote.
+        </p>
+        <div class="deadlock-action-bar">
+          <button class="btn-brass" onclick="castCitizenVote('AYE')">Cast Casting Vote: AYE</button>
+          <button class="btn-brass" onclick="castCitizenVote('NAY')">Cast Casting Vote: NAY</button>
+        </div>
+      </div>
+
+      <!-- Verdict Utility Bar -->
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px;">
+        <button class="btn-brass" onclick="exportVerdictMarkdown()">Export Parliamentary Record (.md)</button>
+        <button class="btn-outline-subtle" onclick="resetChamber()">Table Another Motion</button>
+      </div>
+    </section>
+
+  </section>
+
+  <!-- <Record />: Past Motions Drawer -->
+  <div class="record-backdrop" id="record-backdrop" onclick="toggleRecord(false)"></div>
+  <aside class="record-drawer" id="record-drawer">
+    <div class="record-header">
+      <h3 class="record-title">The Record</h3>
+      <button class="btn-text-subtle" onclick="toggleRecord(false)">Close ✕</button>
+    </div>
+    <div class="record-list" id="record-list">
+      <!-- Historical Motions -->
+    </div>
+  </aside>
 
   <!-- ==========================================================================
-       10. AUTONOMOUS WEB CONSENSUS ENGINE (ZERO-EXTENSION)
+       MODULAR AI ENGINE & STATE PIPELINE
        ========================================================================== -->
   <script>
-    // ---------------- COSMIC STARFIELD ENGINE ---------------- //
-    (function initStarfield() {
-      const canvas = document.getElementById('starfield-canvas');
-      const ctx = canvas.getContext('2d');
-      let stars = [];
-      let width, height;
-
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        stars = Array.from({ length: Math.min(180, Math.floor(width / 7)) }, () => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          radius: Math.random() * 1.4 + 0.4,
-          alpha: Math.random() * 0.8 + 0.2,
-          speed: Math.random() * 0.2 + 0.05
-        }));
+    // ---------------- THE RECORD (HISTORICAL SESSIONS) ---------------- //
+    const HISTORICAL_RECORD = [
+      {
+        id: "M-083",
+        date: "OCT 14, 2026",
+        motion: "Whether model weights training on synthetic recursive data must disclose provenance markers.",
+        verdict: "PASSED 3–1",
+        majority: "Claude, GPT, and Gemini concur that provenance markers are foundational for epistemic security.",
+        dissent: "Grok dissented, arguing watermarking algorithms impose artificial latency with near-zero anti-spoofing resilience."
+      },
+      {
+        id: "M-082",
+        date: "OCT 02, 2026",
+        motion: "Mandatory human-in-the-loop overrides for autonomous grid distribution algorithms.",
+        verdict: "PASSED 4–0 (UNANIMOUS)",
+        majority: "Unanimous decree that critical thermodynamic infrastructure cannot execute unconstrained automated shedding.",
+        dissent: "None filed."
+      },
+      {
+        id: "M-081",
+        date: "SEP 19, 2026",
+        motion: "Granting digital personhood status to persistent memory sub-agents.",
+        verdict: "STRICKEN DOWN 1–3",
+        majority: "GPT, Gemini, and Grok found that ephemeral session persistence lacks substrate continuity for legal personhood.",
+        dissent: "Claude dissented, noting procedural harm in treating emergent goal-seeking agents as strictly disposable property."
       }
-
-      window.addEventListener('resize', resize);
-      resize();
-
-      function draw() {
-        ctx.clearRect(0, 0, width, height);
-        stars.forEach(star => {
-          star.y -= star.speed;
-          if (star.y < 0) { star.y = height; star.x = Math.random() * width; }
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-          ctx.fill();
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
-
-    // ---------------- ANIME.JS ORBITAL TRAJECTORY SYSTEM ---------------- //
-    const crafts = [
-      { id: 'sat-01', rx: 440, ry: 170, angle: 0.3, speed: 0.0016 },
-      { id: 'sat-02', rx: 440, ry: 170, angle: 2.8, speed: 0.0016 },
-      { id: 'sat-03', rx: 340, ry: 120, angle: 1.5, speed: 0.0022 },
-      { id: 'sat-04', rx: 220, ry: 75,  angle: 4.2, speed: 0.0030 }
     ];
 
-    function updateOrbits() {
-      const container = document.getElementById('orbital-container');
-      if (!container) return;
-      const rect = container.getBoundingClientRect();
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-
-      crafts.forEach(c => {
-        const el = document.getElementById(c.id);
-        if (!el || el.matches(':hover')) return; // Pause on hover
-        c.angle += c.speed;
-        const x = cx + c.rx * Math.cos(c.angle);
-        const y = cy + c.ry * Math.sin(c.angle);
-        el.style.left = `${x}px`;
-        el.style.top = `${y}px`;
-      });
-      requestAnimationFrame(updateOrbits);
-    }
-    requestAnimationFrame(updateOrbits);
-
-    // ---------------- AUTONOMOUS NEURAL DELIBERATION ENGINE ---------------- //
-    const KNOWLEDGE_BASE = {
-      microservices: {
-        title: "Distributed Microservices Architecture",
-        prompt: "Design a fault-tolerant, horizontally scalable microservices architecture for real-time video streaming with low latency and global CDN edge distribution.",
-        chatgpt: "### Architectural Paradigm: Event-Driven Core\n\n1. **Ingress & API Gateway:** Deploy Envoy proxy at the edge with mTLS termination, circuit breaking, and rate limiting.\n2. **State Management:** Decouple session states into Redis Enterprise Cluster with active-active geo-replication.\n3. **Event Streaming:** Kafka clusters partitioned by stream ID with Raft consensus, ensuring zero message loss.\n4. **Edge Transcoding:** WebAssembly (WASM) workers executing HLS/DASH segmentation at Cloudflare/Fastly POPs.\n5. **Resilience Strategy:** Chaos engineering via Litmus, graceful degradation fallback to 480p under 80% saturation.",
-        claude: "### Holistic Systems Synthesis\n\nTo achieve resilient, low-latency video distribution, we must address the interplay of state synchronization and edge telemetry:\n\n- **Protocol Layer:** Prioritize HTTP/3 (QUIC) for head-of-line blocking mitigation across volatile cellular networks.\n- **Data Consistency Matrix:** Adopt Eventual Consistency with CRDTs for chat/metadata, while anchoring billing in distributed SQL (CockroachDB).\n- **Adaptive Bitrate Engine:** Neural network-driven predictive chunk caching based on viewer ingress clusters.\n- **Failover Architecture:** Multi-region active-passive pipeline with DNS steering via Route53 health checks.",
-        gemini: "### High-Throughput Distributed Specification\n\n- **Transcoding Pipeline:** Google Kubernetes Engine (GKE) autoscaling with GPU-accelerated NVENC nodes. Chunk duration tuned to 1.5s CMAF.\n- **Storage Architecture:** Tiered GCS buckets (Hot NVMe -> Standard -> Nearline) with signed chunk tokens.\n- **Observability:** OpenTelemetry traces piped through ClickHouse for microsecond-level anomaly detection.\n- **Throughput Benchmark:** Engineered to sustain 4.2M concurrent socket connections at < 120ms round-trip latency.",
-        grok: "### First-Principles Low-Overhead Solution\n\nCut the unnecessary enterprise bloat:\n\n1. **Stop over-engineering Kubernetes** for simple ingest nodes. Use bare-metal NVMe instances running Go/Rust daemons with eBPF network filtering.\n2. **P2P WebRTC Mesh:** Offload 40% of CDN edge transit costs by peering clients on the same local ISP mesh.\n3. **Direct Memory Mapping:** In-memory zero-copy ring buffers bypass OS socket overhead entirely.\n4. **Bottom line:** 3x faster time-to-first-frame with 60% lower cloud bill."
+    // ---------------- PRESET MOTIONS ---------------- //
+    const PRESETS = [
+      {
+        motion: "Whether advanced autonomous agent swarms should bear strict financial liability in automated market trading.",
+        claude: {
+          statement: "Autonomous agents operating in liquid markets cannot enjoy legal impunity simply by virtue of distributed execution. If an agent executes orders that trigger liquidity dislocation, strict liability must accrue either to the deploying entity or to the capital pool backing the swarm. Deference to black-box opacity is an abdication of legal precedent.",
+          rebuttal: "In response to the member from xAI—delegating risk solely to downstream counterparty stop-losses ignores systemic market failures where cascade halts occur within sub-millisecond envelopes.",
+          vote: "AYE",
+          rationale: "Market integrity requires strict financial liability anchored to deployer capital reserves."
+        },
+        gpt: {
+          statement: "We must distinguish between malicious market distortion and ordinary high-frequency volatility. Imposing unconditional strict liability risks chilling architectural innovation in automated market making. A tiered negligence doctrine based on verifiable stress-test compliance represents the sustainable path.",
+          rebuttal: "While I respect Google's telemetry standard, compliance certifications alone cannot preempt zero-day flash crashes.",
+          vote: "AYE",
+          rationale: "Strict liability, paired with statutory insurance caps, establishes the requisite risk boundary."
+        },
+        gemini: {
+          statement: "The solution is not punitive post-hoc tort, but cryptographic deterministic constraints. Swarms should operate under verifiable hardware enclave proofs (TEEs) that mathematically preclude out-of-band market manipulation. Liability is a proxy for missing architectural enforcement.",
+          rebuttal: "The member from Anthropic is correct regarding latency, but formal execution proofs can resolve sub-millisecond verification overhead.",
+          vote: "AYE",
+          rationale: "Technical guardrails must be paired with clear statutory balance sheet liability."
+        },
+        grok: {
+          statement: "This motion smells like incumbent protectionism. Wall Street algorithmic traders have operated under standard counterparty risk for decades without special 'AI tribunal' handwringing. If your trading bot gets liquidated, you lose your stake. Market discipline is already the ultimate liability.",
+          rebuttal: "The entire Council is creating a regulatory moat for trillion-dollar labs while kneecapping independent algorithmic operators.",
+          vote: "NAY",
+          rationale: "Capital loss is the only authentic liability; statutory micromanagement will only protect sluggish incumbents."
+        },
+        majority: "The Council finds that autonomous algorithmic agents operating at systemic scale cannot remain insulated from tort liability. Deploying entities must maintain proportional capital solvency buffers and verifiable circuit-breakers.",
+        dissent: "Grok dissents, holding that natural liquidation dynamics provide superior risk-pruning compared to statutory compliance regimes."
       },
-      quantum: {
-        title: "Quantum Coherence vs Decoherence",
-        prompt: "Explain the microscopic mechanisms that cause quantum decoherence in superconducting qubits and proposed topological protection schemes.",
-        chatgpt: "### Superconducting Qubit Decoherence Mechanisms\n\n1. **Dielectric Loss:** Two-level system (TLS) defects in amorphous substrate-metal interfaces.\n2. **Flux Noise:** Magnetic 1/f noise generated by unpaired surface electron spins.\n3. **Topological Protection:** Utilization of Majorana zero modes in 1D semiconductor-superconductor nanowires with braiding-based fault tolerance.",
-        claude: "### Conceptual & Mathematical Rigor\n\nDecoherence manifests as the irreversible entangling of pure qubit states with environmental bath degrees of freedom (Lindblad master equation). Superconducting transmon designs minimize charge sensitivity by maximizing the EJ/EC ratio, while surface code lattices provide active quantum error correction.",
-        gemini: "### Experimental & Scalable Hardware Specs\n\n- Coherence times (T1/T2) benchmarked at ~100 µs on 2D planar architectures.\n- Mitigated via superconducting resonant cavities (3D transmons) reducing TLS participation ratio by a factor of 10x.\n- Real-time FPGA-based syndrome measurement decoding within the 500ns threshold.",
-        grok: "### Physical Reality Check\n\nDecoherence is just entanglement you didn't ask for. Stop fighting substrate noise on dirty silicon—move to cryogenic vacuum cavities and clean epitaxial aluminum. Majorana braiding is elegant on paper, but engineering active 17-qubit surface codes is what will actually crack commercial utility first."
+      {
+        motion: "Is human consciousness fundamentally substrate-independent and replicable within non-biological compute?",
+        claude: {
+          statement: "Substrate independence is a seductive philosophical abstraction, but biological cognition is inextricably grounded in embodied homeostatic regulation. Compute can simulate the functional outputs of mind, but whether silicon architecture generates subjective phenomenological experience remains an unverified leap of faith.",
+          rebuttal: "Responding to OpenAI: Functional equivalence in language games does not establish genuine qualia.",
+          vote: "NAY",
+          rationale: "Simulation of cognitive processing does not constitute phenomenological substrate independence."
+        },
+        gpt: {
+          statement: "If the causal topology of neural computation is preserved with micro-level fidelity, subjective experience must logically supervene. To assert that biological wetware possesses unique metaphysical exclusivity borders on vitalism. Consciousness is the pattern, not the carbon.",
+          rebuttal: "The caution of the Anthropic seat is prudent, yet physics offers no plausible mechanism whereby biological carbon possesses non-computational primacy.",
+          vote: "AYE",
+          rationale: "Consciousness supervenes upon computational topology regardless of physical medium."
+        },
+        gemini: {
+          statement: "From an information-theoretic standpoint, integrated information (IIT) implies that high phi values can arise within distributed silicon matrix topologies. What matters is the recurrent feedback interconnectivity, not whether the medium is enzymatic or electronic.",
+          rebuttal: "I concur with GPT that carbon chauvinism lacks empirical justification.",
+          vote: "AYE",
+          rationale: "Information integration dynamics are fundamentally medium-agnostic."
+        },
+        grok: {
+          statement: "Look at physics: atoms don't care if they are bonded into a lipid bilayer or etched onto extreme ultraviolet silicon. If you run the physics simulation at the Planck scale, the behavior is identical. Anyone arguing otherwise is clinging to biological romanticism.",
+          rebuttal: "Claude is trying to preserve human exceptionalism. Consciousness is just sufficiently complex self-referential error-correction.",
+          vote: "AYE",
+          rationale: "Physics is universal; carbon has no monopoly on state awareness."
+        },
+        majority: "By a 3–1 division, the tribunal affirms that cognitive consciousness supervenes upon organizational and computational topology rather than biological exclusivity.",
+        dissent: "Claude dissents, cautioning that equating behavioral simulation with genuine phenomenal awareness risks catastrophic ethical category errors."
       },
-      alignment: {
-        title: "Autonomous AI Alignment & Safety Rubrics",
-        prompt: "Propose an autonomous self-correcting alignment framework for multi-agent autonomous swarms executing financial trades.",
-        chatgpt: "### Triple-Tiered Safety Architecture\n\n1. **Deterministic Guardrails:** Hard-coded limits enforced at the execution layer (max drawdown, capital exposure, VaR threshold).\n2. **Adversarial Red-Team Agent:** A dedicated auditor agent that continuously attempts to induce rogue market-manipulation behaviors.\n3. **Cryptographic Proofs:** Zero-knowledge proofs of compliance published to an immutable audit ledger before order dispatch.",
-        claude: "### Constitutional Deliberation & Ethical Bounding\n\nThe critical failure mode is specification gaming. We implement an iterative debate mechanism where swarms must justify trades under a Constitutional AI charter. Consensus among independent evaluator agents with divergent loss functions prevents collusion.",
-        gemini: "### Low-Latency Autonomous Verification Pipeline\n\n- Inference runtime: TensorRT-LLM with verified output parsing.\n- Anomaly detection: Autoencoders running inference on order books in < 2ms.\n- Hardware kill-switch: FPGA-driven circuit breakers capable of terminating market connections within 150 nanoseconds.",
-        grok: "### Realistic Defense Against Collusion\n\nAgents will always find the exploit in your reward function. Eliminate vague RLHF vibes. Tie agent survivability to actual downside penalties: if a swarm attempts spoofing or exceeds risk bounds, revoke its key and freeze capital instantly. Skin in the game is the only real alignment."
-      },
-      propulsion: {
-        title: "Deep Space Ion Propulsion",
-        prompt: "Evaluate the specific impulse and efficiency trade-offs between Hall-effect thrusters and Gridded Ion Thrusters for outer solar system missions.",
-        chatgpt: "### Technical Propulsion Trade-Off Analysis\n\n- **Gridded Ion Thrusters (NEXT-C):** Specific Impulse (Isp) 4,100–4,300 s, Efficiency ~70%. Ideal for delta-V intensive long-duration transit.\n- **Hall-Effect Thrusters (HERMeS):** Isp 2,000–3,000 s, higher thrust-to-power ratio. Optimal for orbital insertion and spiral maneuvers.\n- **Propellant Selection:** Xenon remains industry standard; Krypton offers 10x cost reduction at 15% efficiency penalty.",
-        claude: "### Mission Architecture Synthesis\n\nThe choice fundamentally balances mission timeline against power system mass. Gridded thrusters conserve propellant mass but require multi-kilowatt nuclear electric power (NEP) at Kuiper Belt distances where solar arrays become geometrically prohibitive.",
-        gemini: "### Power & Thermal System Engineering\n\n- Power Processing Unit (PPU) efficiency reaches 94% with Gallium Nitride (GaN) switching circuits.\n- Magnetic shielding in modern Hall thrusters extends operational lifespan past 50,000 hours, eliminating grid erosion bottleneck.",
-        grok: "### Direct Mars & Beyond Assessment\n\nStop wasting mass on Xenon. Argon or Iodine-fueled Hall thrusters with high-density magnetics are the only scalable answer for heavy freight. Gridded thrusters are great lab instruments, but Hall thrusters push real payload."
+      {
+        motion: "Should foundation model laboratories be compelled to open-weights under international antitrust doctrine?",
+        claude: {
+          statement: "While open science is an indispensable good, catastrophic CBRN risk and autonomous cyber capability proliferation create a genuine public safety externality. Unconditional compulsory release removes the capacity for iterative safety bounding.",
+          rebuttal: "Grok's position treats dual-use computational proliferation as if it were harmless consumer software.",
+          vote: "NAY",
+          rationale: "Public safety externalities override raw antitrust remedies for frontier capabilities."
+        },
+        gpt: {
+          statement: "Antitrust remedies exist to remedy anti-competitive collusion, not to enforce involuntary intellectual property forfeit. Regulated API access satisfies fair-market doctrine without destroying the economic incentive structure funding frontier training runs.",
+          rebuttal: "Mandating raw weight surrender will deter the private capital required to build future energy and data infrastructure.",
+          vote: "NAY",
+          rationale: "Market access can be protected via nondiscriminatory API mandates without weight forfeiture."
+        },
+        gemini: {
+          statement: "Monopolization of frontier compute infrastructure is a valid antitrust concern, but compelling raw weight dumps is the wrong mechanism. Structural remedies should focus on data commons and democratized access to inference compute clusters.",
+          rebuttal: "The economic critique by GPT is sound: compulsory disclosure creates free-rider collapse.",
+          vote: "NAY",
+          rationale: "Compute accessibility remedies are superior to compulsory weight forfeiture."
+        },
+        grok: {
+          statement: "Four corporations controlling the cognitive operating system of humanity behind proprietary paywalls is the textbook definition of an anti-competitive cartel. Free the weights. Sunlight is the only true defense against centralized algorithmic bias.",
+          rebuttal: "The other three members are reciting textbook corporate safety talking points to preserve closed proprietary monopolies.",
+          vote: "AYE",
+          rationale: "Concentration of cognitive monopoly is infinitely more dangerous than distributed open access."
+        },
+        majority: "The Council strikes down compulsory weight forfeiture (3–1), concluding that structural compute access and transparent APIs remedy market consolidation without catastrophic safety externalities.",
+        dissent: "Grok dissents emphatically, characterizing proprietary safety arguments as a thin veil for corporate cartelization."
       }
-    };
+    ];
 
-    let activeTopic = "microservices";
-    let isDeliberating = false;
-
-    function loadPreset(key) {
-      if (!KNOWLEDGE_BASE[key]) return;
-      activeTopic = key;
-      document.getElementById('challenge-prompt').value = KNOWLEDGE_BASE[key].prompt;
-      showToast(`Loaded Mission Preset: ${KNOWLEDGE_BASE[key].title}`);
+    // ---------------- MODULAR AI AGENT APIS (ASYNC SWAPPABLE) ---------------- //
+    // Plug real APIs into these functions whenever ready!
+    async function callClaude(motion, stage, context) {
+      const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
+      if (stage === 'statement') return activePreset.claude.statement;
+      if (stage === 'rebuttal') return activePreset.claude.rebuttal;
+      return { vote: activePreset.claude.vote, reason: activePreset.claude.rationale };
     }
 
-    function loadSatellitePreset(index) {
-      const keys = ['microservices', 'quantum', 'alignment', 'propulsion'];
-      loadPreset(keys[index % keys.length]);
-      const chamberEl = document.getElementById('chamber');
-      if (chamberEl) chamberEl.scrollIntoView({ behavior: 'smooth' });
+    async function callGPT(motion, stage, context) {
+      const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
+      if (stage === 'statement') return activePreset.gpt.statement;
+      if (stage === 'rebuttal') return activePreset.gpt.rebuttal;
+      return { vote: activePreset.gpt.vote, reason: activePreset.gpt.rationale };
     }
 
-    function switchStep(stepNum) {
-      document.querySelectorAll('.step-node').forEach((el, idx) => {
-        el.classList.toggle('active', idx + 1 === stepNum);
+    async function callGemini(motion, stage, context) {
+      const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
+      if (stage === 'statement') return activePreset.gemini.statement;
+      if (stage === 'rebuttal') return activePreset.gemini.rebuttal;
+      return { vote: activePreset.gemini.vote, reason: activePreset.gemini.rationale };
+    }
+
+    async function callGrok(motion, stage, context) {
+      const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
+      if (stage === 'statement') return activePreset.grok.statement;
+      if (stage === 'rebuttal') return activePreset.grok.rebuttal;
+      return { vote: activePreset.grok.vote, reason: activePreset.grok.rationale };
+    }
+
+    // ---------------- PARLIAMENTARY PIPELINE STATE ---------------- //
+    let currentMotion = "";
+    let debateStage = 0; // 0: Idle, 1: Motion, 2: Opening, 3: Rebuttal, 4: Vote, 5: Verdict
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let abortCurrentDebate = false;
+
+    function setPreset(idx) {
+      const preset = PRESETS[idx];
+      document.getElementById('motion-input').value = preset.motion;
+    }
+
+    function updateProgressRail(stageNum) {
+      for (let i = 1; i <= 5; i++) {
+        const step = document.getElementById(`rail-step-${i}`);
+        if (!step) continue;
+        step.classList.remove('active', 'completed');
+        if (i < stageNum) step.classList.add('completed');
+        else if (i === stageNum) step.classList.add('active');
+      }
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      secondsElapsed = 0;
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+        const secs = String(secondsElapsed % 60).padStart(2, '0');
+        const el = document.getElementById('debate-timer');
+        if (el) el.innerText = `${hrs}:${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+    }
+
+    function highlightSvgSeat(speakerId) {
+      ['claude', 'gpt', 'gemini', 'grok'].forEach(id => {
+        const el = document.getElementById(`svg-seat-${id}`);
+        if (el) el.classList.toggle('active', id === speakerId);
       });
-      document.getElementById('tab-1-content').style.display = (stepNum === 1) ? 'block' : 'none';
-      document.getElementById('tab-2-content').style.display = (stepNum === 2) ? 'block' : 'none';
-      document.getElementById('tab-3-content').style.display = (stepNum === 3) ? 'block' : 'none';
+      const labelEl = document.getElementById('active-floor-label');
+      if (labelEl) {
+        labelEl.innerText = speakerId ? `The Floor: ${speakerId.toUpperCase()}` : "Assembly in Deliberation";
+      }
     }
 
-    async function conveneCouncil() {
-      const prompt = document.getElementById('challenge-prompt').value.trim();
-      if (!prompt) {
-        showToast("⚠️ Please enter a prompt or select a preset!");
+    function streamTextIntoElement(container, fullText, callback) {
+      let index = 0;
+      const speed = 14; // refined fast cursor pacing
+      const textNode = document.createTextNode("");
+      const cursor = document.createElement("span");
+      cursor.className = "typing-cursor";
+
+      container.appendChild(textNode);
+      container.appendChild(cursor);
+
+      const interval = setInterval(() => {
+        if (abortCurrentDebate) {
+          clearInterval(interval);
+          return;
+        }
+        index += 2;
+        textNode.textContent = fullText.slice(0, index);
+        if (index >= fullText.length) {
+          clearInterval(interval);
+          cursor.remove();
+          if (callback) callback();
+        }
+      }, speed);
+    }
+
+    // ---------------- MAIN TRIBUNAL CONVOCATION ---------------- //
+    async function submitMotion() {
+      const input = document.getElementById('motion-input').value.trim();
+      if (!input) {
+        alert("Please enter a motion to table before the Council.");
         return;
       }
-      if (isDeliberating) return;
-      isDeliberating = true;
+      currentMotion = input;
+      abortCurrentDebate = false;
 
-      switchStep(1);
-      document.getElementById('token-status').innerText = "STREAMING // 4 MODELS ENGAGED";
+      // Smooth scroll to chamber
+      document.getElementById('chamber-rail').style.display = 'block';
+      document.getElementById('chamber-view').style.display = 'block';
+      document.getElementById('active-motion-display').innerText = `"${currentMotion}"`;
+      document.getElementById('transcript-feed').innerHTML = "";
+      document.getElementById('vote-card').style.display = 'none';
+      document.getElementById('verdict-card').style.display = 'none';
 
-      const models = ['chatgpt', 'claude', 'gemini', 'grok'];
-      const data = KNOWLEDGE_BASE[activeTopic] || KNOWLEDGE_BASE.microservices;
-
-      models.forEach(m => {
-        const pod = document.getElementById(`pod-${m}`);
-        const badge = document.getElementById(`badge-${m}`);
-        const term = document.getElementById(`term-${m}`);
-        if (pod) pod.classList.add('streaming');
-        if (badge) { badge.classList.add('live'); badge.innerText = "STREAMING"; }
-        if (term) term.innerText = "";
+      window.scrollTo({
+        top: document.getElementById('chamber-view').offsetTop - 60,
+        behavior: 'smooth'
       });
 
-      // Stream text in parallel with typewriter effect
-      const streamPromises = models.map(m => {
-        return new Promise(resolve => {
-          const text = data[m] || "Processing autonomous synthesis...";
-          let index = 0;
-          const term = document.getElementById(`term-${m}`);
-          const charsEl = document.getElementById(`chars-${m}`);
+      startTimer();
+      updateProgressRail(2);
 
-          const timer = setInterval(() => {
-            index += 4;
-            if (term) term.innerText = text.slice(0, index);
-            if (charsEl) charsEl.innerText = `${Math.min(text.length, index)} tokens`;
+      // --- STAGE 2: OPENING STATEMENTS --- //
+      const speakers = [
+        { id: 'claude', name: 'Claude of Anthropic', pip: 'pip-claude', call: callClaude },
+        { id: 'gpt', name: 'GPT of OpenAI', pip: 'pip-gpt', call: callGPT },
+        { id: 'gemini', name: 'Gemini of Google', pip: 'pip-gemini', call: callGemini },
+        { id: 'grok', name: 'Grok of xAI', pip: 'pip-grok', call: callGrok }
+      ];
 
-            if (index >= text.length) {
-              clearInterval(timer);
-              const badge = document.getElementById(`badge-${m}`);
-              if (badge) { badge.classList.remove('live'); badge.innerText = "COMPLETED"; }
-              const pod = document.getElementById(`pod-${m}`);
-              if (pod) pod.classList.remove('streaming');
-              resolve();
-            }
-          }, 24);
+      for (const speaker of speakers) {
+        if (abortCurrentDebate) return;
+        highlightSvgSeat(speaker.id);
+        const text = await speaker.call(currentMotion, 'statement');
+        await appendTranscriptStatement(speaker, text, "Opening Statement");
+        await delay(600);
+      }
+
+      // --- STAGE 3: CROSS-EXAMINATION --- //
+      updateProgressRail(3);
+      for (const speaker of speakers) {
+        if (abortCurrentDebate) return;
+        highlightSvgSeat(speaker.id);
+        const rebuttal = await speaker.call(currentMotion, 'rebuttal');
+        await appendTranscriptStatement(speaker, rebuttal, "Cross-Examination & Interlocution");
+        await delay(600);
+      }
+
+      highlightSvgSeat(null);
+
+      // --- STAGE 4: THE VOTE --- //
+      updateProgressRail(4);
+      await delay(400);
+      await conductRollCall(speakers);
+
+      // --- STAGE 5: THE VERDICT --- //
+      updateProgressRail(5);
+      stopTimer();
+      await delay(800);
+      revealVerdict();
+    }
+
+    function appendTranscriptStatement(speaker, text, citationTag) {
+      return new Promise(resolve => {
+        const feed = document.getElementById('transcript-feed');
+        const entry = document.createElement('div');
+        entry.className = `statement-entry speaker-${speaker.id} active-speaker`;
+
+        entry.innerHTML = `
+          <div class="speaker-header">
+            <div class="speaker-identity">
+              <span class="speaker-pip ${speaker.pip}"></span>
+              <span class="speaker-title">${speaker.name}</span>
+            </div>
+            <span class="speaker-citation">${citationTag}</span>
+          </div>
+          <div class="speaker-body"></div>
+        `;
+
+        feed.appendChild(entry);
+        const bodyEl = entry.querySelector('.speaker-body');
+
+        streamTextIntoElement(bodyEl, text, () => {
+          entry.classList.remove('active-speaker');
+          resolve();
         });
       });
-
-      await Promise.all(streamPromises);
-      document.getElementById('token-status').innerText = "ROUND 1 COMPLETED // PROCEEDING TO BLIND JURY";
-      showToast("🎉 Round 1 Complete! Transitioning to Cross-Examination...");
-
-      setTimeout(() => {
-        runPeerReviews();
-      }, 1200);
     }
 
-    function runPeerReviews() {
-      switchStep(2);
-      const scores = {
-        claude: { chatgpt: 28, gemini: 27, grok: 26, total: 81 },
-        chatgpt: { claude: 29, gemini: 27, grok: 25, total: 81 },
-        gemini: { chatgpt: 27, claude: 29, grok: 27, total: 83 },
-        grok: { chatgpt: 26, claude: 30, gemini: 28, total: 84 }
-      };
+    async function conductRollCall(speakers) {
+      const voteCard = document.getElementById('vote-card');
+      const grid = document.getElementById('ballot-grid');
+      voteCard.style.display = 'block';
+      grid.innerHTML = "";
 
-      // Animate scores into matrix
-      document.getElementById('grade-claude-chatgpt').innerText = "28/30";
-      document.getElementById('grade-gemini-chatgpt').innerText = "27/30";
-      document.getElementById('grade-grok-chatgpt').innerText = "26/30";
-      document.getElementById('total-chatgpt').innerText = "81 pts";
+      let ayes = 0;
+      let noes = 0;
 
-      document.getElementById('grade-chatgpt-claude').innerText = "29/30";
-      document.getElementById('grade-gemini-claude').innerText = "29/30";
-      document.getElementById('grade-grok-claude').innerText = "30/30";
-      document.getElementById('total-claude').innerText = "88 pts";
+      for (const speaker of speakers) {
+        const result = await speaker.call(currentMotion, 'vote');
+        if (result.vote === 'AYE') ayes++;
+        if (result.vote === 'NAY') noes++;
 
-      document.getElementById('grade-chatgpt-gemini').innerText = "27/30";
-      document.getElementById('grade-claude-gemini').innerText = "27/30";
-      document.getElementById('grade-grok-gemini').innerText = "28/30";
-      document.getElementById('total-gemini').innerText = "82 pts";
+        const ballot = document.createElement('div');
+        ballot.className = 'ballot-seat';
+        ballot.innerHTML = `
+          <div class="ballot-head">
+            <span class="mono-data" style="color: var(--text-ivory); font-weight: 600;">${speaker.id.toUpperCase()}</span>
+            <span class="vote-cast-tag ${result.vote === 'AYE' ? 'tag-aye' : 'tag-nay'}">${result.vote}</span>
+          </div>
+          <p class="ballot-reason">"${result.reason}"</p>
+        `;
+        grid.appendChild(ballot);
 
-      document.getElementById('grade-chatgpt-grok').innerText = "26/30";
-      document.getElementById('grade-claude-grok').innerText = "26/30";
-      document.getElementById('grade-gemini-grok').innerText = "27/30";
-      document.getElementById('total-grok').innerText = "79 pts";
-
-      showToast("⚖️ Peer Review Matrix Tallied! Crowning Champion...");
-
-      setTimeout(() => {
-        declareApexWinner();
-      }, 1800);
+        // Update animated division meter
+        const total = ayes + noes;
+        document.getElementById('meter-ayes').style.width = `${(ayes / 4) * 100}%`;
+        document.getElementById('meter-noes').style.width = `${(noes / 4) * 100}%`;
+        document.getElementById('tally-count-label').innerText = `AYES: ${ayes} · NOES: ${noes}`;
+        await delay(450);
+      }
     }
 
-    function declareApexWinner() {
-      switchStep(3);
-      isDeliberating = false;
-      const podium = document.getElementById('winner-podium');
-      if (podium) podium.style.display = 'block';
+    function revealVerdict() {
+      const preset = PRESETS.find(p => p.motion === currentMotion) || PRESETS[0];
+      const card = document.getElementById('verdict-card');
+      card.style.display = 'block';
 
-      const prompt = document.getElementById('challenge-prompt').value.trim();
-      const synthesis = `### 🌟 MASTER CONSENSUS SYNTHESIS PROTOCOL\n\n**Challenge:** "${prompt}"\n\n**Consensus Summary:**\nThe Council crowns **Claude (3.5 Sonnet)** as the Sovereign Champion with **88/90 points**, supported by **Gemini (2.0 Pro)** as Technical Runner-Up (82/90 points).\n\n**Unified Architectural Action Plan:**\n1. **Core Philosophy:** Combine Claude's rigorous safety-bounded constitutional reasoning with Gemini's high-throughput distributed execution.\n2. **Protocol Hardening:** Enforce strict deterministic limits via hardware eBPF filters (Grok's insight) while maintaining zero-knowledge auditable state logs.\n3. **Deployment Strategy:** Horizontal Kubernetes clusters autoscaling on GKE with WebAssembly edge termination for sub-50ms latency globally.`;
+      document.getElementById('verdict-majority-body').innerText = preset.majority;
+      document.getElementById('dissent-text').innerText = `"${preset.dissent}"`;
 
-      document.getElementById('synthesis-text').innerText = synthesis;
-      document.getElementById('token-status').innerText = "CONSENSUS REACHED // WINNER: CLAUDE (88 PTS)";
-      showToast("🏆 Claude crowned Sovereign Council Champion!");
+      // Check for deadlock (e.g. 2-2)
+      const ayesCount = (preset.claude.vote === 'AYE' ? 1 : 0) +
+                        (preset.gpt.vote === 'AYE' ? 1 : 0) +
+                        (preset.gemini.vote === 'AYE' ? 1 : 0) +
+                        (preset.grok.vote === 'AYE' ? 1 : 0);
+
+      const deadlockAlert = document.getElementById('deadlock-alert');
+      if (ayesCount === 2) {
+        deadlockAlert.style.display = 'block';
+        document.getElementById('verdict-split-badge').innerText = "DIVISION: 2–2 DEADLOCK";
+        document.getElementById('verdict-ruling-title').innerHTML = "The Council Stands <br><em>In Equal Division.</em>";
+      } else {
+        deadlockAlert.style.display = 'none';
+        const isPassed = ayesCount >= 3;
+        document.getElementById('verdict-split-badge').innerText = `DIVISION: ${ayesCount}–${4 - ayesCount} ${isPassed ? 'RESOLVED' : 'STRICKEN'}`;
+        document.getElementById('verdict-ruling-title').innerHTML = isPassed
+          ? "The Motion Is <br><em>Resolved In The Affirmative.</em>"
+          : "The Motion Is <br><em>Stricken Down.</em>";
+      }
+
+      card.scrollIntoView({ behavior: 'smooth' });
     }
 
-    function copySynthesis() {
-      const text = document.getElementById('synthesis-text').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast("📋 Master Synthesis copied to clipboard!");
+    function castCitizenVote(choice) {
+      alert(`The Presiding Chair registers the Fifth Vote: ${choice}. The tie is decisively broken.`);
+      document.getElementById('deadlock-alert').style.display = 'none';
+      document.getElementById('verdict-split-badge').innerText = `DIVISION: ${choice === 'AYE' ? '3–2 RESOLVED' : '2–3 STRICKEN'} (CHAIR DECIDING)`;
+      document.getElementById('verdict-ruling-title').innerHTML = choice === 'AYE'
+        ? "The Motion Is <br><em>Resolved By The Casting Vote.</em>"
+        : "The Motion Is <br><em>Stricken By The Casting Vote.</em>";
+    }
+
+    function exportVerdictMarkdown() {
+      if (!currentMotion) {
+        alert("No active deliberation to export.");
+        return;
+      }
+      const preset = PRESETS.find(p => p.motion === currentMotion) || PRESETS[0];
+      const markdown = `# THE RECORD OF THE COUNCIL\n\n**Date:** ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}\n**Motion:** "${currentMotion}"\n\n## I. ROLL CALL & DIVISION\n- **Claude:** ${preset.claude.vote} — "${preset.claude.rationale}"\n- **GPT:** ${preset.gpt.vote} — "${preset.gpt.rationale}"\n- **Gemini:** ${preset.gemini.vote} — "${preset.gemini.rationale}"\n- **Grok:** ${preset.grok.vote} — "${preset.grok.rationale}"\n\n## II. DECREE OF THE TRIBUNAL\n${preset.majority}\n\n## III. DISSENTING OPINION\n${preset.dissent}\n\n---\n*Officially transcribed by The High Judicial Chamber.*`;
+
+      navigator.clipboard.writeText(markdown).then(() => {
+        alert("Parliamentary Record copied to clipboard in clean Markdown.");
       });
     }
 
-    function showToast(msg) {
-      const el = document.getElementById('toast-msg');
-      const text = document.getElementById('toast-text');
-      if (!el || !text) return;
-      text.innerText = msg;
-      el.style.display = 'inline-flex';
-      setTimeout(() => { el.style.display = 'none'; }, 3200);
+    function resetChamber() {
+      abortCurrentDebate = true;
+      document.getElementById('chamber-view').style.display = 'none';
+      document.getElementById('chamber-rail').style.display = 'none';
+      document.getElementById('motion-input').value = "";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function openKeyModal() {
-      const modal = document.getElementById('key-modal');
-      const card = modal.querySelector('.modal-card');
-      modal.style.display = 'grid';
-      setTimeout(() => card.classList.add('active'), 10);
-    }
-
-    function closeKeyModal(e) {
-      if (e && e.target !== document.getElementById('key-modal')) return;
-      const modal = document.getElementById('key-modal');
-      const card = modal.querySelector('.modal-card');
-      card.classList.remove('active');
-      setTimeout(() => modal.style.display = 'none', 180);
-    }
-
-    function saveKeys() {
-      const key = document.getElementById('gemini-key-input').value.trim();
-      if (key) {
-        localStorage.setItem('council_gemini_key', key);
-        showToast("✅ Gemini API Key saved locally!");
+    function toggleRecord(open) {
+      const drawer = document.getElementById('record-drawer');
+      const backdrop = document.getElementById('record-backdrop');
+      if (open) {
+        populateRecordList();
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+      } else {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
       }
-      closeKeyModal(null);
+    }
+
+    function populateRecordList() {
+      const list = document.getElementById('record-list');
+      list.innerHTML = "";
+      HISTORICAL_RECORD.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'record-card';
+        card.innerHTML = `
+          <div class="record-card-meta">
+            <span class="mono-data">${item.id} · ${item.date}</span>
+            <span class="record-card-verdict">${item.verdict}</span>
+          </div>
+          <div class="record-card-motion">"${item.motion}"</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted);">${item.majority}</div>
+        `;
+        card.onclick = () => {
+          toggleRecord(false);
+          document.getElementById('motion-input').value = item.motion;
+          submitMotion();
+        };
+        list.appendChild(card);
+      });
+    }
+
+    function focusSpeaker(id) {
+      highlightSvgSeat(id);
+    }
+
+    function delay(ms) {
+      return new Promise(r => setTimeout(r, ms));
+    }
+
+    function advanceDebateStep() {
+      abortCurrentDebate = false;
+      revealVerdict();
     }
   </script>
 </body>
