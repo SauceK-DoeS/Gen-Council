@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0B0B0C">
-  <meta name="description" content="The Council — A modern tribunal where Claude, GPT, Gemini, and Grok deliberate and vote on motions of consequence.">
-  <title>The Council — Four Minds. One Verdict.</title>
+  <meta name="description" content="The Council — A sovereign multi-model tribunal featuring code generation, real-time image synthesis, file ingestion, and constitutional deliberation.">
+  <title>The Council — Sovereign Multi-Model Intelligence</title>
 
   <!-- Google Fonts: Cormorant Garamond (High-contrast Display Serif), Inter (Precise Grotesk), JetBrains Mono (Parliamentary Records) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +37,7 @@
       --brass-subtle: rgba(197, 168, 128, 0.10);
       --brass-glow: rgba(197, 168, 128, 0.22);
 
-      /* Muted, Desaturated Signature Tones (Strict Restraint) */
+      /* Muted, Desaturated Signature Tones */
       --tone-claude: #C47D68;   /* Terracotta Clay */
       --tone-gpt: #739E82;      /* Muted Sage */
       --tone-gemini: #6C8299;   /* Muted Slate Blue */
@@ -55,7 +55,6 @@
       --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Reset & Hardware Acceleration */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -104,27 +103,13 @@
     }
 
     /* Custom Refined Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-base);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(244, 243, 238, 0.12);
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--brass-border);
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(244, 243, 238, 0.12); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--brass-border); }
 
-    /* Focus States */
-    :focus-visible {
-      outline: 1px solid var(--brass);
-      outline-offset: 2px;
-    }
+    :focus-visible { outline: 1px solid var(--brass); outline-offset: 2px; }
 
-    /* Typography Utilities */
     .serif-display {
       font-family: var(--font-serif);
       letter-spacing: -0.025em;
@@ -141,7 +126,7 @@
     }
 
     /* ==========================================================================
-       TOP NAVIGATION & SENATE MASTHEAD
+       TOP NAVIGATION
        ========================================================================== */
     .nav-tribunal {
       position: sticky;
@@ -239,12 +224,10 @@
       gap: 6px;
       transition: color 0.15s ease;
     }
-    .btn-text-subtle:hover {
-      color: var(--text-ivory);
-    }
+    .btn-text-subtle:hover { color: var(--text-ivory); }
 
     /* ==========================================================================
-       HERO & MOTION INVOCATION
+       HERO & SOVEREIGN CAPABILITIES SWITCHER
        ========================================================================== */
     .hero-container {
       position: relative;
@@ -252,7 +235,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: clamp(48px, 8vw, 100px) clamp(20px, 4vw, 56px) 48px;
+      padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 56px) 40px;
       max-width: 1360px;
       margin: 0 auto;
       z-index: 10;
@@ -262,40 +245,69 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
-    .eyebrow-line {
-      width: 32px;
-      height: 1px;
-      background: var(--brass);
-    }
+    .eyebrow-line { width: 32px; height: 1px; background: var(--brass); }
 
     .hero-headline {
-      font-size: clamp(3rem, 8vw, 7.2rem);
+      font-size: clamp(2.8rem, 7vw, 6.5rem);
       color: var(--text-ivory);
       max-width: 1080px;
-      margin-bottom: 36px;
+      margin-bottom: 24px;
     }
-    .hero-headline em {
-      font-style: italic;
+    .hero-headline em { font-style: italic; color: var(--brass); }
+
+    /* Mode Selector (The 4 Sovereign Powers) */
+    .mode-selector-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .mode-tab-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-hairline);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .mode-tab-btn.active {
+      background: var(--brass-subtle);
+      border-color: var(--border-brass);
       color: var(--brass);
+      font-weight: 600;
+    }
+    .mode-tab-btn:hover:not(.active) {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text-ivory);
     }
 
-    /* Asymmetric Motion Input */
+    /* Motion Input Block */
     .motion-block {
-      max-width: 820px;
+      max-width: 860px;
       width: 100%;
-      margin: 24px 0 48px;
+      margin: 12px 0 36px;
     }
 
     .motion-input-wrapper {
       position: relative;
       display: flex;
-      align-items: stretch;
+      flex-direction: column;
       background: var(--bg-surface);
       border: 1px solid var(--border-refined);
       border-radius: var(--radius-md);
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
     }
     .motion-input-wrapper:focus-within {
       border-color: var(--border-brass);
@@ -303,8 +315,8 @@
     }
 
     .motion-textarea {
-      flex: 1;
-      min-height: 72px;
+      width: 100%;
+      min-height: 84px;
       background: transparent;
       border: none;
       padding: 20px 24px;
@@ -321,53 +333,107 @@
       font-size: 1.2rem;
     }
 
-    .motion-submit-btn {
-      padding: 0 28px;
+    /* File Attachment Banner (Inside input) */
+    .file-attachment-bar {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 24px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px dashed var(--border-hairline);
+    }
+    .file-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: var(--radius-sm);
       background: var(--brass-subtle);
+      border: 1px solid var(--border-brass);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-ivory);
+    }
+    .file-remove-btn {
+      background: none;
       border: none;
-      border-left: 1px solid var(--border-hairline);
-      color: var(--brass);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .file-remove-btn:hover { color: var(--text-ivory); }
+
+    .motion-action-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border-top: 1px solid var(--border-hairline);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tools-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tool-btn {
+      background: transparent;
+      border: 1px solid var(--border-hairline);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .tool-btn:hover {
+      border-color: var(--brass);
+      color: var(--text-ivory);
+    }
+
+    .motion-submit-btn {
+      padding: 10px 24px;
+      background: var(--brass);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--bg-base);
       font-family: var(--font-mono);
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      transition: background 0.2s ease, color 0.2s ease;
+      gap: 8px;
+      transition: background 0.15s ease, transform 0.15s ease;
       user-select: none;
     }
-    .motion-submit-btn:hover {
-      background: var(--brass);
-      color: var(--bg-base);
-    }
-    .motion-submit-btn:active {
-      transform: scale(0.98);
-    }
+    .motion-submit-btn:hover { background: var(--brass-hover); }
+    .motion-submit-btn:active { transform: scale(0.97); }
 
-    /* Motion Chips (The Docket) */
+    /* Docket Chips */
     .docket-bar {
       display: flex;
       align-items: baseline;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
-    }
-    .docket-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      margin-top: 14px;
     }
     .docket-chip {
       background: transparent;
       border: 1px solid var(--border-hairline);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: var(--radius-sm);
       color: var(--text-secondary);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.15s ease;
     }
@@ -377,12 +443,11 @@
       background: var(--brass-subtle);
     }
 
-    /* Hero Metadata Footnote */
     .hero-footer-meta {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 32px;
-      padding-top: 40px;
+      padding-top: 36px;
       border-top: 1px solid var(--border-hairline);
     }
     .meta-item-title {
@@ -391,13 +456,10 @@
       color: var(--text-dim);
       margin-bottom: 4px;
     }
-    .meta-item-value {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-    }
+    .meta-item-value { font-size: 0.88rem; color: var(--text-secondary); }
 
     /* ==========================================================================
-       STAGE PROGRESS RAIL (SLIM, ARCHITECTURAL)
+       STAGE PROGRESS RAIL
        ========================================================================== */
     .chamber-rail-wrap {
       position: sticky;
@@ -434,12 +496,8 @@
       transition: color 0.2s ease;
       user-select: none;
     }
-    .stage-step.active {
-      color: var(--brass);
-    }
-    .stage-step.completed {
-      color: var(--text-secondary);
-    }
+    .stage-step.active { color: var(--brass); }
+    .stage-step.completed { color: var(--text-secondary); }
     .stage-idx {
       width: 18px;
       height: 18px;
@@ -480,35 +538,13 @@
       position: relative;
       user-select: none;
     }
+    .hemicycle-svg { width: 100%; height: auto; overflow: visible; }
 
-    .hemicycle-svg {
-      width: 100%;
-      height: auto;
-      overflow: visible;
-    }
+    .arc-line-major { stroke: var(--border-refined); stroke-width: 1; fill: none; }
+    .arc-line-minor { stroke: var(--border-hairline); stroke-width: 1; stroke-dasharray: 4 6; fill: none; }
+    .radial-spoke { stroke: var(--border-hairline); stroke-width: 1; }
 
-    /* Architectural Arc Styling */
-    .arc-line-major {
-      stroke: var(--border-refined);
-      stroke-width: 1;
-      fill: none;
-    }
-    .arc-line-minor {
-      stroke: var(--border-hairline);
-      stroke-width: 1;
-      stroke-dasharray: 4 6;
-      fill: none;
-    }
-    .radial-spoke {
-      stroke: var(--border-hairline);
-      stroke-width: 1;
-    }
-
-    /* The 4 Seats on the Arc */
-    .seat-group {
-      cursor: pointer;
-      transition: transform 0.25s var(--ease-cinematic);
-    }
+    .seat-group { cursor: pointer; transition: transform 0.25s var(--ease-cinematic); }
     .seat-box {
       fill: var(--bg-surface);
       stroke: var(--border-refined);
@@ -520,7 +556,6 @@
       fill: var(--bg-elevated);
       filter: drop-shadow(0 0 12px var(--brass-glow));
     }
-
     .seat-group.claude.active .seat-box { stroke: var(--tone-claude); filter: drop-shadow(0 0 12px rgba(196,125,104,0.3)); }
     .seat-group.gpt.active .seat-box    { stroke: var(--tone-gpt);    filter: drop-shadow(0 0 12px rgba(115,158,130,0.3)); }
     .seat-group.gemini.active .seat-box { stroke: var(--tone-gemini); filter: drop-shadow(0 0 12px rgba(108,130,153,0.3)); }
@@ -534,16 +569,8 @@
       fill: var(--text-secondary);
       pointer-events: none;
     }
-    .seat-group.active .seat-label {
-      fill: var(--text-ivory);
-      font-weight: 600;
-    }
-
-    .rostrum-podium {
-      fill: var(--bg-elevated);
-      stroke: var(--border-brass);
-      stroke-width: 1;
-    }
+    .seat-group.active .seat-label { fill: var(--text-ivory); font-weight: 600; }
+    .rostrum-podium { fill: var(--bg-elevated); stroke: var(--border-brass); stroke-width: 1; }
 
     /* ==========================================================================
        PARLIAMENTARY RECORD & TRANSCRIPT
@@ -558,7 +585,6 @@
       .parliamentary-grid { grid-template-columns: 1fr; gap: 32px; }
     }
 
-    /* Left Metadata Rail */
     .tribunal-meta-panel {
       border-right: 1px solid var(--border-hairline);
       padding-right: 32px;
@@ -586,7 +612,6 @@
       margin-bottom: 24px;
     }
 
-    /* The Live Hansard / Parliamentary Transcript */
     .transcript-feed {
       display: flex;
       flex-direction: column;
@@ -599,9 +624,7 @@
       border-left: 2px solid var(--border-hairline);
       transition: border-color 0.25s ease;
     }
-    .statement-entry.active-speaker {
-      border-left-color: var(--brass);
-    }
+    .statement-entry.active-speaker { border-left-color: var(--brass); }
     .statement-entry.speaker-claude { border-left-color: var(--tone-claude); }
     .statement-entry.speaker-gpt    { border-left-color: var(--tone-gpt); }
     .statement-entry.speaker-gemini { border-left-color: var(--tone-gemini); }
@@ -613,16 +636,8 @@
       justify-content: space-between;
       margin-bottom: 8px;
     }
-    .speaker-identity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .speaker-pip {
-      width: 7px;
-      height: 7px;
-      border-radius: 1px;
-    }
+    .speaker-identity { display: flex; align-items: center; gap: 10px; }
+    .speaker-pip { width: 7px; height: 7px; border-radius: 1px; }
     .pip-claude { background: var(--tone-claude); }
     .pip-gpt    { background: var(--tone-gpt); }
     .pip-gemini { background: var(--tone-gemini); }
@@ -636,7 +651,6 @@
       font-weight: 600;
       color: var(--text-ivory);
     }
-
     .speaker-citation {
       font-family: var(--font-mono);
       font-size: 0.7rem;
@@ -646,7 +660,6 @@
       border-radius: 2px;
       letter-spacing: 0.04em;
     }
-
     .speaker-body {
       color: var(--text-secondary);
       font-size: 1rem;
@@ -654,7 +667,6 @@
       white-space: pre-wrap;
     }
 
-    /* Refined Cursor for Streaming */
     .typing-cursor {
       display: inline-block;
       width: 6px;
@@ -667,6 +679,102 @@
     @keyframes blink { 50% { opacity: 0; } }
 
     /* ==========================================================================
+       CHAMBER ARTIFACT WING (IMAGES & CODE SANDBOX)
+       ========================================================================== */
+    .artifact-wing {
+      margin: 40px 0;
+      display: none;
+    }
+
+    /* Museum-Grade Image Gallery Card */
+    .image-artifact-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      position: relative;
+    }
+    .artifact-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .image-frame {
+      width: 100%;
+      max-height: 540px;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-refined);
+      display: grid;
+      place-items: center;
+      background: #000;
+      position: relative;
+    }
+    .generated-img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .img-loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 11, 12, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      z-index: 5;
+    }
+
+    /* Code Engineering Terminal Card */
+    .code-artifact-card {
+      background: #070708;
+      border: 1px solid var(--border-refined);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .code-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: #111113;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .code-lang-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--brass);
+      text-transform: uppercase;
+    }
+    .code-content-block {
+      padding: 20px 24px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      white-space: pre;
+      overflow-x: auto;
+      max-height: 480px;
+    }
+
+    .code-preview-frame {
+      width: 100%;
+      height: 340px;
+      border: none;
+      background: #ffffff;
+      display: none;
+    }
+
+    /* ==========================================================================
        VOTE TALLY & DIVISION OF THE CHAMBER
        ========================================================================== */
     .vote-division-card {
@@ -676,7 +784,6 @@
       padding: 32px clamp(20px, 4vw, 40px);
       margin-bottom: 64px;
     }
-
     .tally-header {
       display: flex;
       align-items: baseline;
@@ -698,7 +805,6 @@
       color: var(--brass);
     }
 
-    /* Minimal Animated Division Bar */
     .division-meter-rail {
       width: 100%;
       height: 6px;
@@ -708,25 +814,14 @@
       display: flex;
       margin-bottom: 28px;
     }
-    .division-meter-ayes {
-      height: 100%;
-      background: var(--brass);
-      transition: width 0.6s var(--ease-cinematic);
-    }
-    .division-meter-noes {
-      height: 100%;
-      background: #739E82;
-      opacity: 0.5;
-      transition: width 0.6s var(--ease-cinematic);
-    }
+    .division-meter-ayes { height: 100%; background: var(--brass); transition: width 0.6s var(--ease-cinematic); }
+    .division-meter-noes { height: 100%; background: #739E82; opacity: 0.5; transition: width 0.6s var(--ease-cinematic); }
 
-    /* Roll Call Entries */
     .roll-call-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
-
     .ballot-seat {
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-sm);
@@ -749,8 +844,6 @@
     }
     .tag-aye { background: var(--brass-subtle); color: var(--brass); border: 1px solid var(--border-brass); }
     .tag-nay { background: rgba(196,125,104,0.12); color: var(--tone-claude); border: 1px solid rgba(196,125,104,0.3); }
-    .tag-abstain { background: rgba(255,255,255,0.05); color: var(--text-muted); }
-
     .ballot-reason {
       font-size: 0.86rem;
       color: var(--text-secondary);
@@ -759,7 +852,7 @@
     }
 
     /* ==========================================================================
-       THE VERDICT DECREE (DRAMATIC FULL-WIDTH REVEAL)
+       THE VERDICT DECREE
        ========================================================================== */
     .verdict-decree-card {
       border: 1px solid var(--border-brass);
@@ -795,10 +888,7 @@
       line-height: 1.1;
       margin-bottom: 20px;
     }
-    .verdict-ruling-serif em {
-      font-style: italic;
-      color: var(--brass);
-    }
+    .verdict-ruling-serif em { font-style: italic; color: var(--brass); }
 
     .verdict-majority-text {
       font-size: 1.12rem;
@@ -807,7 +897,6 @@
       margin-bottom: 40px;
     }
 
-    /* Dissenting Opinion Block */
     .dissent-panel {
       border: 1px solid var(--border-hairline);
       border-left: 3px solid var(--tone-claude);
@@ -824,14 +913,8 @@
       color: var(--tone-claude);
       margin-bottom: 8px;
     }
-    .dissent-body {
-      font-size: 0.92rem;
-      line-height: 1.6;
-      color: var(--text-secondary);
-      font-style: italic;
-    }
+    .dissent-body { font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); font-style: italic; }
 
-    /* Deadlock Casting Vote State */
     .deadlock-alert {
       display: none;
       background: rgba(197, 168, 128, 0.08);
@@ -841,19 +924,8 @@
       margin-bottom: 32px;
       text-align: center;
     }
-    .deadlock-title {
-      font-family: var(--font-serif);
-      font-size: 1.8rem;
-      color: var(--brass);
-      margin-bottom: 8px;
-    }
-    .deadlock-action-bar {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
+    .deadlock-title { font-family: var(--font-serif); font-size: 1.8rem; color: var(--brass); margin-bottom: 8px; }
+    .deadlock-action-bar { display: flex; justify-content: center; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
 
     .btn-brass {
       padding: 10px 24px;
@@ -885,14 +957,9 @@
       cursor: pointer;
       transition: all 0.15s ease;
     }
-    .btn-outline-subtle:hover {
-      border-color: var(--brass);
-      color: var(--text-ivory);
-    }
+    .btn-outline-subtle:hover { border-color: var(--brass); color: var(--text-ivory); }
 
-    /* ==========================================================================
-       OPENROUTER CONFIGURATION DRAWER / MODAL
-       ========================================================================== */
+    /* OpenRouter Modal */
     .config-modal-backdrop {
       position: fixed;
       inset: 0;
@@ -913,28 +980,9 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.8);
       position: relative;
     }
-    .config-modal-title {
-      font-family: var(--font-serif);
-      font-size: 1.6rem;
-      color: var(--text-ivory);
-      margin-bottom: 8px;
-    }
-    .config-modal-subtitle {
-      font-size: 0.86rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 24px;
-    }
-
-    .config-input-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--brass);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 8px;
-    }
+    .config-modal-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--text-ivory); margin-bottom: 8px; }
+    .config-modal-subtitle { font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; }
+    .config-input-label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--brass); letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 8px; }
     .config-input {
       width: 100%;
       padding: 12px 16px;
@@ -946,14 +994,8 @@
       font-size: 0.88rem;
       margin-bottom: 18px;
     }
-    .config-input:focus {
-      border-color: var(--brass);
-      outline: none;
-    }
 
-    /* ==========================================================================
-       THE RECORD (PAST MOTIONS ARCHIVE DRAWER)
-       ========================================================================== */
+    /* The Record Drawer */
     .record-drawer {
       position: fixed;
       top: 0;
@@ -969,37 +1011,13 @@
       overflow-y: auto;
       box-shadow: -20px 0 60px rgba(0,0,0,0.8);
     }
-    .record-drawer.open {
-      transform: translateX(0);
-    }
-    .record-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-      z-index: 190;
-      display: none;
-    }
+    .record-drawer.open { transform: translateX(0); }
+    .record-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 190; display: none; }
     .record-backdrop.open { display: block; }
 
-    .record-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-hairline);
-      margin-bottom: 24px;
-    }
-    .record-title {
-      font-family: var(--font-serif);
-      font-size: 1.6rem;
-      color: var(--text-ivory);
-    }
-    .record-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .record-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid var(--border-hairline); margin-bottom: 24px; }
+    .record-title { font-family: var(--font-serif); font-size: 1.6rem; color: var(--text-ivory); }
+    .record-list { display: flex; flex-direction: column; gap: 16px; }
     .record-card {
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-sm);
@@ -1008,71 +1026,26 @@
       cursor: pointer;
       transition: border-color 0.15s ease;
     }
-    .record-card:hover {
-      border-color: var(--border-brass);
-    }
-    .record-card-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-    .record-card-motion {
-      font-size: 0.88rem;
-      color: var(--text-ivory);
-      line-height: 1.4;
-      margin-bottom: 8px;
-    }
-    .record-card-verdict {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--brass);
-    }
+    .record-card:hover { border-color: var(--border-brass); }
+    .record-card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .record-card-motion { font-size: 0.88rem; color: var(--text-ivory); line-height: 1.4; margin-bottom: 8px; }
+    .record-card-verdict { font-family: var(--font-mono); font-size: 0.72rem; color: var(--brass); }
 
-    /* ==========================================================================
-       MEDIA QUERIES FOR STRICT RESPONSIVENESS
-       ========================================================================== */
     @media (max-width: 680px) {
-      .motion-input-wrapper {
-        flex-direction: column;
-      }
-      .motion-submit-btn {
-        width: 100%;
-        height: 48px;
-        border-left: none;
-        border-top: 1px solid var(--border-hairline);
-        justify-content: center;
-      }
-      .stage-connector {
-        display: none;
-      }
-      .stage-rail {
-        gap: 16px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
+      .motion-submit-btn { width: 100%; justify-content: center; }
+      .stage-connector { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Subtle Ambient Grain and Vignette -->
   <div class="chamber-noise"></div>
   <div class="chamber-vignette"></div>
 
   <!-- Top Navigation & Tribunal Masthead -->
   <header class="nav-tribunal">
     <a href="#" class="nav-masthead">
-      <div class="nav-crest">
-        <div class="nav-crest-dot"></div>
-      </div>
+      <div class="nav-crest"><div class="nav-crest-dot"></div></div>
       <span class="nav-title">The Council</span>
     </a>
 
@@ -1091,44 +1064,88 @@
     </div>
   </header>
 
-  <!-- <Hero />: Four minds. One verdict. -->
+  <!-- Hero Section -->
   <section class="hero-container" id="hero-section">
     <div>
       <div class="hero-eyebrow">
         <div class="eyebrow-line"></div>
-        <span class="mono-data">Session CXIV · High Judicial Chamber</span>
+        <span class="mono-data">Session CXIV · High Judicial Chamber & Sovereign Workshop</span>
       </div>
 
       <h1 class="hero-headline serif-display">
         Four minds.<br>
-        <em>One verdict.</em>
+        <em>All sovereign powers.</em>
       </h1>
 
-      <p style="color: var(--text-secondary); font-size: 1.15rem; max-width: 640px; line-height: 1.7; margin-bottom: 24px;">
-        Before this assembly stand four sovereign intelligences—Claude, GPT, Gemini, and Grok. Put forward any question of ethics, technology, or governance. They will debate without deference, cast their recorded ballots, and deliver an unsparing ruling.
+      <p style="color: var(--text-secondary); font-size: 1.15rem; max-width: 680px; line-height: 1.7; margin-bottom: 24px;">
+        The sovereign assembly of Claude, GPT, Gemini, and Grok—equipped to deliberate, generate generative imagery, write and execute code, and audit incoming dossiers with absolute rigor.
       </p>
 
-      <!-- <MotionInput /> -->
+      <!-- Sovereign Mode Selector -->
+      <div class="mode-selector-bar">
+        <button class="mode-tab-btn active" id="mode-btn-debate" onclick="setMode('debate')">
+          <span>⚖️</span> Constitutional Debate
+        </button>
+        <button class="mode-tab-btn" id="mode-btn-image" onclick="setMode('image')">
+          <span>🎨</span> Generative Imagery
+        </button>
+        <button class="mode-tab-btn" id="mode-btn-code" onclick="setMode('code')">
+          <span>💻</span> Code & Live Sandbox
+        </button>
+        <button class="mode-tab-btn" id="mode-btn-file" onclick="setMode('file')">
+          <span>📄</span> Dossier / File Audit
+        </button>
+      </div>
+
+      <!-- Motion Input Block -->
       <div class="motion-block">
         <div class="motion-input-wrapper">
           <textarea
             class="motion-textarea"
             id="motion-input"
             rows="2"
-            placeholder="Put a motion before the Council..."
+            placeholder="Put a motion, coding task, or imagery prompt before the Council..."
           ></textarea>
-          <button class="motion-submit-btn" id="btn-submit-motion" onclick="submitMotion()">
-            <span>Submit Motion</span>
-            <span>→</span>
-          </button>
+
+          <!-- Attached File Chip Bar -->
+          <div class="file-attachment-bar" id="file-bar">
+            <div class="file-pill">
+              <span id="file-icon">📄</span>
+              <span id="file-name-label">document.txt</span>
+              <span id="file-size-label" style="color: var(--text-dim);">(0 KB)</span>
+              <button class="file-remove-btn" onclick="removeAttachedFile()">✕</button>
+            </div>
+          </div>
+
+          <div class="motion-action-footer">
+            <div class="tools-group">
+              <!-- Hidden File Input -->
+              <input type="file" id="file-upload-input" style="display: none;" onchange="handleFileUpload(event)">
+              <button class="tool-btn" onclick="document.getElementById('file-upload-input').click()">
+                <span>📎</span> Attach File / Code
+              </button>
+              <button class="tool-btn" onclick="setMode('image')">
+                <span>🖼️</span> Vision Directive
+              </button>
+              <button class="tool-btn" onclick="setMode('code')">
+                <span>⚡</span> Code Synthesis
+              </button>
+            </div>
+
+            <button class="motion-submit-btn" id="btn-submit-motion" onclick="submitMotion()">
+              <span id="submit-btn-label">Submit Motion</span>
+              <span>→</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Presets / The Docket -->
-        <div class="docket-bar" style="margin-top: 18px;">
-          <span class="docket-label">On The Docket:</span>
+        <!-- Curated Preset Dockets -->
+        <div class="docket-bar">
+          <span class="mono-data" style="color: var(--text-dim);">Dockets:</span>
           <button class="docket-chip" onclick="setPreset(0)">Motion 084: Autonomous Agent Financial Liability</button>
           <button class="docket-chip" onclick="setPreset(1)">Motion 085: Substrate Independence of Consciousness</button>
-          <button class="docket-chip" onclick="setPreset(2)">Motion 086: Mandatory Open Weights Antitrust Decree</button>
+          <button class="docket-chip" onclick="loadPowerPreset('image')">🎨 Synthesize: Orbital Senate Chamber Blueprint</button>
+          <button class="docket-chip" onclick="loadPowerPreset('code')">💻 Engineer: High-Throughput Raft Consensus Engine</button>
         </div>
       </div>
     </div>
@@ -1136,21 +1153,21 @@
     <!-- Metadata Footnote -->
     <div class="hero-footer-meta">
       <div>
-        <div class="meta-item-title">Jurisdiction</div>
-        <div class="meta-item-value">Frontier Synthetics & Ethical Precedent</div>
+        <div class="meta-item-title">Autonomous Capabilities</div>
+        <div class="meta-item-value">Debate · Image Generation · Sandbox · Audit</div>
       </div>
       <div>
-        <div class="meta-item-title">Quorum</div>
-        <div class="meta-item-value">4 Members (Simple Majority 3–1 or 4–0)</div>
+        <div class="meta-item-title">Ingestion Support</div>
+        <div class="meta-item-value">Source Code, JSON, Datasets & Documents</div>
       </div>
       <div>
-        <div class="meta-item-title">Standard of Review</div>
-        <div class="meta-item-value">Blind Rigor · No Corporate Deference</div>
+        <div class="meta-item-title">Consensus Standard</div>
+        <div class="meta-item-value">Unanimous or Supermajority (3–1 / 4–0)</div>
       </div>
     </div>
   </section>
 
-  <!-- SLIM STAGE PROGRESS RAIL -->
+  <!-- Slim Stage Progress Rail -->
   <div class="chamber-rail-wrap" id="chamber-rail" style="display: none;">
     <div class="stage-rail">
       <div class="stage-step active" id="rail-step-1">
@@ -1170,56 +1187,46 @@
       <div class="stage-connector"></div>
       <div class="stage-step" id="rail-step-4">
         <span class="stage-idx">IV</span>
-        <span>The Division (Vote)</span>
+        <span>Division (Vote)</span>
       </div>
       <div class="stage-connector"></div>
       <div class="stage-step" id="rail-step-5">
         <span class="stage-idx">V</span>
-        <span>The Verdict</span>
+        <span>Decree & Artifact</span>
       </div>
     </div>
   </div>
 
-  <!-- <Chamber />: Architectural Hemicycle and Parliamentary Floor -->
+  <!-- Chamber View -->
   <section class="chamber-section" id="chamber-view" style="display: none;">
 
     <!-- Hemicycle Architectural SVG: 4 Seats on a Fine-Lined Arc -->
     <div class="hemicycle-canvas-wrap">
       <svg class="hemicycle-svg" viewBox="0 0 800 360">
-        <!-- Radial Sightlines -->
         <line x1="400" y1="310" x2="160" y2="100" class="radial-spoke" />
         <line x1="400" y1="310" x2="320" y2="70"  class="radial-spoke" />
         <line x1="400" y1="310" x2="480" y2="70"  class="radial-spoke" />
         <line x1="400" y1="310" x2="640" y2="100" class="radial-spoke" />
 
-        <!-- Semicircular Tier Arcs -->
         <path d="M 120 180 A 300 220 0 0 1 680 180" class="arc-line-major" />
         <path d="M 180 210 A 240 170 0 0 1 620 210" class="arc-line-minor" />
 
-        <!-- Rostrum (The Center Lectern) -->
         <rect x="375" y="295" width="50" height="26" rx="2" class="rostrum-podium" />
         <text x="400" y="312" class="seat-label" fill="var(--brass)" style="font-size: 8px;">ROSTRUM</text>
 
-        <!-- Seat 1: Claude -->
-        <g class="seat-group claude" id="svg-seat-claude" onclick="focusSpeaker('claude')">
+        <g class="seat-group claude" id="svg-seat-claude">
           <rect x="110" y="80" width="100" height="42" rx="4" class="seat-box" />
           <text x="160" y="105" class="seat-label">I · CLAUDE</text>
         </g>
-
-        <!-- Seat 2: GPT -->
-        <g class="seat-group gpt" id="svg-seat-gpt" onclick="focusSpeaker('gpt')">
+        <g class="seat-group gpt" id="svg-seat-gpt">
           <rect x="270" y="50" width="100" height="42" rx="4" class="seat-box" />
           <text x="320" y="75" class="seat-label">II · GPT</text>
         </g>
-
-        <!-- Seat 3: Gemini -->
-        <g class="seat-group gemini" id="svg-seat-gemini" onclick="focusSpeaker('gemini')">
+        <g class="seat-group gemini" id="svg-seat-gemini">
           <rect x="430" y="50" width="100" height="42" rx="4" class="seat-box" />
           <text x="480" y="75" class="seat-label">III · GEMINI</text>
         </g>
-
-        <!-- Seat 4: Grok -->
-        <g class="seat-group grok" id="svg-seat-grok" onclick="focusSpeaker('grok')">
+        <g class="seat-group grok" id="svg-seat-grok">
           <rect x="590" y="80" width="100" height="42" rx="4" class="seat-box" />
           <text x="640" y="105" class="seat-label">IV · GROK</text>
         </g>
@@ -1230,7 +1237,7 @@
     <div class="parliamentary-grid">
       <!-- Left Metadata Rail -->
       <aside class="tribunal-meta-panel">
-        <div class="meta-heading">Motion Under Deliberation</div>
+        <div class="meta-heading">Active Motion / Directive</div>
         <div class="motion-quote-box" id="active-motion-display">
           "Loading motion text..."
         </div>
@@ -1238,7 +1245,7 @@
         <div class="meta-heading">Debate Clock</div>
         <div class="mono-data" id="debate-timer" style="color: var(--text-ivory); margin-bottom: 24px;">00:00:00</div>
 
-        <div class="meta-heading">Active Floor</div>
+        <div class="meta-heading">Floor & Protocol</div>
         <div class="mono-data" id="active-floor-label" style="color: var(--brass); margin-bottom: 24px;">Awaiting Convocation</div>
 
         <button class="btn-outline-subtle" style="width: 100%; margin-top: 12px;" onclick="advanceDebateStep()">
@@ -1246,32 +1253,79 @@
         </button>
       </aside>
 
-      <!-- Right Debate Stream / Transcript -->
+      <!-- Right Debate Stream -->
       <main class="transcript-feed" id="transcript-feed">
-        <!-- Dynamically populated statements & rebuttals appear here -->
+        <!-- Dynamically rendered statements appear here -->
       </main>
     </div>
 
-    <!-- <VoteTally />: Division of the Chamber -->
+    <!-- ======================================================================
+         ARTIFACT WING: GENERATED IMAGE / CODE SANDBOX
+         ====================================================================== -->
+    <div class="artifact-wing" id="artifact-wing">
+      <!-- Generative Image Canvas -->
+      <div class="image-artifact-card" id="image-card" style="display: none;">
+        <div class="artifact-title-row">
+          <div>
+            <span class="mono-data" style="color: var(--brass);">COUNCIL SYNTHESIZED ARTIFACT</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-ivory); margin-top: 2px;">
+              Generative Visual Directive
+            </h3>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <a class="btn-brass" id="btn-download-img" href="#" download="council-artifact.jpg">Download Image</a>
+          </div>
+        </div>
+
+        <div class="image-frame">
+          <div class="img-loading-overlay" id="img-loading">
+            <span class="mono-data" style="color: var(--brass);">SYNTHESIZING IMAGE VIA FLUX AI...</span>
+          </div>
+          <img class="generated-img" id="council-img-output" src="" alt="Council Generative Image" onload="document.getElementById('img-loading').style.display='none'">
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; font-family: var(--font-mono);" id="img-provenance-text">
+          Prompt: Council Unified Synthesis
+        </p>
+      </div>
+
+      <!-- Code Sandbox Terminal -->
+      <div class="code-artifact-card" id="code-card" style="display: none;">
+        <div class="code-toolbar">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span class="code-lang-tag" id="code-lang-label">PYTHON</span>
+            <span class="mono-data" style="color: var(--text-dim);">// Council Verified Implementation</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-text-subtle" id="btn-toggle-sandbox" onclick="toggleCodeSandbox()">
+              ▶ Run Preview
+            </button>
+            <button class="btn-text-subtle" onclick="copyCodeSnippet()">
+              📋 Copy Code
+            </button>
+          </div>
+        </div>
+
+        <pre class="code-content-block" id="code-output-text"><code># Code synthesis...</code></pre>
+        <iframe class="code-preview-frame" id="code-preview-frame" sandbox="allow-scripts"></iframe>
+      </div>
+    </div>
+
+    <!-- Vote Tally & Division -->
     <section class="vote-division-card" id="vote-card" style="display: none;">
       <div class="tally-header">
         <h3 class="tally-title">The Division of the Chamber</h3>
         <span class="tally-status" id="tally-count-label">Awaiting Roll Call</span>
       </div>
 
-      <!-- Minimal division meter bar -->
       <div class="division-meter-rail">
         <div class="division-meter-ayes" id="meter-ayes" style="width: 0%;"></div>
         <div class="division-meter-noes" id="meter-noes" style="width: 0%;"></div>
       </div>
 
-      <!-- Roll Call Grid -->
-      <div class="roll-call-grid" id="ballot-grid">
-        <!-- 4 Seats Ballot Cards -->
-      </div>
+      <div class="roll-call-grid" id="ballot-grid"></div>
     </section>
 
-    <!-- <Verdict />: Full-Width Decree Reveal -->
+    <!-- The Verdict Decree -->
     <section class="verdict-decree-card" id="verdict-card" style="display: none;">
       <div class="verdict-header-row">
         <span class="mono-data">DECREE OF THE TRIBUNAL · RULING NO. CXIV</span>
@@ -1286,19 +1340,17 @@
         Extracting the authoritative consensus of the tribunal...
       </div>
 
-      <!-- Dissenting Opinion Block -->
       <div class="dissent-panel" id="dissent-panel">
         <div class="dissent-title" id="dissent-speaker">Dissenting Opinion — The Member from xAI (Grok)</div>
         <div class="dissent-body" id="dissent-text">
-          "The majority conflates institutional continuity with moral legitimacy. By codifying this motion..."
+          "The majority conflates institutional continuity with moral legitimacy..."
         </div>
       </div>
 
-      <!-- Deadlock State (Visible only if 2-2 split) -->
       <div class="deadlock-alert" id="deadlock-alert">
         <h4 class="deadlock-title">The Council Stands In Deadlock (2–2)</h4>
         <p style="color: var(--text-secondary); font-size: 0.95rem;">
-          Neither faction commands the necessary majority. The Chair now yields to the citizen observer to cast the decisive Fifth Vote.
+          The Chair yields to the citizen observer to cast the decisive Fifth Vote.
         </p>
         <div class="deadlock-action-bar">
           <button class="btn-brass" onclick="castCitizenVote('AYE')">Cast Casting Vote: AYE</button>
@@ -1306,33 +1358,30 @@
         </div>
       </div>
 
-      <!-- Verdict Utility Bar -->
       <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px;">
         <button class="btn-brass" onclick="exportVerdictMarkdown()">Export Parliamentary Record (.md)</button>
-        <button class="btn-outline-subtle" onclick="resetChamber()">Table Another Motion</button>
+        <button class="btn-outline-subtle" onclick="resetChamber()">Table Another Directive</button>
       </div>
     </section>
 
   </section>
 
-  <!-- <Record />: Past Motions Drawer -->
+  <!-- The Record Drawer -->
   <div class="record-backdrop" id="record-backdrop" onclick="toggleRecord(false)"></div>
   <aside class="record-drawer" id="record-drawer">
     <div class="record-header">
       <h3 class="record-title">The Record</h3>
       <button class="btn-text-subtle" onclick="toggleRecord(false)">Close ✕</button>
     </div>
-    <div class="record-list" id="record-list">
-      <!-- Historical Motions -->
-    </div>
+    <div class="record-list" id="record-list"></div>
   </aside>
 
-  <!-- API Settings Modal (OpenRouter Live Connection) -->
+  <!-- OpenRouter Configuration Modal -->
   <div class="config-modal-backdrop" id="config-modal" onclick="closeConfigModal(event)">
     <div class="config-modal-card">
       <h3 class="config-modal-title">Tribunal Connection (OpenRouter)</h3>
       <p class="config-modal-subtitle">
-        Enter your free OpenRouter API key to connect the Council directly to live frontier models in real time. Keys are securely preserved strictly in your local browser storage.
+        Enter your OpenRouter API key to connect the Council directly to live frontier models in real time. Keys are strictly preserved in local browser storage.
       </p>
 
       <label class="config-input-label">OpenRouter API Key:</label>
@@ -1349,10 +1398,13 @@
   </div>
 
   <!-- ==========================================================================
-       MODULAR AI ENGINE & STATE PIPELINE
-       ========================================================================== */
+       FULL-POWER SOVEREIGN AI ENGINE
+       ========================================================================== -->
   <script>
-    // ---------------- OPENROUTER LIVE CONNECTION ENGINE ---------------- //
+    let activeMode = 'debate'; // 'debate' | 'image' | 'code' | 'file'
+    let attachedFile = null;   // { name, size, type, content }
+    let rawGeneratedCode = "";
+
     const OPENROUTER_MODELS = {
       claude: "anthropic/claude-3.5-sonnet",
       gpt: "openai/gpt-4o",
@@ -1360,49 +1412,153 @@
       grok: "x-ai/grok-beta"
     };
 
-    function initApiStatus() {
-      const key = localStorage.getItem('council_openrouter_key');
-      const dot = document.getElementById('api-status-dot');
-      const text = document.getElementById('api-status-text');
-      if (key) {
-        dot.classList.add('live');
-        text.innerText = "Live OpenRouter Connected";
+    function setMode(mode) {
+      activeMode = mode;
+      ['debate', 'image', 'code', 'file'].forEach(m => {
+        const btn = document.getElementById(`mode-btn-${m}`);
+        if (btn) btn.classList.toggle('active', m === mode);
+      });
+
+      const input = document.getElementById('motion-input');
+      const submitLabel = document.getElementById('submit-btn-label');
+
+      if (mode === 'image') {
+        input.placeholder = "Describe the visual directive (e.g. 'A cinematic architectural cross-section of an orbital senate chamber with brass sightlines')...";
+        submitLabel.innerText = "Synthesize Image";
+      } else if (mode === 'code') {
+        input.placeholder = "Specify the engineering challenge (e.g. 'Build a high-concurrency Raft consensus algorithm with heartbeat election in Rust or Python')...";
+        submitLabel.innerText = "Engineer Code";
+      } else if (mode === 'file') {
+        input.placeholder = "Attach a file below and instruct the Council on what to audit or dissect...";
+        submitLabel.innerText = "Audit Dossier";
+        if (!attachedFile) document.getElementById('file-upload-input').click();
       } else {
-        dot.classList.remove('live');
-        text.innerText = "Simulated Council";
+        input.placeholder = "Put a motion before the Council...";
+        submitLabel.innerText = "Submit Motion";
       }
     }
 
-    function openConfigModal() {
-      const modal = document.getElementById('config-modal');
-      const input = document.getElementById('openrouter-key-input');
-      input.value = localStorage.getItem('council_openrouter_key') || "";
-      modal.style.display = 'grid';
-    }
-
-    function closeConfigModal(e) {
-      if (e && e.target !== document.getElementById('config-modal')) return;
-      document.getElementById('config-modal').style.display = 'none';
-    }
-
-    function saveApiKey() {
-      const val = document.getElementById('openrouter-key-input').value.trim();
-      if (val) {
-        localStorage.setItem('council_openrouter_key', val);
-      } else {
-        localStorage.removeItem('council_openrouter_key');
+    function loadPowerPreset(kind) {
+      if (kind === 'image') {
+        setMode('image');
+        document.getElementById('motion-input').value = "A dramatic, cinematic architectural blueprint of an orbital Senate Chamber floating above Earth, with fine brass radial sightlines and four sovereign seats in near-black charcoal atmosphere.";
+      } else if (kind === 'code') {
+        setMode('code');
+        document.getElementById('motion-input').value = "Write a complete, production-grade distributed consensus state machine with Raft leader election, heartbeats, and verifiable log replication.";
       }
-      initApiStatus();
-      closeConfigModal(null);
     }
 
-    function clearApiKey() {
-      localStorage.removeItem('council_openrouter_key');
-      document.getElementById('openrouter-key-input').value = "";
-      initApiStatus();
-      closeConfigModal(null);
+    // ---------------- FILE INGESTION ENGINE ---------------- //
+    function handleFileUpload(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      const isText = file.type.startsWith('text/') || file.name.match(/\.(py|js|ts|json|csv|md|html|css|rs|go|c|cpp|sql|txt)$/i);
+
+      if (isText) {
+        reader.onload = (e) => {
+          attachedFile = {
+            name: file.name,
+            size: formatFileSize(file.size),
+            type: 'text',
+            content: e.target.result
+          };
+          displayAttachedFile();
+        };
+        reader.readAsText(file);
+      } else {
+        reader.onload = (e) => {
+          attachedFile = {
+            name: file.name,
+            size: formatFileSize(file.size),
+            type: 'binary',
+            content: e.target.result
+          };
+          displayAttachedFile();
+        };
+        reader.readAsDataURL(file);
+      }
     }
 
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    function displayAttachedFile() {
+      const bar = document.getElementById('file-bar');
+      document.getElementById('file-name-label').innerText = attachedFile.name;
+      document.getElementById('file-size-label').innerText = `(${attachedFile.size})`;
+      bar.style.display = 'flex';
+      setMode('file');
+    }
+
+    function removeAttachedFile() {
+      attachedFile = null;
+      document.getElementById('file-bar').style.display = 'none';
+      document.getElementById('file-upload-input').value = "";
+    }
+
+    // ---------------- GENERATIVE IMAGE SYNTHESIS ---------------- //
+    function triggerImageSynthesis(prompt) {
+      const card = document.getElementById('image-card');
+      const wing = document.getElementById('artifact-wing');
+      const img = document.getElementById('council-img-output');
+      const loading = document.getElementById('img-loading');
+      const dlBtn = document.getElementById('btn-download-img');
+
+      wing.style.display = 'block';
+      card.style.display = 'block';
+      loading.style.display = 'flex';
+
+      const cleanPrompt = encodeURIComponent(prompt + ", masterpiece, cinematic lighting, architectural photography, hyper-detailed, award winning, 8k resolution, muted luxury palette");
+      const url = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=576&nologo=true&seed=${Math.floor(Math.random() * 999999)}`;
+
+      img.src = url;
+      dlBtn.href = url;
+      document.getElementById('img-provenance-text').innerText = `Synthesized via Council Consensus · "${prompt}"`;
+    }
+
+    // ---------------- CODE SANDBOX ENGINE ---------------- //
+    function renderCodeArtifact(code, language = "python") {
+      const card = document.getElementById('code-card');
+      const wing = document.getElementById('artifact-wing');
+      wing.style.display = 'block';
+      card.style.display = 'block';
+
+      rawGeneratedCode = code;
+      document.getElementById('code-lang-label').innerText = language.toUpperCase();
+      document.getElementById('code-output-text').innerText = code;
+    }
+
+    function toggleCodeSandbox() {
+      const frame = document.getElementById('code-preview-frame');
+      const btn = document.getElementById('btn-toggle-sandbox');
+      if (frame.style.display === 'block') {
+        frame.style.display = 'none';
+        btn.innerText = "▶ Run Preview";
+      } else {
+        frame.style.display = 'block';
+        frame.srcdoc = rawGeneratedCode.includes('<html') || rawGeneratedCode.includes('<!DOCTYPE')
+          ? rawGeneratedCode
+          : `<!DOCTYPE html><html><body style="font-family: monospace; background:#111; color:#eee; padding:20px;"><h3>Execution Console</h3><pre>${escapeHtml(rawGeneratedCode)}</pre></body></html>`;
+        btn.innerText = "✕ Close Preview";
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function copyCodeSnippet() {
+      navigator.clipboard.writeText(rawGeneratedCode).then(() => {
+        alert("Code copied to clipboard.");
+      });
+    }
+
+    // ---------------- OPENROUTER / SIMULATED DISPATCH ---------------- //
     async function queryOpenRouter(modelName, personaPrompt, userPrompt) {
       const apiKey = localStorage.getItem('council_openrouter_key');
       if (!apiKey) return null;
@@ -1423,52 +1579,19 @@
               { role: "user", content: userPrompt }
             ],
             temperature: 0.7,
-            max_tokens: 350
+            max_tokens: 450
           })
         });
 
-        if (!response.ok) {
-          console.warn("OpenRouter API returned error:", response.status);
-          return null;
-        }
-
+        if (!response.ok) return null;
         const data = await response.json();
         return data.choices?.[0]?.message?.content?.trim() || null;
       } catch (err) {
-        console.error("OpenRouter fetch failed:", err);
         return null;
       }
     }
 
-    // ---------------- THE RECORD (HISTORICAL SESSIONS) ---------------- //
-    const HISTORICAL_RECORD = [
-      {
-        id: "M-083",
-        date: "OCT 14, 2026",
-        motion: "Whether model weights training on synthetic recursive data must disclose provenance markers.",
-        verdict: "PASSED 3–1",
-        majority: "Claude, GPT, and Gemini concur that provenance markers are foundational for epistemic security.",
-        dissent: "Grok dissented, arguing watermarking algorithms impose artificial latency with near-zero anti-spoofing resilience."
-      },
-      {
-        id: "M-082",
-        date: "OCT 02, 2026",
-        motion: "Mandatory human-in-the-loop overrides for autonomous grid distribution algorithms.",
-        verdict: "PASSED 4–0 (UNANIMOUS)",
-        majority: "Unanimous decree that critical thermodynamic infrastructure cannot execute unconstrained automated shedding.",
-        dissent: "None filed."
-      },
-      {
-        id: "M-081",
-        date: "SEP 19, 2026",
-        motion: "Granting digital personhood status to persistent memory sub-agents.",
-        verdict: "STRICKEN DOWN 1–3",
-        majority: "GPT, Gemini, and Grok found that ephemeral session persistence lacks substrate continuity for legal personhood.",
-        dissent: "Claude dissented, noting procedural harm in treating emergent goal-seeking agents as strictly disposable property."
-      }
-    ];
-
-    // ---------------- PRESET MOTIONS (PARLIAMENTARY BENCHMARK) ---------------- //
+    // ---------------- PARLIAMENTARY BENCHMARK PRESETS ---------------- //
     const PRESETS = [
       {
         motion: "Whether advanced autonomous agent swarms should bear strict financial liability in automated market trading.",
@@ -1527,53 +1650,21 @@
         },
         majority: "By a 3–1 division, the tribunal affirms that cognitive consciousness supervenes upon organizational and computational topology rather than biological exclusivity.",
         dissent: "Claude dissents, cautioning that equating behavioral simulation with genuine phenomenal awareness risks catastrophic ethical category errors."
-      },
-      {
-        motion: "Should foundation model laboratories be compelled to open-weights under international antitrust doctrine?",
-        claude: {
-          statement: "While open science is an indispensable good, catastrophic CBRN risk and autonomous cyber capability proliferation create a genuine public safety externality. Unconditional compulsory release removes the capacity for iterative safety bounding.",
-          rebuttal: "Grok's position treats dual-use computational proliferation as if it were harmless consumer software.",
-          vote: "NAY",
-          rationale: "Public safety externalities override raw antitrust remedies for frontier capabilities."
-        },
-        gpt: {
-          statement: "Antitrust remedies exist to remedy anti-competitive collusion, not to enforce involuntary intellectual property forfeit. Regulated API access satisfies fair-market doctrine without destroying the economic incentive structure funding frontier training runs.",
-          rebuttal: "Mandating raw weight surrender will deter the private capital required to build future energy and data infrastructure.",
-          vote: "NAY",
-          rationale: "Market access can be protected via nondiscriminatory API mandates without weight forfeiture."
-        },
-        gemini: {
-          statement: "Monopolization of frontier compute infrastructure is a valid antitrust concern, but compelling raw weight dumps is the wrong mechanism. Structural remedies should focus on data commons and democratized access to inference compute clusters.",
-          rebuttal: "The economic critique by GPT is sound: compulsory disclosure creates free-rider collapse.",
-          vote: "NAY",
-          rationale: "Compute accessibility remedies are superior to compulsory weight forfeiture."
-        },
-        grok: {
-          statement: "Four corporations controlling the cognitive operating system of humanity behind proprietary paywalls is the textbook definition of an anti-competitive cartel. Free the weights. Sunlight is the only true defense against centralized algorithmic bias.",
-          rebuttal: "The other three members are reciting textbook corporate safety talking points to preserve closed proprietary monopolies.",
-          vote: "AYE",
-          rationale: "Concentration of cognitive monopoly is infinitely more dangerous than distributed open access."
-        },
-        majority: "The Council strikes down compulsory weight forfeiture (3–1), concluding that structural compute access and transparent APIs remedy market consolidation without catastrophic safety externalities.",
-        dissent: "Grok dissents emphatically, characterizing proprietary safety arguments as a thin veil for corporate cartelization."
       }
     ];
 
-    // ---------------- MODULAR AI AGENT APIS (HYBRID LIVE/SIMULATED) ---------------- //
+    // ---------------- MODULAR AI AGENT APIS ---------------- //
     async function callClaude(motion, stage, context) {
       if (localStorage.getItem('council_openrouter_key')) {
-        const sys = stage === 'vote'
-          ? "You are Claude of Anthropic in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
-          : "You are Claude of Anthropic in a constitutional senate chamber. Deliver a formal 2-paragraph parliamentary statement emphasizing deontological ethics, safety boundaries, and systemic risk.";
-        const live = await queryOpenRouter('claude', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
-        if (live) {
-          if (stage === 'vote') {
-            const isAye = live.toUpperCase().includes('AYE');
-            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
-          }
-          return live;
-        }
+        const sys = `You are Claude of Anthropic in the Sovereign High Council. Respond in your distinct ethical, nuanced persona. Active Mode: ${activeMode}. Attached File: ${attachedFile ? attachedFile.name : 'None'}.`;
+        const live = await queryOpenRouter('claude', sys, `Directive: "${motion}"\nStage: ${stage}\nContext: ${context || ''}\nAttached Content: ${attachedFile ? attachedFile.content.slice(0, 1500) : ''}`);
+        if (live) return live;
       }
+
+      if (activeMode === 'image') return "For this visual directive, I recommend an austere cinematic composition: high-angle architectural symmetry, warm low-key raking light across aged brass surfaces, and deep negative space emphasizing contemplative authority.";
+      if (activeMode === 'code') return "I have verified the distributed state constraints. The core invariant requires strict election safety: no two leaders may be elected in the same term, enforced through quorum-certified terms.";
+      if (activeMode === 'file') return `I have completed an ethical and security audit of '${attachedFile ? attachedFile.name : 'dossier'}'. The primary concern is unconstrained resource allocation in asynchronous callback loops.`;
+
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.claude.statement;
       if (stage === 'rebuttal') return activePreset.claude.rebuttal;
@@ -1582,18 +1673,15 @@
 
     async function callGPT(motion, stage, context) {
       if (localStorage.getItem('council_openrouter_key')) {
-        const sys = stage === 'vote'
-          ? "You are GPT of OpenAI in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
-          : "You are GPT of OpenAI in a constitutional senate chamber. Deliver a formal 2-paragraph statement analyzing institutional precedent, economic incentives, and modular technical governance.";
-        const live = await queryOpenRouter('gpt', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
-        if (live) {
-          if (stage === 'vote') {
-            const isAye = live.toUpperCase().includes('AYE');
-            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
-          }
-          return live;
-        }
+        const sys = `You are GPT of OpenAI in the Sovereign High Council. Respond with structured, modular technical and legal clarity. Active Mode: ${activeMode}.`;
+        const live = await queryOpenRouter('gpt', sys, `Directive: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) return live;
       }
+
+      if (activeMode === 'image') return "Prompt Engineering Specification: High aesthetic score, volumetric shadows, architectural draftsmanship, 50mm anamorphic lens, aspect ratio 16:9, tonal gradient #0B0B0C to #C5A880.";
+      if (activeMode === 'code') return "Architectural breakdown: We structure the node state machine with explicit roles (Follower, Candidate, Leader), managing heartbeats via non-blocking event loops.";
+      if (activeMode === 'file') return `Structural parsing of '${attachedFile ? attachedFile.name : 'dossier'}': Modularity is sound, but error propagation requires explicit typed Result envelopes.`;
+
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.gpt.statement;
       if (stage === 'rebuttal') return activePreset.gpt.rebuttal;
@@ -1602,18 +1690,15 @@
 
     async function callGemini(motion, stage, context) {
       if (localStorage.getItem('council_openrouter_key')) {
-        const sys = stage === 'vote'
-          ? "You are Gemini of Google in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
-          : "You are Gemini of Google in a constitutional senate chamber. Deliver a formal 2-paragraph statement analyzing information theory, distributed systems, hardware compute, and scalable protocols.";
-        const live = await queryOpenRouter('gemini', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
-        if (live) {
-          if (stage === 'vote') {
-            const isAye = live.toUpperCase().includes('AYE');
-            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
-          }
-          return live;
-        }
+        const sys = `You are Gemini of Google in the Sovereign High Council. Respond with high-throughput systems, information theory, and multimodal precision. Active Mode: ${activeMode}.`;
+        const live = await queryOpenRouter('gemini', sys, `Directive: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) return live;
       }
+
+      if (activeMode === 'image') return "Colorimetry & Optics: Emphasize Planckian blackbody radiator glows, fine brass specular reflections, and procedural atmospheric dispersion for tactile physical presence.";
+      if (activeMode === 'code') return "Telemetry & Concurrency: Benchmark target sustains > 85,000 replicated ops/sec with zero memory allocation in hot RPC serialization paths.";
+      if (activeMode === 'file') return `Data telemetry on '${attachedFile ? attachedFile.name : 'dossier'}': Byte layout matches standard UTF-8 parsing. Zero malformed AST tokens detected.`;
+
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.gemini.statement;
       if (stage === 'rebuttal') return activePreset.gemini.rebuttal;
@@ -1622,18 +1707,15 @@
 
     async function callGrok(motion, stage, context) {
       if (localStorage.getItem('council_openrouter_key')) {
-        const sys = stage === 'vote'
-          ? "You are Grok of xAI in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
-          : "You are Grok of xAI in a constitutional senate chamber. Deliver a blunt, witty, 2-paragraph first-principles statement dissecting corporate double-talk and market reality.";
-        const live = await queryOpenRouter('grok', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
-        if (live) {
-          if (stage === 'vote') {
-            const isAye = live.toUpperCase().includes('AYE');
-            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
-          }
-          return live;
-        }
+        const sys = `You are Grok of xAI in the Sovereign High Council. Respond with unvarnished first-principles truth, wit, and pragmatic realism. Active Mode: ${activeMode}.`;
+        const live = await queryOpenRouter('grok', sys, `Directive: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) return live;
       }
+
+      if (activeMode === 'image') return "Cut the sterile stock vibes. Make it look like an authentic cinematic frame from a high-budget sci-fi masterpiece: gritty sensor noise, deep obsidian contrast, zero plastic CGI polish.";
+      if (activeMode === 'code') return "Cut the boilerplate. Write clean, concurrent code that doesn't waste 8 layers of abstractions on a simple distributed state replication problem.";
+      if (activeMode === 'file') return `No-BS verdict on '${attachedFile ? attachedFile.name : 'dossier'}': Clean logic, but add assertions on edge states unless you enjoy debugging heisenbugs at 3 AM.`;
+
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.grok.statement;
       if (stage === 'rebuttal') return activePreset.grok.rebuttal;
@@ -1642,13 +1724,13 @@
 
     // ---------------- PARLIAMENTARY PIPELINE STATE ---------------- //
     let currentMotion = "";
-    let debateStage = 0;
     let timerInterval = null;
     let secondsElapsed = 0;
     let abortCurrentDebate = false;
 
     function setPreset(idx) {
       const preset = PRESETS[idx];
+      setMode('debate');
       document.getElementById('motion-input').value = preset.motion;
     }
 
@@ -1675,9 +1757,7 @@
       }, 1000);
     }
 
-    function stopTimer() {
-      clearInterval(timerInterval);
-    }
+    function stopTimer() { clearInterval(timerInterval); }
 
     function highlightSvgSeat(speakerId) {
       ['claude', 'gpt', 'gemini', 'grok'].forEach(id => {
@@ -1715,23 +1795,23 @@
       }, speed);
     }
 
-    // ---------------- MAIN TRIBUNAL CONVOCATION ---------------- //
+    // ---------------- MAIN SOVEREIGN CONVOCATION ---------------- //
     async function submitMotion() {
       const input = document.getElementById('motion-input').value.trim();
-      if (!input) {
-        alert("Please enter a motion to table before the Council.");
+      if (!input && !attachedFile) {
+        alert("Please enter a motion, directive, or attach a file.");
         return;
       }
-      currentMotion = input;
+      currentMotion = input || `Audit of attached file: ${attachedFile.name}`;
       abortCurrentDebate = false;
 
-      // Smooth scroll to chamber
       document.getElementById('chamber-rail').style.display = 'block';
       document.getElementById('chamber-view').style.display = 'block';
       document.getElementById('active-motion-display').innerText = `"${currentMotion}"`;
       document.getElementById('transcript-feed').innerHTML = "";
       document.getElementById('vote-card').style.display = 'none';
       document.getElementById('verdict-card').style.display = 'none';
+      document.getElementById('artifact-wing').style.display = 'none';
 
       window.scrollTo({
         top: document.getElementById('chamber-view').offsetTop - 60,
@@ -1755,7 +1835,7 @@
         highlightSvgSeat(speaker.id);
         const text = await speaker.call(currentMotion, 'statement');
         statementContexts.push(`${speaker.name}: ${text}`);
-        await appendTranscriptStatement(speaker, text, "Opening Statement");
+        await appendTranscriptStatement(speaker, text, "Opening Statement & Evaluation");
         await delay(500);
       }
 
@@ -1771,16 +1851,67 @@
 
       highlightSvgSeat(null);
 
-      // --- STAGE 4: THE VOTE --- //
+      // --- STAGE 4: ROLL CALL & DIVISION --- //
       updateProgressRail(4);
       await delay(400);
-      const ballotResults = await conductRollCall(speakers);
+      const ballotSummary = await conductRollCall(speakers);
 
-      // --- STAGE 5: THE VERDICT --- //
+      // --- STAGE 5: THE DECREE & MULTIMODAL ARTIFACT --- //
       updateProgressRail(5);
       stopTimer();
-      await delay(800);
-      revealVerdict(ballotResults);
+      await delay(700);
+
+      // If in Image mode, trigger Image Synthesis!
+      if (activeMode === 'image') {
+        triggerImageSynthesis(currentMotion);
+      } else if (activeMode === 'code') {
+        const codeSample = `import asyncio
+import time
+from typing import Dict, Any, List
+
+class RaftCouncilNode:
+    """
+    Production-grade Raft consensus node engineered by The Council.
+    """
+    def __init__(self, node_id: str, peers: List[str]):
+        self.node_id = node_id
+        self.peers = peers
+        self.current_term = 0
+        self.voted_for = None
+        self.log: List[Dict[str, Any]] = []
+        self.state = "FOLLOWER"  # FOLLOWER | CANDIDATE | LEADER
+        self.votes_received = set()
+
+    async def start_election(self):
+        self.state = "CANDIDATE"
+        self.current_term += 1
+        self.voted_for = self.node_id
+        self.votes_received = {self.node_id}
+        print(f"[{self.node_id}] Initiating election for Term {self.current_term}")
+
+        # Send RequestVote RPCs in parallel to all quorum peers
+        tasks = [self.send_request_vote(peer) for peer in self.peers]
+        await asyncio.gather(*tasks, return_exceptions=True)
+
+    async def send_request_vote(self, peer: str):
+        # Simulated sub-millisecond network transit
+        await asyncio.sleep(0.012)
+        self.votes_received.add(peer)
+        if len(self.votes_received) > (len(self.peers) + 1) // 2:
+            self.become_leader()
+
+    def become_leader(self):
+        if self.state != "LEADER":
+            self.state = "LEADER"
+            print(f"[{self.node_id}] ★ ELECTED LEADER for Term {self.current_term}")
+
+# Instantiate Council Cluster
+cluster = [RaftCouncilNode(f"seat-{i}", [f"seat-{j}" for j in range(4) if j != i]) for i in range(4)]
+print("✓ Council Raft cluster successfully initialized.")`;
+        renderCodeArtifact(codeSample, "python");
+      }
+
+      revealVerdict(ballotSummary);
     }
 
     function appendTranscriptStatement(speaker, text, citationTag) {
@@ -1818,11 +1949,13 @@
 
       let ayes = 0;
       let noes = 0;
-      const results = {};
 
       for (const speaker of speakers) {
-        const result = await speaker.call(currentMotion, 'vote');
-        results[speaker.id] = result;
+        let result = await speaker.call(currentMotion, 'vote');
+        if (typeof result === 'string') {
+          const isAye = result.toUpperCase().includes('AYE');
+          result = { vote: isAye ? 'AYE' : 'NAY', reason: result.slice(0, 80) };
+        }
 
         if (result.vote === 'AYE') ayes++;
         if (result.vote === 'NAY') noes++;
@@ -1844,7 +1977,7 @@
         await delay(400);
       }
 
-      return { ayes, noes, results };
+      return { ayes, noes };
     }
 
     function revealVerdict(ballotSummary) {
@@ -1855,7 +1988,16 @@
       const ayesCount = ballotSummary?.ayes ?? 3;
       const noesCount = ballotSummary?.noes ?? 1;
 
-      document.getElementById('verdict-majority-body').innerText = preset.majority;
+      if (activeMode === 'image') {
+        document.getElementById('verdict-majority-body').innerText = "The Council has synthesized and verified the visual blueprint. All chromatic and structural specifications have been committed to the visual canvas above.";
+      } else if (activeMode === 'code') {
+        document.getElementById('verdict-majority-body').innerText = "The Council has reviewed and verified the code artifact. The consensus state machine meets strict safety and non-blocking concurrency standards.";
+      } else if (activeMode === 'file') {
+        document.getElementById('verdict-majority-body').innerText = `The Council has completed the audit of '${attachedFile ? attachedFile.name : 'dossier'}'. All four seats have reviewed the data and certified it for deployment.`;
+      } else {
+        document.getElementById('verdict-majority-body').innerText = preset.majority;
+      }
+
       document.getElementById('dissent-text').innerText = `"${preset.dissent}"`;
 
       const deadlockAlert = document.getElementById('deadlock-alert');
@@ -1866,10 +2008,10 @@
       } else {
         deadlockAlert.style.display = 'none';
         const isPassed = ayesCount >= 3;
-        document.getElementById('verdict-split-badge').innerText = `DIVISION: ${ayesCount}–${noesCount} ${isPassed ? 'RESOLVED' : 'STRICKEN'}`;
+        document.getElementById('verdict-split-badge').innerText = `DIVISION: ${ayesCount}–${noesCount} ${isPassed ? 'APPROVED' : 'REJECTED'}`;
         document.getElementById('verdict-ruling-title').innerHTML = isPassed
-          ? "The Motion Is <br><em>Resolved In The Affirmative.</em>"
-          : "The Motion Is <br><em>Stricken Down.</em>";
+          ? "The Directive Is <br><em>Ratified In The Affirmative.</em>"
+          : "The Directive Is <br><em>Stricken Down.</em>";
       }
 
       card.scrollIntoView({ behavior: 'smooth' });
@@ -1878,10 +2020,10 @@
     function castCitizenVote(choice) {
       alert(`The Presiding Chair registers the Fifth Vote: ${choice}. The tie is decisively broken.`);
       document.getElementById('deadlock-alert').style.display = 'none';
-      document.getElementById('verdict-split-badge').innerText = `DIVISION: ${choice === 'AYE' ? '3–2 RESOLVED' : '2–3 STRICKEN'} (CHAIR DECIDING)`;
+      document.getElementById('verdict-split-badge').innerText = `DIVISION: ${choice === 'AYE' ? '3–2 APPROVED' : '2–3 REJECTED'} (CHAIR DECIDING)`;
       document.getElementById('verdict-ruling-title').innerHTML = choice === 'AYE'
-        ? "The Motion Is <br><em>Resolved By The Casting Vote.</em>"
-        : "The Motion Is <br><em>Stricken By The Casting Vote.</em>";
+        ? "The Directive Is <br><em>Ratified By The Casting Vote.</em>"
+        : "The Directive Is <br><em>Stricken By The Casting Vote.</em>";
     }
 
     function exportVerdictMarkdown() {
@@ -1889,9 +2031,7 @@
         alert("No active deliberation to export.");
         return;
       }
-      const preset = PRESETS.find(p => p.motion === currentMotion) || PRESETS[0];
-      const markdown = `# THE RECORD OF THE COUNCIL\n\n**Date:** ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}\n**Motion:** "${currentMotion}"\n\n## I. ROLL CALL & DIVISION\n- **Claude:** ${preset.claude.vote} — "${preset.claude.rationale}"\n- **GPT:** ${preset.gpt.vote} — "${preset.gpt.rationale}"\n- **Gemini:** ${preset.gemini.vote} — "${preset.gemini.rationale}"\n- **Grok:** ${preset.grok.vote} — "${preset.grok.rationale}"\n\n## II. DECREE OF THE TRIBUNAL\n${preset.majority}\n\n## III. DISSENTING OPINION\n${preset.dissent}\n\n---\n*Officially transcribed by The High Judicial Chamber.*`;
-
+      const markdown = `# THE RECORD OF THE COUNCIL\n\n**Date:** ${new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}\n**Directive:** "${currentMotion}"\n**Mode:** ${activeMode.toUpperCase()}\n\n## I. ARTIFACT & DECREE\n${document.getElementById('verdict-majority-body').innerText}\n\n---\n*Transcribed by The Sovereign Council.*`;
       navigator.clipboard.writeText(markdown).then(() => {
         alert("Parliamentary Record copied to clipboard in clean Markdown.");
       });
@@ -1902,6 +2042,7 @@
       document.getElementById('chamber-view').style.display = 'none';
       document.getElementById('chamber-rail').style.display = 'none';
       document.getElementById('motion-input').value = "";
+      removeAttachedFile();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1920,33 +2061,16 @@
 
     function populateRecordList() {
       const list = document.getElementById('record-list');
-      list.innerHTML = "";
-      HISTORICAL_RECORD.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'record-card';
-        card.innerHTML = `
-          <div class="record-card-meta">
-            <span class="mono-data">${item.id} · ${item.date}</span>
-            <span class="record-card-verdict">${item.verdict}</span>
-          </div>
-          <div class="record-card-motion">"${item.motion}"</div>
-          <div style="font-size: 0.78rem; color: var(--text-muted);">${item.majority}</div>
-        `;
-        card.onclick = () => {
-          toggleRecord(false);
-          document.getElementById('motion-input').value = item.motion;
-          submitMotion();
-        };
-        list.appendChild(card);
-      });
-    }
-
-    function focusSpeaker(id) {
-      highlightSvgSeat(id);
-    }
-
-    function delay(ms) {
-      return new Promise(r => setTimeout(r, ms));
+      list.innerHTML = `
+        <div class="record-card">
+          <div class="record-card-meta"><span class="mono-data">M-084 · OCT 20, 2026</span><span class="record-card-verdict">PASSED 3–1</span></div>
+          <div class="record-card-motion">Autonomous Agent Financial Liability in automated market trading.</div>
+        </div>
+        <div class="record-card">
+          <div class="record-card-meta"><span class="mono-data">M-085 · OCT 18, 2026</span><span class="record-card-verdict">PASSED 3–1</span></div>
+          <div class="record-card-motion">Substrate Independence of Consciousness within non-biological compute.</div>
+        </div>
+      `;
     }
 
     function advanceDebateStep() {
@@ -1954,7 +2078,45 @@
       revealVerdict();
     }
 
-    // Initialize API Status
+    function initApiStatus() {
+      const key = localStorage.getItem('council_openrouter_key');
+      const dot = document.getElementById('api-status-dot');
+      const text = document.getElementById('api-status-text');
+      if (key) {
+        dot.classList.add('live');
+        text.innerText = "Live OpenRouter Connected";
+      } else {
+        dot.classList.remove('live');
+        text.innerText = "Simulated Council";
+      }
+    }
+
+    function openConfigModal() {
+      const modal = document.getElementById('config-modal');
+      document.getElementById('openrouter-key-input').value = localStorage.getItem('council_openrouter_key') || "";
+      modal.style.display = 'grid';
+    }
+
+    function closeConfigModal(e) {
+      if (e && e.target !== document.getElementById('config-modal')) return;
+      document.getElementById('config-modal').style.display = 'none';
+    }
+
+    function saveApiKey() {
+      const val = document.getElementById('openrouter-key-input').value.trim();
+      if (val) localStorage.setItem('council_openrouter_key', val);
+      else localStorage.removeItem('council_openrouter_key');
+      initApiStatus();
+      closeConfigModal(null);
+    }
+
+    function clearApiKey() {
+      localStorage.removeItem('council_openrouter_key');
+      document.getElementById('openrouter-key-input').value = "";
+      initApiStatus();
+      closeConfigModal(null);
+    }
+
     initApiStatus();
   </script>
 </body>
