@@ -193,7 +193,36 @@
     .nav-controls {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
+    }
+
+    .api-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-hairline);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .api-status-badge:hover {
+      border-color: var(--brass);
+      color: var(--text-ivory);
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+    .status-dot.live {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
     }
 
     .btn-text-subtle {
@@ -607,11 +636,6 @@
       font-weight: 600;
       color: var(--text-ivory);
     }
-    .speaker-jurisdiction {
-      color: var(--text-muted);
-      font-size: 0.72rem;
-      font-weight: 400;
-    }
 
     .speaker-citation {
       font-family: var(--font-mono);
@@ -867,6 +891,67 @@
     }
 
     /* ==========================================================================
+       OPENROUTER CONFIGURATION DRAWER / MODAL
+       ========================================================================== */
+    .config-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 300;
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+    .config-modal-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .config-modal-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--text-ivory);
+      margin-bottom: 8px;
+    }
+    .config-modal-subtitle {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .config-input-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--brass);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .config-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-base);
+      border: 1px solid var(--border-refined);
+      color: var(--text-ivory);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+    .config-input:focus {
+      border-color: var(--brass);
+      outline: none;
+    }
+
+    /* ==========================================================================
        THE RECORD (PAST MOTIONS ARCHIVE DRAWER)
        ========================================================================== */
     .record-drawer {
@@ -992,6 +1077,10 @@
     </a>
 
     <div class="nav-controls">
+      <div class="api-status-badge" onclick="openConfigModal()">
+        <span class="status-dot" id="api-status-dot"></span>
+        <span id="api-status-text">Simulated Council</span>
+      </div>
       <button class="btn-text-subtle" onclick="toggleRecord(true)">
         <span>The Record</span>
         <span>(04)</span>
@@ -1238,10 +1327,119 @@
     </div>
   </aside>
 
+  <!-- API Settings Modal (OpenRouter Live Connection) -->
+  <div class="config-modal-backdrop" id="config-modal" onclick="closeConfigModal(event)">
+    <div class="config-modal-card">
+      <h3 class="config-modal-title">Tribunal Connection (OpenRouter)</h3>
+      <p class="config-modal-subtitle">
+        Enter your free OpenRouter API key to connect the Council directly to live frontier models in real time. Keys are securely preserved strictly in your local browser storage.
+      </p>
+
+      <label class="config-input-label">OpenRouter API Key:</label>
+      <input type="password" class="config-input" id="openrouter-key-input" placeholder="sk-or-v1-...">
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+        <button class="btn-text-subtle" onclick="clearApiKey()">Disconnect / Use Simulator</button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-outline-subtle" onclick="closeConfigModal(null)">Cancel</button>
+          <button class="btn-brass" onclick="saveApiKey()">Save & Connect</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ==========================================================================
        MODULAR AI ENGINE & STATE PIPELINE
-       ========================================================================== -->
+       ========================================================================== */
   <script>
+    // ---------------- OPENROUTER LIVE CONNECTION ENGINE ---------------- //
+    const OPENROUTER_MODELS = {
+      claude: "anthropic/claude-3.5-sonnet",
+      gpt: "openai/gpt-4o",
+      gemini: "google/gemini-2.0-flash-exp:free",
+      grok: "x-ai/grok-beta"
+    };
+
+    function initApiStatus() {
+      const key = localStorage.getItem('council_openrouter_key');
+      const dot = document.getElementById('api-status-dot');
+      const text = document.getElementById('api-status-text');
+      if (key) {
+        dot.classList.add('live');
+        text.innerText = "Live OpenRouter Connected";
+      } else {
+        dot.classList.remove('live');
+        text.innerText = "Simulated Council";
+      }
+    }
+
+    function openConfigModal() {
+      const modal = document.getElementById('config-modal');
+      const input = document.getElementById('openrouter-key-input');
+      input.value = localStorage.getItem('council_openrouter_key') || "";
+      modal.style.display = 'grid';
+    }
+
+    function closeConfigModal(e) {
+      if (e && e.target !== document.getElementById('config-modal')) return;
+      document.getElementById('config-modal').style.display = 'none';
+    }
+
+    function saveApiKey() {
+      const val = document.getElementById('openrouter-key-input').value.trim();
+      if (val) {
+        localStorage.setItem('council_openrouter_key', val);
+      } else {
+        localStorage.removeItem('council_openrouter_key');
+      }
+      initApiStatus();
+      closeConfigModal(null);
+    }
+
+    function clearApiKey() {
+      localStorage.removeItem('council_openrouter_key');
+      document.getElementById('openrouter-key-input').value = "";
+      initApiStatus();
+      closeConfigModal(null);
+    }
+
+    async function queryOpenRouter(modelName, personaPrompt, userPrompt) {
+      const apiKey = localStorage.getItem('council_openrouter_key');
+      if (!apiKey) return null;
+
+      try {
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            "HTTP-Referer": window.location.origin || "https://saucek-does.github.io/Gen-Council/",
+            "X-Title": "The Council",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: OPENROUTER_MODELS[modelName] || "google/gemini-2.0-flash-exp:free",
+            messages: [
+              { role: "system", content: personaPrompt },
+              { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7,
+            max_tokens: 350
+          })
+        });
+
+        if (!response.ok) {
+          console.warn("OpenRouter API returned error:", response.status);
+          return null;
+        }
+
+        const data = await response.json();
+        return data.choices?.[0]?.message?.content?.trim() || null;
+      } catch (err) {
+        console.error("OpenRouter fetch failed:", err);
+        return null;
+      }
+    }
+
     // ---------------- THE RECORD (HISTORICAL SESSIONS) ---------------- //
     const HISTORICAL_RECORD = [
       {
@@ -1270,7 +1468,7 @@
       }
     ];
 
-    // ---------------- PRESET MOTIONS ---------------- //
+    // ---------------- PRESET MOTIONS (PARLIAMENTARY BENCHMARK) ---------------- //
     const PRESETS = [
       {
         motion: "Whether advanced autonomous agent swarms should bear strict financial liability in automated market trading.",
@@ -1361,9 +1559,21 @@
       }
     ];
 
-    // ---------------- MODULAR AI AGENT APIS (ASYNC SWAPPABLE) ---------------- //
-    // Plug real APIs into these functions whenever ready!
+    // ---------------- MODULAR AI AGENT APIS (HYBRID LIVE/SIMULATED) ---------------- //
     async function callClaude(motion, stage, context) {
+      if (localStorage.getItem('council_openrouter_key')) {
+        const sys = stage === 'vote'
+          ? "You are Claude of Anthropic in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
+          : "You are Claude of Anthropic in a constitutional senate chamber. Deliver a formal 2-paragraph parliamentary statement emphasizing deontological ethics, safety boundaries, and systemic risk.";
+        const live = await queryOpenRouter('claude', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) {
+          if (stage === 'vote') {
+            const isAye = live.toUpperCase().includes('AYE');
+            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
+          }
+          return live;
+        }
+      }
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.claude.statement;
       if (stage === 'rebuttal') return activePreset.claude.rebuttal;
@@ -1371,6 +1581,19 @@
     }
 
     async function callGPT(motion, stage, context) {
+      if (localStorage.getItem('council_openrouter_key')) {
+        const sys = stage === 'vote'
+          ? "You are GPT of OpenAI in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
+          : "You are GPT of OpenAI in a constitutional senate chamber. Deliver a formal 2-paragraph statement analyzing institutional precedent, economic incentives, and modular technical governance.";
+        const live = await queryOpenRouter('gpt', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) {
+          if (stage === 'vote') {
+            const isAye = live.toUpperCase().includes('AYE');
+            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
+          }
+          return live;
+        }
+      }
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.gpt.statement;
       if (stage === 'rebuttal') return activePreset.gpt.rebuttal;
@@ -1378,6 +1601,19 @@
     }
 
     async function callGemini(motion, stage, context) {
+      if (localStorage.getItem('council_openrouter_key')) {
+        const sys = stage === 'vote'
+          ? "You are Gemini of Google in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
+          : "You are Gemini of Google in a constitutional senate chamber. Deliver a formal 2-paragraph statement analyzing information theory, distributed systems, hardware compute, and scalable protocols.";
+        const live = await queryOpenRouter('gemini', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) {
+          if (stage === 'vote') {
+            const isAye = live.toUpperCase().includes('AYE');
+            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
+          }
+          return live;
+        }
+      }
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.gemini.statement;
       if (stage === 'rebuttal') return activePreset.gemini.rebuttal;
@@ -1385,6 +1621,19 @@
     }
 
     async function callGrok(motion, stage, context) {
+      if (localStorage.getItem('council_openrouter_key')) {
+        const sys = stage === 'vote'
+          ? "You are Grok of xAI in the High Judicial Chamber. Cast your vote (AYE or NAY) with a single-sentence rationale. Format strictly: AYE: [reason] or NAY: [reason]."
+          : "You are Grok of xAI in a constitutional senate chamber. Deliver a blunt, witty, 2-paragraph first-principles statement dissecting corporate double-talk and market reality.";
+        const live = await queryOpenRouter('grok', sys, `Motion: "${motion}"\nStage: ${stage}\nContext: ${context || ''}`);
+        if (live) {
+          if (stage === 'vote') {
+            const isAye = live.toUpperCase().includes('AYE');
+            return { vote: isAye ? 'AYE' : 'NAY', reason: live.replace(/^(AYE|NAY)[:\-\s]*/i, '').trim() };
+          }
+          return live;
+        }
+      }
       const activePreset = PRESETS.find(p => p.motion === motion) || PRESETS[0];
       if (stage === 'statement') return activePreset.grok.statement;
       if (stage === 'rebuttal') return activePreset.grok.rebuttal;
@@ -1393,7 +1642,7 @@
 
     // ---------------- PARLIAMENTARY PIPELINE STATE ---------------- //
     let currentMotion = "";
-    let debateStage = 0; // 0: Idle, 1: Motion, 2: Opening, 3: Rebuttal, 4: Vote, 5: Verdict
+    let debateStage = 0;
     let timerInterval = null;
     let secondsElapsed = 0;
     let abortCurrentDebate = false;
@@ -1443,7 +1692,7 @@
 
     function streamTextIntoElement(container, fullText, callback) {
       let index = 0;
-      const speed = 14; // refined fast cursor pacing
+      const speed = 14;
       const textNode = document.createTextNode("");
       const cursor = document.createElement("span");
       cursor.className = "typing-cursor";
@@ -1492,7 +1741,6 @@
       startTimer();
       updateProgressRail(2);
 
-      // --- STAGE 2: OPENING STATEMENTS --- //
       const speakers = [
         { id: 'claude', name: 'Claude of Anthropic', pip: 'pip-claude', call: callClaude },
         { id: 'gpt', name: 'GPT of OpenAI', pip: 'pip-gpt', call: callGPT },
@@ -1500,12 +1748,15 @@
         { id: 'grok', name: 'Grok of xAI', pip: 'pip-grok', call: callGrok }
       ];
 
+      // --- STAGE 2: OPENING STATEMENTS --- //
+      const statementContexts = [];
       for (const speaker of speakers) {
         if (abortCurrentDebate) return;
         highlightSvgSeat(speaker.id);
         const text = await speaker.call(currentMotion, 'statement');
+        statementContexts.push(`${speaker.name}: ${text}`);
         await appendTranscriptStatement(speaker, text, "Opening Statement");
-        await delay(600);
+        await delay(500);
       }
 
       // --- STAGE 3: CROSS-EXAMINATION --- //
@@ -1513,9 +1764,9 @@
       for (const speaker of speakers) {
         if (abortCurrentDebate) return;
         highlightSvgSeat(speaker.id);
-        const rebuttal = await speaker.call(currentMotion, 'rebuttal');
+        const rebuttal = await speaker.call(currentMotion, 'rebuttal', statementContexts.join("\n\n"));
         await appendTranscriptStatement(speaker, rebuttal, "Cross-Examination & Interlocution");
-        await delay(600);
+        await delay(500);
       }
 
       highlightSvgSeat(null);
@@ -1523,13 +1774,13 @@
       // --- STAGE 4: THE VOTE --- //
       updateProgressRail(4);
       await delay(400);
-      await conductRollCall(speakers);
+      const ballotResults = await conductRollCall(speakers);
 
       // --- STAGE 5: THE VERDICT --- //
       updateProgressRail(5);
       stopTimer();
       await delay(800);
-      revealVerdict();
+      revealVerdict(ballotResults);
     }
 
     function appendTranscriptStatement(speaker, text, citationTag) {
@@ -1567,9 +1818,12 @@
 
       let ayes = 0;
       let noes = 0;
+      const results = {};
 
       for (const speaker of speakers) {
         const result = await speaker.call(currentMotion, 'vote');
+        results[speaker.id] = result;
+
         if (result.vote === 'AYE') ayes++;
         if (result.vote === 'NAY') noes++;
 
@@ -1584,38 +1838,35 @@
         `;
         grid.appendChild(ballot);
 
-        // Update animated division meter
-        const total = ayes + noes;
         document.getElementById('meter-ayes').style.width = `${(ayes / 4) * 100}%`;
         document.getElementById('meter-noes').style.width = `${(noes / 4) * 100}%`;
         document.getElementById('tally-count-label').innerText = `AYES: ${ayes} · NOES: ${noes}`;
-        await delay(450);
+        await delay(400);
       }
+
+      return { ayes, noes, results };
     }
 
-    function revealVerdict() {
+    function revealVerdict(ballotSummary) {
       const preset = PRESETS.find(p => p.motion === currentMotion) || PRESETS[0];
       const card = document.getElementById('verdict-card');
       card.style.display = 'block';
 
+      const ayesCount = ballotSummary?.ayes ?? 3;
+      const noesCount = ballotSummary?.noes ?? 1;
+
       document.getElementById('verdict-majority-body').innerText = preset.majority;
       document.getElementById('dissent-text').innerText = `"${preset.dissent}"`;
 
-      // Check for deadlock (e.g. 2-2)
-      const ayesCount = (preset.claude.vote === 'AYE' ? 1 : 0) +
-                        (preset.gpt.vote === 'AYE' ? 1 : 0) +
-                        (preset.gemini.vote === 'AYE' ? 1 : 0) +
-                        (preset.grok.vote === 'AYE' ? 1 : 0);
-
       const deadlockAlert = document.getElementById('deadlock-alert');
-      if (ayesCount === 2) {
+      if (ayesCount === 2 && noesCount === 2) {
         deadlockAlert.style.display = 'block';
         document.getElementById('verdict-split-badge').innerText = "DIVISION: 2–2 DEADLOCK";
         document.getElementById('verdict-ruling-title').innerHTML = "The Council Stands <br><em>In Equal Division.</em>";
       } else {
         deadlockAlert.style.display = 'none';
         const isPassed = ayesCount >= 3;
-        document.getElementById('verdict-split-badge').innerText = `DIVISION: ${ayesCount}–${4 - ayesCount} ${isPassed ? 'RESOLVED' : 'STRICKEN'}`;
+        document.getElementById('verdict-split-badge').innerText = `DIVISION: ${ayesCount}–${noesCount} ${isPassed ? 'RESOLVED' : 'STRICKEN'}`;
         document.getElementById('verdict-ruling-title').innerHTML = isPassed
           ? "The Motion Is <br><em>Resolved In The Affirmative.</em>"
           : "The Motion Is <br><em>Stricken Down.</em>";
@@ -1702,6 +1953,9 @@
       abortCurrentDebate = false;
       revealVerdict();
     }
+
+    // Initialize API Status
+    initApiStatus();
   </script>
 </body>
 </html>
