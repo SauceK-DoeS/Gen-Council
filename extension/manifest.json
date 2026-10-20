@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "AI Council Bridge",
+  "version": "1.0.2",
+  "description": "Local bridge connecting the AI Council Chamber directly to ChatGPT, Claude, Gemini, and Grok in the same tabs.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://chatgpt.com/*",
+    "https://*.chatgpt.com/*",
+    "https://*.openai.com/*",
+    "https://chat.openai.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://bard.google.com/*",
+    "https://grok.com/*",
+    "https://x.com/*",
+    "https://twitter.com/*",
+    "file://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*index.html*",
+        "file://*/*ai-council*",
+        "http://127.0.0.1:8000/*",
+        "http://localhost:8000/*",
+        "http://127.0.0.1/*",
+        "http://localhost/*",
+        "https://*.trycloudflare.com/*"
+      ],
+      "js": ["bridge.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
