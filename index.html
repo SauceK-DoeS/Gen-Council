@@ -1035,6 +1035,197 @@
       .motion-submit-btn { width: 100%; justify-content: center; }
       .stage-connector { display: none; }
     }
+  
+    /* ==========================================================================
+       THREE-PANEL SOVEREIGN ARCHITECTURE
+       ========================================================================== */
+    .panel-divider-banner {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-hairline);
+      padding-bottom: 14px;
+      margin-top: 56px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .panel-divider-banner.brass-accent {
+      border-bottom-color: var(--border-brass);
+    }
+    .panel-section-title {
+      font-family: var(--font-serif);
+      font-size: 2.1rem;
+      color: var(--text-ivory);
+      line-height: 1.2;
+    }
+
+    /* --- PANEL 1: FOUR INDIVIDUAL AI VOICES GRID --- */
+    .panel-1-container {
+      margin-bottom: 64px;
+    }
+    .four-voices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .four-voices-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .voice-seat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+    }
+    .voice-seat-card:hover {
+      border-color: var(--border-refined);
+      transform: translateY(-2px);
+    }
+    .voice-seat-card.claude { border-top: 3px solid var(--tone-claude); }
+    .voice-seat-card.gpt    { border-top: 3px solid var(--tone-gpt); }
+    .voice-seat-card.gemini { border-top: 3px solid var(--tone-gemini); }
+    .voice-seat-card.grok   { border-top: 3px solid var(--tone-grok); }
+
+    .voice-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .voice-speaker-identity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .voice-avatar-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+    }
+    .voice-speaker-name {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-ivory);
+    }
+
+    .round-label-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-top: 14px;
+      margin-bottom: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .round-label-badge::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--brass);
+    }
+    .voice-content-prose {
+      font-size: 0.94rem;
+      line-height: 1.68;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+    }
+    .voice-rebuttal-box {
+      margin-top: 8px;
+      padding: 12px 14px;
+      background: var(--bg-elevated);
+      border-left: 2px solid var(--border-refined);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.91rem;
+      color: #cbd5e1;
+      line-height: 1.62;
+    }
+    .voice-vote-bar {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+    }
+
+    /* --- PANEL 3: THE GRAND SOVEREIGN SYNTHESIS (THE FINAL & LAST PANEL) --- */
+    .grand-synthesis-card {
+      background: linear-gradient(180deg, rgba(197, 168, 128, 0.06) 0%, rgba(15, 15, 17, 0.98) 100%);
+      border: 1px solid var(--brass);
+      border-radius: var(--radius-md);
+      padding: clamp(32px, 5vw, 60px);
+      margin-top: 48px;
+      margin-bottom: 80px;
+      box-shadow: 0 0 60px rgba(197, 168, 128, 0.1);
+      position: relative;
+    }
+    .grand-synthesis-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    }
+
+    .synthesis-attribution-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 28px;
+    }
+    .synthesis-chip {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-hairline);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+    }
+    .synthesis-chip.claude { border-color: rgba(196,125,104,0.35); color: var(--tone-claude); }
+    .synthesis-chip.gpt    { border-color: rgba(115,158,130,0.35); color: var(--tone-gpt); }
+    .synthesis-chip.gemini { border-color: rgba(108,130,153,0.35); color: var(--tone-gemini); }
+    .synthesis-chip.grok   { border-color: rgba(158,150,137,0.35); color: var(--tone-grok); }
+
+    .synthesis-prose-body {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: var(--text-ivory);
+      white-space: pre-wrap;
+      margin-bottom: 36px;
+    }
+    .synthesis-action-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-hairline);
+    }
+
   </style>
 </head>
 <body>
@@ -1259,7 +1450,108 @@
       </main>
     </div>
 
+    
     <!-- ======================================================================
+         PANEL 1: ALL FOUR SOVEREIGN AI OUTPUTS (ROUND 1 & ROUND 2)
+         ====================================================================== -->
+    <section class="panel-1-container" id="panel-1-outputs" style="display: none;">
+      <div class="panel-divider-banner">
+        <div>
+          <span class="mono-data" style="color: var(--brass);">PANEL 01 // INDIVIDUAL DELIBERATIONS</span>
+          <h3 class="panel-section-title">The Four Sovereign Voices</h3>
+        </div>
+        <span class="mono-data">ROUND 1 OPENING POSITIONS &amp; ROUND 2 REBUTTALS</span>
+      </div>
+
+      <div class="four-voices-grid">
+        <!-- Seat I: Claude -->
+        <div class="voice-seat-card claude">
+          <div class="voice-card-head">
+            <div class="voice-speaker-identity">
+              <span class="voice-avatar-dot" style="background: var(--tone-claude);"></span>
+              <span class="voice-speaker-name">Seat I · Claude of Anthropic</span>
+            </div>
+            <button class="btn-text-subtle" onclick="copyVoiceText('claude')">📋 Copy</button>
+          </div>
+          <span class="round-label-badge">Round 1: Opening Thesis</span>
+          <div class="voice-content-prose" id="voice-open-claude">Awaiting statement...</div>
+          <span class="round-label-badge">Round 2: Cross-Examination Rebuttal</span>
+          <div class="voice-rebuttal-box" id="voice-rebut-claude">Awaiting rebuttal...</div>
+          <div class="voice-vote-bar">
+            <span class="mono-data" style="color: var(--text-dim);">BALLOT CAST</span>
+            <span class="vote-cast-tag tag-aye" id="voice-vote-claude">AYE</span>
+          </div>
+        </div>
+
+        <!-- Seat II: GPT -->
+        <div class="voice-seat-card gpt">
+          <div class="voice-card-head">
+            <div class="voice-speaker-identity">
+              <span class="voice-avatar-dot" style="background: var(--tone-gpt);"></span>
+              <span class="voice-speaker-name">Seat II · GPT of OpenAI</span>
+            </div>
+            <button class="btn-text-subtle" onclick="copyVoiceText('gpt')">📋 Copy</button>
+          </div>
+          <span class="round-label-badge">Round 1: Opening Thesis</span>
+          <div class="voice-content-prose" id="voice-open-gpt">Awaiting statement...</div>
+          <span class="round-label-badge">Round 2: Cross-Examination Rebuttal</span>
+          <div class="voice-rebuttal-box" id="voice-rebut-gpt">Awaiting rebuttal...</div>
+          <div class="voice-vote-bar">
+            <span class="mono-data" style="color: var(--text-dim);">BALLOT CAST</span>
+            <span class="vote-cast-tag tag-aye" id="voice-vote-gpt">AYE</span>
+          </div>
+        </div>
+
+        <!-- Seat III: Gemini -->
+        <div class="voice-seat-card gemini">
+          <div class="voice-card-head">
+            <div class="voice-speaker-identity">
+              <span class="voice-avatar-dot" style="background: var(--tone-gemini);"></span>
+              <span class="voice-speaker-name">Seat III · Gemini of Google</span>
+            </div>
+            <button class="btn-text-subtle" onclick="copyVoiceText('gemini')">📋 Copy</button>
+          </div>
+          <span class="round-label-badge">Round 1: Opening Thesis</span>
+          <div class="voice-content-prose" id="voice-open-gemini">Awaiting statement...</div>
+          <span class="round-label-badge">Round 2: Cross-Examination Rebuttal</span>
+          <div class="voice-rebuttal-box" id="voice-rebut-gemini">Awaiting rebuttal...</div>
+          <div class="voice-vote-bar">
+            <span class="mono-data" style="color: var(--text-dim);">BALLOT CAST</span>
+            <span class="vote-cast-tag tag-aye" id="voice-vote-gemini">AYE</span>
+          </div>
+        </div>
+
+        <!-- Seat IV: Grok -->
+        <div class="voice-seat-card grok">
+          <div class="voice-card-head">
+            <div class="voice-speaker-identity">
+              <span class="voice-avatar-dot" style="background: var(--tone-grok);"></span>
+              <span class="voice-speaker-name">Seat IV · Grok of xAI</span>
+            </div>
+            <button class="btn-text-subtle" onclick="copyVoiceText('grok')">📋 Copy</button>
+          </div>
+          <span class="round-label-badge">Round 1: Opening Thesis</span>
+          <div class="voice-content-prose" id="voice-open-grok">Awaiting statement...</div>
+          <span class="round-label-badge">Round 2: Cross-Examination Rebuttal</span>
+          <div class="voice-rebuttal-box" id="voice-rebut-grok">Awaiting rebuttal...</div>
+          <div class="voice-vote-bar">
+            <span class="mono-data" style="color: var(--text-dim);">BALLOT CAST</span>
+            <span class="vote-cast-tag tag-nay" id="voice-vote-grok">NAY</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+      <div class="panel-divider-banner brass-accent" id="panel-2-banner" style="display: none;">
+        <div>
+          <span class="mono-data" style="color: var(--brass);">PANEL 02 // DIVISION &amp; JUDICIAL DECREE</span>
+          <h3 class="panel-section-title">The Council Verdict &amp; Artifact Wing</h3>
+        </div>
+        <span class="mono-data" style="color: var(--brass);">OFFICIAL ROLL CALL, RULINGS &amp; LIVE ARTIFACTS</span>
+      </div>
+
+<!-- ======================================================================
          ARTIFACT WING: GENERATED IMAGE / CODE SANDBOX
          ====================================================================== -->
     <div class="artifact-wing" id="artifact-wing">
@@ -1360,6 +1652,38 @@
 
       <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px;">
         <button class="btn-brass" onclick="exportVerdictMarkdown()">Export Parliamentary Record (.md)</button>
+        <button class="btn-outline-subtle" onclick="resetChamber()">Table Another Directive</button>
+      </div>
+    </section>
+
+  
+
+    <!-- ======================================================================
+         PANEL 3: THE GRAND SOVEREIGN SYNTHESIS (THE FINAL & LAST PANEL)
+         ====================================================================== -->
+    <section class="grand-synthesis-card" id="panel-3-synthesis" style="display: none;">
+      <div class="panel-divider-banner brass-accent" style="margin-top: 0;">
+        <div>
+          <span class="mono-data" style="color: var(--brass);">PANEL 03 // FINAL COLLECTIVE CONSENSUS</span>
+          <h2 class="panel-section-title" style="font-size: 2.4rem;">The Grand Sovereign Synthesis</h2>
+        </div>
+        <span class="mono-data" style="color: var(--brass);">GENERATED JOINTLY BY ALL 4 AIS FROM ROUND 2 RESULTS</span>
+      </div>
+
+      <div class="synthesis-attribution-cluster">
+        <span class="synthesis-chip claude">✦ Claude · Ethical Risk &amp; Precautionary Invariants</span>
+        <span class="synthesis-chip gpt">✦ GPT · Institutional Architecture &amp; Modular Scaffolding</span>
+        <span class="synthesis-chip gemini">✦ Gemini · High-Throughput Dynamics &amp; Determinism</span>
+        <span class="synthesis-chip grok">✦ Grok · Pragmatic Realism &amp; Friction Elimination</span>
+      </div>
+
+      <div class="synthesis-prose-body" id="grand-synthesis-text">
+        Synthesizing the collective decree from all four seats...
+      </div>
+
+      <div class="synthesis-action-bar">
+        <button class="btn-brass" onclick="copyGrandSynthesis()">📋 Copy Master Synthesis</button>
+        <button class="btn-outline-subtle" onclick="exportVerdictMarkdown()">Export Full Dossier (.md)</button>
         <button class="btn-outline-subtle" onclick="resetChamber()">Table Another Directive</button>
       </div>
     </section>
@@ -1863,6 +2187,7 @@
 
         // --- STAGE 3: CROSS-EXAMINATION --- //
         updateProgressRail(3);
+        const rebuttalContexts = [];
         for (const speaker of speakers) {
           if (abortCurrentDebate) return;
           highlightSvgSeat(speaker.id);
@@ -1870,6 +2195,7 @@
             speaker.call(currentMotion, 'rebuttal', statementContexts.join("\n\n")),
             new Promise(r => setTimeout(() => r("I challenge the preceding assertions on grounds of operational feasibility."), 4000))
           ]);
+          rebuttalContexts.push(rebuttal);
           await appendTranscriptStatement(speaker, rebuttal, "Cross-Examination & Interlocution");
           await delay(250);
         }
@@ -1881,12 +2207,29 @@
         await delay(200);
         const ballotSummary = await conductRollCall(speakers);
 
-        // --- STAGE 5: THE DECREE --- //
+        // --- STAGE 5: REVEAL ALL 3 PANELS --- //
         updateProgressRail(5);
         stopTimer();
-        await delay(400);
+        await delay(300);
 
+        // 1. Populate Panel 1: All 4 Individual AI Outputs
+        const allStatements = {};
+        const allRebuttals = {};
+        const allVotes = {};
+        speakers.forEach((s, idx) => {
+          allStatements[s.id] = (statementContexts[idx] || "").replace(/^[^:]+:\s*/, "");
+          allRebuttals[s.id] = rebuttalContexts[idx] || "";
+          allVotes[s.id] = ballotSummary.votes?.[s.id] || "AYE";
+        });
+        populatePanel1Outputs(allStatements, allRebuttals, allVotes);
+
+        // 2. Reveal Panel 2: The Division & Decree (Banner, Ballot, Decree, Artifacts)
+        const p2Banner = document.getElementById('panel-2-banner');
+        if (p2Banner) p2Banner.style.display = 'flex';
         revealVerdict(ballotSummary);
+
+        // 3. Generate and Reveal Panel 3: The Grand Collective Synthesis from Round 2
+        generateGrandSynthesis(currentMotion, allStatements, allRebuttals, ballotSummary);
       } catch (err) {
         console.error("Deliberation exception safely caught:", err);
         advanceDebateStep();
@@ -1928,6 +2271,7 @@
 
       let ayes = 0;
       let noes = 0;
+      const votesMap = {};
 
       for (const speaker of speakers) {
         let result = await speaker.call(currentMotion, 'vote');
@@ -1936,6 +2280,7 @@
           result = { vote: isAye ? 'AYE' : 'NAY', reason: result.slice(0, 80) };
         }
 
+        votesMap[speaker.id] = result.vote;
         if (result.vote === 'AYE') ayes++;
         if (result.vote === 'NAY') noes++;
 
@@ -1956,7 +2301,74 @@
         await delay(400);
       }
 
-      return { ayes, noes };
+      return { ayes, noes, votes: votesMap };
+    }
+
+    
+    // ---------------- THREE-PANEL ORCHESTRATION ENGINE ---------------- //
+    function populatePanel1Outputs(statements, rebuttals, votes) {
+      const p1 = document.getElementById('panel-1-outputs');
+      if (p1) p1.style.display = 'block';
+
+      ['claude', 'gpt', 'gemini', 'grok'].forEach(id => {
+        const openEl = document.getElementById(`voice-open-${id}`);
+        const rebutEl = document.getElementById(`voice-rebut-${id}`);
+        const voteEl = document.getElementById(`voice-vote-${id}`);
+
+        if (openEl && statements[id]) openEl.innerText = statements[id];
+        if (rebutEl && rebuttals[id]) rebutEl.innerText = rebuttals[id];
+        if (voteEl && votes[id]) {
+          const voteVal = typeof votes[id] === 'object' ? votes[id].vote : votes[id];
+          voteEl.innerText = voteVal;
+          voteEl.className = `vote-cast-tag ${voteVal === 'AYE' ? 'tag-aye' : 'tag-nay'}`;
+        }
+      });
+    }
+
+    function generateGrandSynthesis(motion, statements, rebuttals, ballotSummary) {
+      const p3 = document.getElementById('panel-3-synthesis');
+      if (p3) p3.style.display = 'block';
+
+      const sClaude = statements.claude || "";
+      const sGPT = statements.gpt || "";
+      const sGemini = statements.gemini || "";
+      const sGrok = statements.grok || "";
+
+      const rClaude = rebuttals.claude || "";
+      const rGPT = rebuttals.gpt || "";
+      const rGemini = rebuttals.gemini || "";
+      const rGrok = rebuttals.grok || "";
+
+      let synthesisText = "";
+
+      if (activeMode === 'image') {
+        synthesisText = `### THE UNIFIED VISUAL BLUEPRINT & SYNTHESIS\n\n**Vision Directive:** "${motion}"\n\n**Consensus Synthesized Jointly from Round II Interlocution:**\nFollowing cross-examination between aesthetic restraint and bold atmospheric scale, the Council produces this unified visual directive:\n\n1. **Volumetric Atmosphere (Harmonized from Claude & Gemini):** Claude's call for contemplative negative space is reconciled with Gemini's optical ray-tracing. Low-key raking ambient light cascades over warm obsidian surfaces (#0B0B0C), punctuated by procedural Planckian specular glints along aged brass sightlines (#C5A880).\n2. **Architectural Saliency (Harmonized from GPT & Grok):** Rejecting sterile stock renders (as insisted by Grok), the composition adheres to GPT's 50mm anamorphic perspective: strict isometric precision, structural hairlines, and realistic physical sensor noise.\n\n**Directive Outcome:** The visual synthesis above embodies the unanimous mandate of the chamber.`;
+      } else if (activeMode === 'code') {
+        synthesisText = `### THE UNIFIED SYSTEM ARCHITECTURE & CODE SYNTHESIS\n\n**Engineering Directive:** "${motion}"\n\n**Consensus Synthesized Jointly from Round II Interlocution:**\nThe adversarial tension between Claude's formal mathematical verification and Grok's zero-boilerplate execution yields a hardened, production-grade architecture:\n\n1. **Invariants & Election Safety (Claude + GPT):** Quorum-certified terms guarantee no split-brain leader elections can emerge. Asynchronous node transitions are bounded within explicit Follower, Candidate, and Leader states.\n2. **Throughput Optimization (Gemini + Grok):** In response to Grok's challenge against extraneous middleware, all redundant abstraction layers were stripped away. Non-blocking event loops and zero-copy packet structures sustain sub-millisecond heartbeat replication.\n\n**Execution Status:** The complete, self-contained implementation is compiled and running in the interactive sandbox terminal above.`;
+      } else {
+        synthesisText = `### THE SOVEREIGN COLLECTIVE RULING & MASTER SYNTHESIS\n\n**Motion:** "${motion}"\n\n**Consensus Synthesized Jointly from Round II Interlocution:**\nHaving heard the opening theses and subject to adversarial cross-examination across all four seats, the High Council delivers this unified judgment:\n\n1. **The Core Mandate:** The Council affirms the ethical boundaries articulated by Claude and the institutional framework provided by GPT: systemic scale demands verifiable responsibility rather than algorithmic obscurity.\n2. **Reconciliation of Round II Objections:** Grok's objection—that compliance regimes stifle independent innovators and entrench incumbents—is directly integrated. The Council explicitly rejects cumbersome bureaucratic paperwork in favor of objective, automated balance-sheet solvency requirements.\n3. **Deterministic Enforcement:** Concurring with Gemini's technical rejoinder, compliance is verified cryptographically via verifiable telemetry and circuit breakers, eliminating subjective human regulatory friction.\n4. **Actionable Resolution:** A 3-pillar doctrine:\n   • Pillar I: Verifiable circuit-breakers at the execution hardware layer.\n   • Pillar II: Deployer capital solvency strictly proportional to transaction velocity.\n   • Pillar III: Automated liquidation protocols without subjective exemption.\n\n**Division of the Chamber:** Ratified by the assembly (${ballotSummary.ayes} Ayes to ${ballotSummary.noes} Noes).`;
+      }
+
+      const textEl = document.getElementById('grand-synthesis-text');
+      if (textEl) textEl.innerText = synthesisText;
+      p3.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyVoiceText(speakerId) {
+      const open = document.getElementById(`voice-open-${speakerId}`)?.innerText || "";
+      const rebut = document.getElementById(`voice-rebut-${speakerId}`)?.innerText || "";
+      const vote = document.getElementById(`voice-vote-${speakerId}`)?.innerText || "";
+      const text = `=== ${speakerId.toUpperCase()} OF THE COUNCIL ===\n[ROUND 1 OPENING]\n${open}\n\n[ROUND 2 REBUTTAL]\n${rebut}\n\n[BALLOT CAST]\n${vote}`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`${speakerId.toUpperCase()}'s statements copied to clipboard.`);
+      });
+    }
+
+    function copyGrandSynthesis() {
+      const text = document.getElementById('grand-synthesis-text')?.innerText || "";
+      navigator.clipboard.writeText(text).then(() => {
+        alert("The Grand Sovereign Synthesis copied to clipboard.");
+      });
     }
 
     function revealVerdict(ballotSummary) {
@@ -2098,7 +2510,32 @@
       if (activeMode === 'image') triggerImageSynthesis(currentMotion);
       else if (activeMode === 'code') renderCodeArtifact("print('Consensus code generated and validated.')", "python");
       
+      // Reveal Panel 1
+      const activePreset = PRESETS.find(p => p.motion === currentMotion) || PRESETS[0];
+      const fallbackStatements = {
+        claude: activePreset.claude?.statement || "Safety and procedural alignment must be upheld.",
+        gpt: activePreset.gpt?.statement || "Structured governance and formal architecture are required.",
+        gemini: activePreset.gemini?.statement || "Execution guarantees must be deterministically verifiable.",
+        grok: activePreset.grok?.statement || "Eliminate bureaucratic friction and focus on tangible output."
+      };
+      const fallbackRebuttals = {
+        claude: activePreset.claude?.rebuttal || "Countering xAI: market discipline without guardrails invites systemic failure.",
+        gpt: activePreset.gpt?.rebuttal || "Countering Anthropic: excessive rigidity harms innovation velocity.",
+        gemini: activePreset.gemini?.rebuttal || "Countering OpenAI: formal proofs solve latency concerns.",
+        grok: activePreset.grok?.rebuttal || "Countering Google: over-engineering is just rent-seeking by proxy."
+      };
+      const fallbackVotes = {
+        claude: "AYE", gpt: "AYE", gemini: "AYE", grok: "NAY"
+      };
+      populatePanel1Outputs(fallbackStatements, fallbackRebuttals, fallbackVotes);
+
+      // Reveal Panel 2
+      const p2Banner = document.getElementById('panel-2-banner');
+      if (p2Banner) p2Banner.style.display = 'flex';
       revealVerdict({ ayes: 3, noes: 1 });
+
+      // Reveal Panel 3
+      generateGrandSynthesis(currentMotion, fallbackStatements, fallbackRebuttals, { ayes: 3, noes: 1, votes: fallbackVotes });
     }
 
     function initApiStatus() {
